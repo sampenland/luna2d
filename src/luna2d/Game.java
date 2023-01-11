@@ -10,24 +10,33 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = -2680723036795663013L;
 	
 	protected Window window;
+	public ObjectHandler objHandler;
+	public InputHandler inputHandler;
+	
 	private Thread mainGameThread;
 	private boolean gameRunning = false;
 	
 	private int width, height;
 	private String title;
+	private Color bkgColor;
 	
-	public void init(int width, int height, String title)
+	public void init(int width, int height, String title, Color bkgColor)
 	{
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		this.bkgColor = bkgColor;
 		
-		window = new Window(width, height, title, this);
+		objHandler = new ObjectHandler();	
+		inputHandler = new InputHandler(objHandler);
+		
+		window = new Window(this.width, this.height, this.title, this);
+		this.addKeyListener(inputHandler);
 	}
 	
 	private void tick()
 	{
-		
+		objHandler.updateAllObjects();
 	}
 	
 	private void render()
@@ -41,8 +50,10 @@ public class Game extends Canvas implements Runnable {
 		
 		Graphics g = bs.getDrawGraphics();
 		
-		g.setColor(Color.blue);
+		g.setColor(this.bkgColor);
 		g.fillRect(0, 0, this.width, this.height);
+		
+		objHandler.renderAllObjects(g);
 		
 		g.dispose();
 		bs.show();
@@ -73,7 +84,7 @@ public class Game extends Canvas implements Runnable {
 	{
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
-		double ns = 1000000000;
+		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
 		int frames = 0;
@@ -84,7 +95,7 @@ public class Game extends Canvas implements Runnable {
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			
-			while(delta > 1)
+			while(delta >= 1)
 			{
 				tick();
 				delta--;
@@ -93,16 +104,17 @@ public class Game extends Canvas implements Runnable {
 			if(this.gameRunning)
 			{
 				render();
-				frames++;
-				
-				if(System.currentTimeMillis() - timer > 1000)
-				{
-					timer += 1000;
-					System.out.println("FPS: " + frames);
-					frames = 0;
-				}
 			}
 			
+			frames++;
+				
+			if(System.currentTimeMillis() - timer > 1000)
+			{
+				timer += 1000;
+				System.out.println("FPS: " + frames);
+				frames = 0;
+			}
+		
 		}
 		
 		stop();

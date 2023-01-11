@@ -1,5 +1,7 @@
 package sampleGame;
 
+import java.awt.Color;
+
 import luna2d.Game;
 
 public class SampleGame extends Game 
@@ -12,14 +14,14 @@ public class SampleGame extends Game
 	public static void main(String[] args)
 	{
 		Game g = new Game();
-		g.init(WIDTH, HEIGHT, "Sample Game");		
+		g.init(WIDTH, HEIGHT, "Sample Game", Color.black);
+		
+		Player player = new Player(100, 100, 0, true, g.objHandler);
 	}
 
 	@Override
 	public void run() 
 	{
-		
-		
 
 	}
 	
