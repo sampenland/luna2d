@@ -1,8 +1,9 @@
-package sampleGame;
+package theHunter;
 
 import java.awt.Color;
 
 import luna2d.Game;
+import theHunter.scenes.MainMenu;
 
 public class SampleGame extends Game 
 {
@@ -14,15 +15,10 @@ public class SampleGame extends Game
 	public static void main(String[] args)
 	{
 		Game g = new Game();
-		g.init(WIDTH, HEIGHT, "Sample Game", Color.black);
+		g.init(WIDTH, HEIGHT, "The Hunter", Color.black);
 		
-		Player player = new Player(100, 100, 0, true, g.objHandler);
-	}
-
-	@Override
-	public void run() 
-	{
-
-	}
-	
+		MainMenu menu = new MainMenu("Menu");		
+		g.beginSceneEngine(menu);
+		
+	}	
 }

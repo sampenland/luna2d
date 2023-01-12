@@ -10,11 +10,11 @@ public abstract class GameObject
 	protected int x, y, objectType;
 	protected HashMap<Integer, Boolean> keys;
 
-	private ObjectHandler objHandler;
+	private Scene inScene;
 	
-	public GameObject(int x, int y, int objectType, boolean inputEnabled, ObjectHandler objHandler)
+	public GameObject(int x, int y, int objectType, boolean inputEnabled, Scene inScene)
 	{
-		this.objHandler = objHandler;
+		this.inScene = inScene;
 		this.keys = new HashMap<Integer, Boolean>();
 		
 		this.x = x;
@@ -22,7 +22,7 @@ public abstract class GameObject
 		this.objectType = objectType;
 		this.inputEnabled = inputEnabled;
 		
-		this.objHandler.addObject(this);
+		this.inScene.getObjectHandler().addObject(this);
 	}
 	
 	protected abstract void render(Graphics g);

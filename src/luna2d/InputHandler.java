@@ -4,16 +4,30 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class InputHandler extends KeyAdapter 
-{
-	private ObjectHandler objHandler;
+{	
+	private Game game;
 	
-	public InputHandler(ObjectHandler objHandler)
+	public InputHandler(Game g)
 	{
-		this.objHandler = objHandler;
+		this.game = g;
 	}
 	
 	public void keyPressed(KeyEvent e)
 	{
+		if (this.game == null) 
+		{
+			Log.println("Input Handler has null Game object.");
+			return;
+		}
+		
+		ObjectHandler objHandler = this.game.getObjectHandler();
+		
+		if (objHandler == null)
+		{
+			Log.println("Input Handler has null Object Handler");
+			return;
+		}
+		
 		int key = e.getKeyCode();
 		
 		for (int i = 0; i < objHandler.getObjects().size(); i++) 
@@ -24,10 +38,30 @@ public class InputHandler extends KeyAdapter
 			temp.keyPressed(key);
 		}
 		
+		Scene currentScene = this.game.sceneManager.getCurrentScene();
+		if (currentScene != null)
+		{
+			currentScene.keyPressed(key);
+		}
+		
 	}
 	
 	public void keyReleased(KeyEvent e)
 	{
+		if (this.game == null) 
+		{
+			Log.println("Input Handler has null Game object.");
+			return;
+		}
+		
+		ObjectHandler objHandler = this.game.getObjectHandler();
+		
+		if (objHandler == null)
+		{
+			Log.println("Input Handler has null Object Handler");
+			return;
+		}
+		
 		int key = e.getKeyCode();
 		
 		for (int i = 0; i < objHandler.getObjects().size(); i++) 
@@ -37,6 +71,13 @@ public class InputHandler extends KeyAdapter
 			
 			temp.keyReleased(key);
 		}
+		
+		Scene currentScene = this.game.sceneManager.getCurrentScene();
+		if (currentScene != null)
+		{
+			currentScene.keyReleased(key);
+		}
+		
 	}
 
 }

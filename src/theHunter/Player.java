@@ -1,10 +1,10 @@
-package sampleGame;
+package theHunter;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import luna2d.GameObject;
-import luna2d.ObjectHandler;
+import luna2d.Scene;
 
 public class Player extends GameObject
 {
@@ -12,9 +12,9 @@ public class Player extends GameObject
 	private int moveSpeed = 5;
 	private int size = 16;
 	
-	public Player(int x, int y, int objectType, boolean inputEnabled, ObjectHandler objHandler) 
+	public Player(int x, int y, int objectType, boolean inputEnabled, Scene inScene) 
 	{
-		super(x, y, objectType, inputEnabled, objHandler);
+		super(x, y, objectType, inputEnabled, inScene);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = -2680723036795663013L;
 	
 	protected Window window;
-	public ObjectHandler objHandler;
+	public SceneManager sceneManager;
 	public InputHandler inputHandler;
 	
 	private Thread mainGameThread;
@@ -27,16 +27,40 @@ public class Game extends Canvas implements Runnable {
 		this.title = title;
 		this.bkgColor = bkgColor;
 		
-		objHandler = new ObjectHandler();	
-		inputHandler = new InputHandler(objHandler);
-		
+		sceneManager = new SceneManager(this);		
 		window = new Window(this.width, this.height, this.title, this);
-		this.addKeyListener(inputHandler);
+	}
+	
+	public SceneManager getSceneManager()
+	{
+		return sceneManager;
+	}
+	
+	public ObjectHandler getObjectHandler()
+	{
+		if (this.sceneManager != null)
+		{
+			if (this.sceneManager.getCurrentScene() != null)
+			{
+				return this.sceneManager.getCurrentScene().getObjectHandler();
+			}
+		}
+		
+		return null;
 	}
 	
 	private void tick()
 	{
-		objHandler.updateAllObjects();
+		if (this.sceneManager == null) return;
+		
+		if (this.inputHandler == null)
+		{
+			this.inputHandler = new InputHandler(this);
+			this.addKeyListener(inputHandler);
+			Log.println("Input Handler initialized.");
+		}
+		
+		this.sceneManager.update();
 	}
 	
 	private void render()
@@ -53,12 +77,17 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(this.bkgColor);
 		g.fillRect(0, 0, this.width, this.height);
 		
-		objHandler.renderAllObjects(g);
+		this.sceneManager.render(g);
 		
 		g.dispose();
 		bs.show();
 	}
 
+	public void beginSceneEngine(Scene startingScene)
+	{
+		this.sceneManager.startEngine(startingScene);
+	}
+	
 	public synchronized void start()
 	{
 		mainGameThread = new Thread(this);
@@ -66,17 +95,14 @@ public class Game extends Canvas implements Runnable {
 		this.gameRunning = true;
 	}
 	
-	public synchronized void stop()
+	public void endGame()
 	{
-		try
-		{
-			this.mainGameThread.join();
-			this.gameRunning = false;
-		}
-		catch(Exception ex)
-		{
-			ex.printStackTrace();
-		}
+		this.gameRunning = false;
+	}
+	
+	private synchronized void stop()
+	{
+		System.exit(0);
 	}
 
 	@Override
@@ -118,5 +144,6 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		stop();
+		
 	}
 }
