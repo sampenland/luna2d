@@ -2,6 +2,7 @@ package theHunter;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import luna2d.GameObject;
 import luna2d.Scene;
@@ -22,29 +23,28 @@ public class Player extends GameObject
 		
 		g.setColor(Color.red);
 		g.fillRect(x, y, this.size, this.size);
-		
 	}
 
 	@Override
 	protected void update() 
 	{
 		
-		if (this.isKeyPressed((int)'W'))
+		if (this.isKeyPressed(KeyEvent.VK_W))
 		{
 			this.y -= moveSpeed;
 		}
 		
-		if (this.isKeyPressed((int)'S'))
+		if (this.isKeyPressed(KeyEvent.VK_S))
 		{
 			this.y += moveSpeed;
 		}
 		
-		if (this.isKeyPressed((int)'A'))
+		if (this.isKeyPressed(KeyEvent.VK_A))
 		{
 			this.x -= moveSpeed;
 		}
 		
-		if (this.isKeyPressed((int)'D'))
+		if (this.isKeyPressed(KeyEvent.VK_D))
 		{
 			this.x += moveSpeed;
 		}

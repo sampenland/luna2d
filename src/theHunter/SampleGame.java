@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import luna2d.Game;
 import theHunter.scenes.MainMenu;
+import theHunter.scenes.MapPlayer;
 
 public class SampleGame extends Game 
 {
@@ -17,8 +18,11 @@ public class SampleGame extends Game
 		Game g = new Game();
 		g.init(WIDTH, HEIGHT, "The Hunter", Color.black);
 		
-		MainMenu menu = new MainMenu("Menu");		
+		MainMenu menu = new MainMenu("MainMenu");		
 		g.beginSceneEngine(menu);
+		
+		MapPlayer mapPlayer = new MapPlayer("MapPlayer");
+		g.sceneManager.addScene(mapPlayer);
 		
 	}	
 }

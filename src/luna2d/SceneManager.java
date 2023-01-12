@@ -1,7 +1,10 @@
 package luna2d;
 
 import java.awt.Graphics;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SceneManager 
 {
@@ -32,9 +35,7 @@ public class SceneManager
 			foundIndex = this.scenes.indexOf(startScene);
 		}
 		
-		this.currentScene = this.scenes.get(foundIndex);
-		this.currentScene.setGame(this.game);
-		this.currentScene.start();
+		this.openScene(this.scenes.get(foundIndex).name);
 		this.running = true;
 	}
 	
@@ -47,6 +48,42 @@ public class SceneManager
 		}
 		
 		this.running = false;
+	}
+	
+	public void openScene(String sceneName)
+	{
+		for(int i = 0; i < this.scenes.size(); i++)
+		{
+			Scene newScene = this.scenes.get(i); 
+			if (newScene != null && newScene.name == sceneName)
+			{
+				if (this.currentScene != null)
+				{
+					this.currentScene.end();
+				}
+				
+				this.currentScene = newScene;
+				this.currentScene.keys.clear();
+				this.currentScene.setInputEnabled(false);
+				this.currentScene.setGame(this.game);
+				this.currentScene.start();
+				
+				// Wait a 750 milliseconds before enabling input
+				SceneTimer reenableInput = new SceneTimer(this.currentScene) {
+					@Override
+					public void run() 
+					{
+						this.scene.setInputEnabled(true);
+					}
+				};
+				Timer ticker = new Timer("T-" + (new Date()).getTime()); 
+				ticker.schedule(reenableInput, 750);
+				
+				return;
+			}
+		}
+		
+		Log.println("Scene: " + sceneName + " NOT FOUND in Scene Manager scenes list");
 	}
 	
 	public Scene getCurrentScene() { return this.currentScene; }
@@ -66,24 +103,6 @@ public class SceneManager
 		{
 			this.scenes.remove(s);
 		}
-	}
-	
-	public void setCurrent(Scene s)
-	{
-		if (this.currentScene != s)
-		{
-			int foundIndex = this.scenes.indexOf(s);
-			if (foundIndex == -1)
-			{
-				this.scenes.add(s);
-			}
-			else
-			{
-				this.currentScene = this.scenes.get(foundIndex);
-			}
-		}
-		
-		this.currentScene.setGame(this.game);
 	}
 	
 	public void render(Graphics g)

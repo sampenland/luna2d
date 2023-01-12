@@ -1,5 +1,7 @@
 package theHunter.scenes;
 
+import java.awt.event.KeyEvent;
+
 import luna2d.Log;
 import luna2d.Scene;
 
@@ -23,11 +25,16 @@ public class MainMenu extends Scene
 	
 	private void checkKeys()
 	{
-		if (this.isKeyPressed((int)'Q'))
+		if (this.isKeyPressed(KeyEvent.VK_Q) || this.isKeyPressed(KeyEvent.VK_ESCAPE))
 		{
 			Log.println("Quitting the game");
 			this.endGame();
 			return;
+		}
+		
+		if (this.isKeyPressed(KeyEvent.VK_P))
+		{
+			this.openScene("MapPlayer");
 		}
 	}
 	
