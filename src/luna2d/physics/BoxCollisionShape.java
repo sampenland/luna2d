@@ -42,7 +42,7 @@ public class BoxCollisionShape extends CollisionShape
 			case Box:				
 				
 				BoxCollisionShape oBox = (BoxCollisionShape)other;
-				return this.rect.intersects(oBox.rect);
+				return this.rect.intersects(oBox.rect.getBounds());
 				
 			// Collision between this box and a circle
 			case Circle:
