@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import luna2d.Log;
 import luna2d.Scene;
+import theHunter.Player;
 
 public class MapPlayer extends Scene
 {
@@ -17,6 +18,9 @@ public class MapPlayer extends Scene
 	public void start() 
 	{
 		Log.println("Started Map Player");
+		
+		Player p = new Player(100, 100, 0, true, this);
+		
 	}
 
 	@Override

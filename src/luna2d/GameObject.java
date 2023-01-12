@@ -25,6 +25,16 @@ public abstract class GameObject
 		this.inScene.getObjectHandler().addObject(this);
 	}
 	
+	protected void addObjectToHandler(GameObject o) 
+	{
+		this.inScene.getObjectHandler().addObject(o);
+	}
+	
+	protected void addRenderableToHandler(Renderable r)
+	{
+		this.inScene.getObjectHandler().addRenderable(r);
+	}
+	
 	protected abstract void render(Graphics g);
 	protected abstract void update();
 	

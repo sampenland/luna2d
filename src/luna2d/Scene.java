@@ -62,11 +62,13 @@ public abstract class Scene
 	public void render(Graphics g)
 	{
 		this.objHandler.renderAllObjects(g);
+		this.objHandler.renderAllRenderables(g);
 	}
 	
 	void backgroundUpdate()
 	{
 		this.objHandler.updateAllObjects();
+		this.objHandler.updateAllRenderables();
 		this.update();
 	}
 	
