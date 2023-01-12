@@ -1,16 +1,35 @@
 package luna2d.physics;
 
+import java.awt.Rectangle;
+
+import luna2d.Maths;
+
 public class BoxCollisionShape extends CollisionShape
 {
 	
-	private int w, h;
+	public Rectangle rect;
 	
 	public BoxCollisionShape(int x, int y, int w, int h)
 	{
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+		this.rect.x = x;
+		this.rect.y = y;
+		this.rect.width = w;
+		this.rect.height = h;
+		
+		this.shape = TYPES.Box;
+	}
+	
+	@Override
+	protected void update(int x, int y)
+	{
+		this.rect.x = x;
+		this.rect.y = y;
+	}
+	
+	protected void resize(int w, int h)
+	{
+		this.rect.width = w;
+		this.rect.height = h;
 	}
 
 	@Override
@@ -23,15 +42,20 @@ public class BoxCollisionShape extends CollisionShape
 			case Box:				
 				
 				BoxCollisionShape oBox = (BoxCollisionShape)other;
-				
-				boolean widthIsPositive = Math.min(this.w, oBox.w) > Math.max(this.x, oBox.x);
-		        boolean heightIsPositive = Math.min(this.h, oBox.h) > Math.max(this.y, oBox.y);
-		        return ( widthIsPositive && heightIsPositive);
+				return this.rect.intersects(oBox.rect);
 				
 			// Collision between this box and a circle
 			case Circle:
 				
-				return false;
+				CircleCollisionShape oCircle = (CircleCollisionShape)other;
+				
+				float closestX = Maths.clamp(oCircle.x, this.rect.x, this.rect.x + this.rect.width);
+			    float closestY = Maths.clamp(oCircle.y, this.rect.y - this.rect.height, this.rect.y);
+			 
+			    float distanceX = oCircle.x - closestX;
+			    float distanceY = oCircle.y - closestY;
+			 
+			    return Math.pow(distanceX, 2) + Math.pow(distanceY, 2) < Math.pow(oCircle.r, 2);
 		}
 		
 		return false;
