@@ -3,6 +3,8 @@ package luna2d;
 import java.awt.Graphics;
 import java.util.HashMap;
 
+import luna2d.renderables.Renderable;
+
 public abstract class GameObject 
 {
 

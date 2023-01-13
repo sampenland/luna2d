@@ -1,8 +1,10 @@
-package luna2d;
+package luna2d.renderables;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import luna2d.Scene;
 
 public class FillBar extends Renderable
 {
@@ -62,7 +64,7 @@ public class FillBar extends Renderable
 		g.fillRect(this.bkgRect.x, this.bkgRect.y, this.bkgRect.width, this.bkgRect.height);
 		
 		g.setColor(valueColor);
-		g.fillRect(this.valueRect.x, this.valueRect.y, this.valueRect.width, this.valueRect.height);		
+		g.fillRect(this.valueRect.x, this.valueRect.y, this.valueRect.width, this.valueRect.height);
 	}
 
 	@Override
@@ -77,11 +79,9 @@ public class FillBar extends Renderable
 		this.outlineRect.width += 2 * this.outlineSize;
 		this.outlineRect.y -= this.outlineSize;
 		this.outlineRect.height += 2 * this.outlineSize;
+			
+		this.valueRect.width = Math.round(this.w * (float)((float)this.value / (float)this.max));
 		
-		this.valueRect.x += this.outlineSize;
-		this.valueRect.width = Math.round(this.w * ((float)(this.value / this.max)));
-		this.valueRect.y += this.outlineSize;
-		this.valueRect.height -= 2 * this.outlineSize;
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class FillBar extends Renderable
 		this.outlineSize = outlineSize;
 	}
 	
-	protected void updateValue(int value)
+	public void setValue(int value)
 	{
 		this.value = value;
 	}

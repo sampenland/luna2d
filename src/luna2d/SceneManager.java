@@ -20,23 +20,9 @@ public class SceneManager
 		this.scenes = new LinkedList<Scene>();
 	}
 	
-	public void startEngine(Scene startScene)
+	public void startEngine(String name)
 	{
-		if (startScene == null) 
-		{
-			System.out.println("Invalid scene. Could not start.");
-			return;
-		}
-		
-		int foundIndex = this.scenes.indexOf(startScene);
-		if (foundIndex == -1)
-		{
-			this.scenes.add(startScene);
-			foundIndex = this.scenes.indexOf(startScene);
-		}
-		
-		this.openScene(this.scenes.get(foundIndex).name);
-		this.running = true;
+		this.running = this.openScene(name);
 	}
 	
 	public void stopEngine()
@@ -50,7 +36,7 @@ public class SceneManager
 		this.running = false;
 	}
 	
-	public void openScene(String sceneName)
+	public boolean openScene(String sceneName)
 	{
 		for(int i = 0; i < this.scenes.size(); i++)
 		{
@@ -59,6 +45,7 @@ public class SceneManager
 			{
 				if (this.currentScene != null)
 				{
+					this.currentScene.unload();
 					this.currentScene.end();
 				}
 				
@@ -79,11 +66,12 @@ public class SceneManager
 				Timer ticker = new Timer("T-" + (new Date()).getTime()); 
 				ticker.schedule(reenableInput, 750);
 				
-				return;
+				return true;
 			}
 		}
 		
 		Log.println("Scene: " + sceneName + " NOT FOUND in Scene Manager scenes list");
+		return false;
 	}
 	
 	public Scene getCurrentScene() { return this.currentScene; }

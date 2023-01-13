@@ -3,6 +3,8 @@ package luna2d;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+import luna2d.renderables.Renderable;
+
 public class ObjectHandler 
 {
 

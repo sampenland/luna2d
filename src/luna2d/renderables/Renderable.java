@@ -1,6 +1,8 @@
-package luna2d;
+package luna2d.renderables;
 
 import java.awt.Graphics;
+
+import luna2d.Scene;
 
 public abstract class Renderable 
 {

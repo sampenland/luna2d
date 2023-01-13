@@ -31,6 +31,11 @@ public class Game extends Canvas implements Runnable {
 		window = new Window(this.width, this.height, this.title, this);
 	}
 	
+	public void setBkgColor(Color c)
+	{
+		this.bkgColor = c;
+	}
+	
 	public SceneManager getSceneManager()
 	{
 		return sceneManager;
@@ -83,9 +88,9 @@ public class Game extends Canvas implements Runnable {
 		bs.show();
 	}
 
-	public void beginSceneEngine(Scene startingScene)
+	public void beginSceneEngine(String name)
 	{
-		this.sceneManager.startEngine(startingScene);
+		this.sceneManager.startEngine(name);
 	}
 	
 	public synchronized void start()

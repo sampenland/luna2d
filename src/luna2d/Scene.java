@@ -36,6 +36,12 @@ public abstract class Scene
 	public abstract void start();
 	public abstract void end();
 	
+	public void unload()
+	{
+		this.objHandler.getObjects().clear();
+		this.objHandler.getRenderables().clear();
+	}
+	
 	public void openScene(String sceneName)
 	{
 		if (this.game == null)
