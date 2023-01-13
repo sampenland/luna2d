@@ -18,7 +18,7 @@ public class TheHunter extends Game
 	public static void main(String[] args)
 	{
 		Game g = new Game();
-		g.init(WIDTH, HEIGHT, "The Hunter", Color.black);
+		g.init(WIDTH, HEIGHT, "The Hunter", Color.black, "src/theHunter/res/");
 		
 		MainMenu menu = new MainMenu("MainMenu");		
 		g.sceneManager.addScene(menu);

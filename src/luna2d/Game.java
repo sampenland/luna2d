@@ -16,19 +16,22 @@ public class Game extends Canvas implements Runnable {
 	private Thread mainGameThread;
 	private boolean gameRunning = false;
 	
-	private int width, height;
+	public static int WIDTH, HEIGHT;
 	private String title;
 	private Color bkgColor;
 	
-	public void init(int width, int height, String title, Color bkgColor)
+	public static String resDir;
+	
+	public void init(int width, int height, String title, Color bkgColor, String resourceDir)
 	{
-		this.width = width;
-		this.height = height;
+		this.WIDTH = width;
+		this.HEIGHT = height;
 		this.title = title;
 		this.bkgColor = bkgColor;
+		this.resDir = resourceDir;
 		
 		sceneManager = new SceneManager(this);		
-		window = new Window(this.width, this.height, this.title, this);
+		window = new Window(this.WIDTH, this.HEIGHT, this.title, this);
 	}
 	
 	public void setBkgColor(Color c)
@@ -80,7 +83,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		
 		g.setColor(this.bkgColor);
-		g.fillRect(0, 0, this.width, this.height);
+		g.fillRect(0, 0, this.WIDTH, this.HEIGHT);
 		
 		this.sceneManager.render(g);
 		
