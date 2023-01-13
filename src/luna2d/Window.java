@@ -26,4 +26,6 @@ public class Window extends Canvas
 		game.start();
 	}
 	
+	public JFrame getFrame() { return this.frame; }
+	
 }

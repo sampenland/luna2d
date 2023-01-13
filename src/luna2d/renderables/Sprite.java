@@ -23,7 +23,9 @@ public class Sprite extends Renderable
 	private SpriteTimer nextFrameTask;
 	private Timer nextFrameTimer;
 	
-	public Sprite(Scene inScene, String path, int x, int y, float scale) 
+	public boolean visible = true;
+	
+	public Sprite(Scene inScene, String name, int x, int y, float scale) 
 	{
 		super(inScene);
 		
@@ -36,14 +38,7 @@ public class Sprite extends Renderable
 		this.scale = scale;
 		this.drawRect = new Rectangle();
 		
-		int idxStart = path.lastIndexOf("/");
-		int idxEnd = path.indexOf(".");
-		
-		if (idxStart == -1) idxStart = 0;
-		
-		String name = path.substring(idxStart, idxEnd);
-		
-		imgRef = ResourceHandler.addImage(name, path);
+		imgRef = ResourceHandler.getImage(name);
 		
 		if (imgRef == null)
 		{
@@ -55,6 +50,36 @@ public class Sprite extends Renderable
 		this.drawRect.y = y;
 		this.drawRect.width = imgRef.getWidth();
 		this.drawRect.height = imgRef.getHeight();
+		
+		this.frameWidth = this.drawRect.width;
+		
+	}
+	
+	public Sprite(Scene inScene, String name, int x, int y, float scale, int w, int h) 
+	{
+		super(inScene);
+		
+		this.isAnimated = false;
+		this.currentFrame = 0;
+		this.frames = 1;
+		this.nextFrameTask = null;
+		this.nextFrameTimer = null;
+		
+		this.scale = scale;
+		this.drawRect = new Rectangle();
+		
+		imgRef = ResourceHandler.getImage(name);
+		
+		if (imgRef == null)
+		{
+			Log.println("Failed to load Sprite image: " + name);
+			return;
+		}
+
+		this.drawRect.x = x;
+		this.drawRect.y = y;
+		this.drawRect.width = w;
+		this.drawRect.height = h;
 		
 		this.frameWidth = this.drawRect.width;
 		
@@ -106,10 +131,18 @@ public class Sprite extends Renderable
 		this.nextFrameTimer.scheduleAtFixedRate(nextFrameTask, msBetweenFrames, msBetweenFrames);
 		
 	}
+	
+	public void updateImageRef(String name)
+	{
+		this.imgRef = ResourceHandler.getImage(name);
+	}
 
 	@Override
 	public void render(Graphics g) 
 	{
+		if (!this.visible) return;
+		if (this.imgRef == null) return;
+		
 		if (this.isAnimated)
 		{
 			int srcX = this.currentFrame * this.frameWidth;			

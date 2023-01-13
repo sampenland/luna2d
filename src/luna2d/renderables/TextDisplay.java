@@ -22,6 +22,11 @@ public class TextDisplay extends Renderable
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void updateText(String text)
+	{
+		this.text = text;
+	}
 
 	@Override
 	public void render(Graphics g) 

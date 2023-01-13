@@ -3,6 +3,7 @@ package luna2d;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -17,11 +18,12 @@ public class Game extends Canvas implements Runnable {
 	private boolean gameRunning = false;
 	
 	public static int WIDTH, HEIGHT;
+	public static int mouseX, mouseY;
 	private String title;
 	private Color bkgColor;
 	
 	public static String resDir;
-	
+		
 	public void init(int width, int height, String title, Color bkgColor, String resourceDir)
 	{
 		this.WIDTH = width;
@@ -126,6 +128,9 @@ public class Game extends Canvas implements Runnable {
 		
 		while (this.gameRunning)
 		{
+			mouseX = MouseInfo.getPointerInfo().getLocation().x - this.window.getFrame().getLocationOnScreen().x;
+			mouseY = MouseInfo.getPointerInfo().getLocation().y - this.window.getFrame().getLocationOnScreen().y;
+			
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;

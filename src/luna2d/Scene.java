@@ -26,6 +26,11 @@ public abstract class Scene
 		this.inputEnabled = isEnabled;
 	}
 	
+	public boolean getInputEnabled()
+	{
+		return this.inputEnabled;
+	}
+	
 	void setGame(Game g)
 	{
 		this.game = g;

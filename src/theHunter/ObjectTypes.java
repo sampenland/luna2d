@@ -6,5 +6,6 @@ public enum ObjectTypes
 	Player,
 	Tree,
 	Bush,
-	Water
+	Water,
+	Wolf
 }

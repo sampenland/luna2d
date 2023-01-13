@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Maths;
+import luna2d.ResourceHandler;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
@@ -27,7 +28,12 @@ public class MainMenu extends Scene
 		new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN);
 		new TextDisplay(this, "(Q) Quit", 200, 400, Color.GREEN);
 		
-		new Sprite(this, "player-idle_16x16_4-frames.png", 20, 20, 1.0f, 16, 4, 250);
+		loadImages();
+	}
+	
+	private void loadImages()
+	{
+		ResourceHandler.addImage("Player", "player-idle_16x16_4-frames.png");
 	}
 	
 	public void update()
