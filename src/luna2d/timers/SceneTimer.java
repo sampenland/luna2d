@@ -1,6 +1,8 @@
-package luna2d;
+package luna2d.timers;
 
 import java.util.TimerTask;
+
+import luna2d.Scene;
 
 public class SceneTimer extends TimerTask
 {

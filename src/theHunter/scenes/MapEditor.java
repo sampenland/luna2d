@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Timer;
 
 import luna2d.Scene;
-import luna2d.SceneTimer;
 import luna2d.renderables.Grid;
+import luna2d.timers.SceneTimer;
 
 public class MapEditor extends Scene
 {

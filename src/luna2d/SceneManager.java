@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import luna2d.timers.SceneTimer;
+
 public class SceneManager 
 {
 	private Game game;
