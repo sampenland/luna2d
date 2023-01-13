@@ -3,15 +3,18 @@ package theHunter.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Timer;
 
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Grid;
+import luna2d.renderables.Rect;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
 import luna2d.timers.SceneTimer;
+import theHunter.Ground;
 import theHunter.ObjectTypes;
 
 public class MapEditor extends Scene
@@ -27,6 +30,9 @@ public class MapEditor extends Scene
 		PLACING
 	}
 	
+	private static final int TYPE_LAYER = 0;
+	private static final int SPRITE_LAYER = 1;
+	
 	private MOUSE_STATUS mouseStatus;
 	private boolean disableSwitching = false;
 	private SceneTimer resetInputTask;
@@ -36,7 +42,8 @@ public class MapEditor extends Scene
 	private ObjectTypes lastSelection;
 	private Sprite currentSelectionSprite;
 	
-	private HashMap<Integer, int[][]> mapData;
+	private Sprite[][] mapDataSprites;
+	private Ground[][] mapDataGrounds;
 	
 	private TextDisplay statusLabel;
 	
@@ -50,20 +57,33 @@ public class MapEditor extends Scene
 
 	@Override
 	public void start() 
-	{
-		new Grid(this, 0, 5, ROWS, COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.2f));
-		this.currentSelectionSprite = new Sprite(this, "Player", 0, 0, 1.0f, 16, 16);
-		this.currentSelectionSprite.visible = false;
+	{		
+		this.mapDataSprites = new Sprite[ROWS][COLUMNS];
+		this.mapDataGrounds = new Ground[ROWS][COLUMNS];
 		
-		this.mapData = new HashMap<Integer, int[][]>();
-		for(int i = 0; i < 4; i++)
+		for(int r = 0; r < this.ROWS; r++)
 		{
-			mapData.put(i, new int[ROWS][COLUMNS]);
+			for(int c = 0; c < this.COLUMNS; c++)
+			{				
+				mapDataGrounds[r][c] = new Ground(this, c * 16, 5 + r * 16, ObjectTypes.GndGrass);
+				mapDataSprites[r][c] = new Sprite(this, "Empty", c * 16, 5 + r * 16, 1.0f);
+			}
 		}
+		
+		new Grid(this, 0, 5, ROWS, COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.5f));
 		
 		this.setInputEnabled(false);
 		
 		this.statusLabel = new TextDisplay(this, "Idle", Game.WIDTH / 2 - 64, Game.HEIGHT - 64, Color.WHITE);
+		createSelectionSprites();
+		
+		this.currentSelectionSprite = new Sprite(this, "Player", 0, 0, 1.0f, 16, 16);
+		this.currentSelectionSprite.visible = false;
+	}
+	
+	private void createSelectionSprites()
+	{
+		
 	}
 
 	@Override

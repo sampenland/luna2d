@@ -14,6 +14,10 @@ public class TheHunter extends Game
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 640;
+	
+	public static final Color GrassColor = Color.green;
+	public static final Color DirtColor = Color.gray;
+	public static final Color WaterColor = Color.blue;
 		
 	public static void main(String[] args)
 	{

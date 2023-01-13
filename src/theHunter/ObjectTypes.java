@@ -7,5 +7,9 @@ public enum ObjectTypes
 	Tree,
 	Bush,
 	Water,
-	Wolf
+	Wolf,
+	GndGrass,
+	GndDirt,
+	GndRock,
+	GndWater
 }
