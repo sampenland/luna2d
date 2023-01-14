@@ -1,6 +1,7 @@
 package theHunter.scenes;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import luna2d.Log;
 import luna2d.Scene;
@@ -41,6 +42,21 @@ public class MapPlayer extends Scene
 		{
 			this.openScene("MainMenu");
 		}
+	}
+	
+	@Override
+	public void onMouseClick(MouseEvent e) 
+	{
+	}
+
+	@Override
+	public void onMousePressed(MouseEvent e) 
+	{
+	}
+
+	@Override
+	public void onMouseReleased(MouseEvent e) 
+	{
 	}
 
 }

@@ -2,6 +2,7 @@ package theHunter.scenes;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import luna2d.Game;
 import luna2d.Log;
@@ -14,6 +15,8 @@ import theHunter.TheHunter;
 
 public class MainMenu extends Scene
 {	
+	private Sprite s;
+	
 	public MainMenu(String name) 
 	{
 		super(name);
@@ -29,11 +32,16 @@ public class MainMenu extends Scene
 		new TextDisplay(this, "(Q) Quit", 200, 400, Color.GREEN);
 		
 		loadImages();
+		
 	}
 	
 	private void loadImages()
 	{
 		ResourceHandler.addImage("Player", "player-idle_16x16_4-frames.png");
+		ResourceHandler.addImage("BerryBush", "berry-bush.png");
+		ResourceHandler.addImage("Tree", "tree.png");
+		ResourceHandler.addImage("Water", "water.png");
+		ResourceHandler.addImage("Wolf", "wolf.png");
 	}
 	
 	public void update()
@@ -64,6 +72,21 @@ public class MainMenu extends Scene
 	public void end()
 	{
 		Log.println("Main menu ended.");
+	}
+	
+	@Override
+	public void onMouseClick(MouseEvent e) 
+	{
+	}
+
+	@Override
+	public void onMousePressed(MouseEvent e) 
+	{
+	}
+
+	@Override
+	public void onMouseReleased(MouseEvent e) 
+	{
 	}
 
 }

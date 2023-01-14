@@ -1,9 +1,10 @@
 package luna2d;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
-public abstract class Scene 
+public abstract class Scene
 {
 
 	public String name;
@@ -11,6 +12,7 @@ public abstract class Scene
 	protected ObjectHandler objHandler;
 	protected HashMap<Integer, Boolean> keys;
 	private boolean inputEnabled = false;
+	private boolean mouseEnabled = false;
 	
 	private Game game;
 	
@@ -29,6 +31,16 @@ public abstract class Scene
 	public boolean getInputEnabled()
 	{
 		return this.inputEnabled;
+	}
+	
+	public void setMouseEnabled(boolean isEnabled)
+	{
+		this.mouseEnabled = isEnabled;
+	}
+	
+	public boolean getMouseEnabled()
+	{
+		return this.mouseEnabled;
 	}
 	
 	void setGame(Game g)
@@ -103,5 +115,9 @@ public abstract class Scene
 		if (this.keys.get(keycode) == null) return false;
 		return this.keys.get(keycode);
 	}
+	
+	protected abstract void onMouseClick(MouseEvent e);
+	protected abstract void onMousePressed(MouseEvent e);
+	protected abstract void onMouseReleased(MouseEvent e);
 	
 }

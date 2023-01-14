@@ -1,6 +1,7 @@
 package luna2d;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
@@ -109,6 +110,42 @@ public class SceneManager
 		if (this.currentScene == null) return;
 		
 		this.currentScene.backgroundUpdate();
+	}
+	
+	protected void onMouseClick(MouseEvent e)
+	{
+		for(int i = 0; i < this.scenes.size(); i++)
+		{
+			Scene temp = this.scenes.get(i);
+			if (temp.getMouseEnabled())
+			{				
+				temp.onMouseClick(e);
+			}
+		}
+	}
+	
+	protected void onMousePressed(MouseEvent e)
+	{
+		for(int i = 0; i < this.scenes.size(); i++)
+		{
+			Scene temp = this.scenes.get(i);
+			if (temp.getMouseEnabled())
+			{
+				temp.onMousePressed(e);
+			}
+		}
+	}
+	
+	protected void onMouseReleased(MouseEvent e)
+	{
+		for(int i = 0; i < this.scenes.size(); i++)
+		{
+			Scene temp = this.scenes.get(i);
+			if (temp.getMouseEnabled())
+			{				
+				temp.onMouseReleased(e);
+			}
+		}
 	}
 	
 }

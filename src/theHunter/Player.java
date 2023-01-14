@@ -3,6 +3,7 @@ package theHunter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import luna2d.GameObject;
 import luna2d.Scene;
@@ -59,6 +60,21 @@ public class Player extends GameObject
 		
 		healthBar.updatePosition(this.x - this.size / 2,  this.y - this.size / 2);
 		healthBar.setValue(this.health);
+	}
+
+	@Override
+	protected void onMouseClick(MouseEvent e) 
+	{
+	}
+
+	@Override
+	protected void onMousePressed(MouseEvent e) 
+	{
+	}
+
+	@Override
+	protected void onMouseReleased(MouseEvent e) 
+	{	
 	}
 
 }

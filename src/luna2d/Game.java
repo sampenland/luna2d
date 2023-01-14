@@ -12,7 +12,8 @@ public class Game extends Canvas implements Runnable {
 	
 	protected Window window;
 	public SceneManager sceneManager;
-	public InputHandler inputHandler;
+	private InputHandler inputHandler;
+	private MouseHandler mouseHandler;
 	
 	private Thread mainGameThread;
 	private boolean gameRunning = false;
@@ -34,6 +35,7 @@ public class Game extends Canvas implements Runnable {
 		
 		sceneManager = new SceneManager(this);		
 		window = new Window(this.WIDTH, this.HEIGHT, this.title, this);
+		ResourceHandler.addImage("", ""); // Creates "NONE" empty image
 	}
 	
 	public void setBkgColor(Color c)
@@ -67,7 +69,11 @@ public class Game extends Canvas implements Runnable {
 		{
 			this.inputHandler = new InputHandler(this);
 			this.addKeyListener(inputHandler);
-			Log.println("Input Handler initialized.");
+			
+			this.mouseHandler = new MouseHandler(this);
+			this.addMouseListener(mouseHandler);
+			
+			Log.println("Input and Mouse initialized.");
 		}
 		
 		this.sceneManager.update();

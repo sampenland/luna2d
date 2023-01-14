@@ -43,13 +43,16 @@ public class Sprite extends Renderable
 		if (imgRef == null)
 		{
 			Log.println("Failed to load Sprite image: " + name);
-			return;
+			this.visible = false;
+		}
+		else
+		{
+			this.drawRect.width = imgRef.getWidth();
+			this.drawRect.height = imgRef.getHeight();
 		}
 
 		this.drawRect.x = x;
 		this.drawRect.y = y;
-		this.drawRect.width = imgRef.getWidth();
-		this.drawRect.height = imgRef.getHeight();
 		
 		this.frameWidth = this.drawRect.width;
 		
@@ -73,7 +76,7 @@ public class Sprite extends Renderable
 		if (imgRef == null)
 		{
 			Log.println("Failed to load Sprite image: " + name);
-			return;
+			this.visible = false;
 		}
 
 		this.drawRect.x = x;
@@ -85,7 +88,7 @@ public class Sprite extends Renderable
 		
 	}
 	
-	public Sprite(Scene inScene, String path, int x, int y, float scale, int frameWidth, int frames, int msBetweenFrames)
+	public Sprite(Scene inScene, String name, int x, int y, float scale, int frameWidth, int frames, int msBetweenFrames)
 	{
 		super(inScene);
 		
@@ -97,25 +100,21 @@ public class Sprite extends Renderable
 		this.scale = scale;
 		this.drawRect = new Rectangle();
 		
-		int idxStart = path.lastIndexOf("/");
-		int idxEnd = path.indexOf(".");
-		
-		if (idxStart == -1) idxStart = 0;
-		
-		String name = path.substring(idxStart, idxEnd);
-		
-		imgRef = ResourceHandler.addImage(name, path);
+		imgRef = ResourceHandler.getImage(name);
 		
 		if (imgRef == null)
 		{
 			Log.println("Failed to load Sprite image: " + name);
-			return;
+			this.visible = false;
+		}
+		else
+		{
+			this.drawRect.width = imgRef.getWidth();
+			this.drawRect.height = imgRef.getHeight();
 		}
 
 		this.drawRect.x = x;
 		this.drawRect.y = y;
-		this.drawRect.width = imgRef.getWidth(); 
-		this.drawRect.height = imgRef.getHeight();
 		
 		this.nextFrameTask = new SpriteTimer(this)
 		{
@@ -132,9 +131,41 @@ public class Sprite extends Renderable
 		
 	}
 	
-	public void updateImageRef(String name)
+	public void updateImageRef(String name, boolean visible, boolean reset)
 	{
 		this.imgRef = ResourceHandler.getImage(name);
+		this.visible = visible;
+		
+		if (reset)
+		{
+			this.drawRect.width = imgRef.getWidth();
+			this.drawRect.height = imgRef.getHeight();
+			this.frames = 1;
+			this.frameWidth = this.drawRect.width;
+			this.currentFrame = 0;
+			
+			if (this.nextFrameTimer != null)
+			{
+				this.nextFrameTimer.cancel();				
+			}
+		}
+	}
+	
+	public void updateImageRef(String name, boolean visible, int w, int h)
+	{
+		this.imgRef = ResourceHandler.getImage(name);
+		this.visible = visible;
+		
+		this.drawRect.width = w;
+		this.drawRect.height = h;
+		this.frames = 1;
+		this.frameWidth = w;
+		this.currentFrame = 0;
+		
+		if (this.nextFrameTimer != null)
+		{
+			this.nextFrameTimer.cancel();				
+		}
 	}
 
 	@Override

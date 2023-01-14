@@ -1,6 +1,7 @@
 package luna2d;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import luna2d.renderables.Renderable;
@@ -83,4 +84,39 @@ public class ObjectHandler
 		}
 	}
 	
+	public void onMouseClick(MouseEvent e)
+	{
+		for(int i = 0; i < objects.size(); i++)
+		{
+			GameObject temp = objects.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMouseClick(e);
+			}
+		}
+	}
+	
+	public void onMousePressed(MouseEvent e)
+	{
+		for(int i = 0; i < objects.size(); i++)
+		{
+			GameObject temp = objects.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMousePressed(e);
+			}
+		}
+	}
+	
+	public void onMouseReleased(MouseEvent e)
+	{
+		for(int i = 0; i < objects.size(); i++)
+		{
+			GameObject temp = objects.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMouseReleased(e);
+			}
+		}
+	}
 }

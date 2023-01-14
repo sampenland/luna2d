@@ -1,6 +1,7 @@
 package luna2d;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 import luna2d.renderables.Renderable;
@@ -55,5 +56,9 @@ public abstract class GameObject
 		if (this.keys.get(keycode) == null) return false;
 		return this.keys.get(keycode);
 	}
+	
+	protected abstract void onMouseClick(MouseEvent e);
+	protected abstract void onMousePressed(MouseEvent e);
+	protected abstract void onMouseReleased(MouseEvent e);
 	
 }

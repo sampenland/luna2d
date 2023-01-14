@@ -15,6 +15,13 @@ public class ResourceHandler
 	public static BufferedImage addImage(String name, String path)
 	{
 
+		if (name == "")
+		{
+			name = "NONE";
+			images.put(name, new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+			return images.get(name);
+		}
+		
 		path = Game.resDir + path;
 		
 		BufferedImage img = null;
@@ -39,6 +46,7 @@ public class ResourceHandler
 	
 	public static BufferedImage getImage(String name)
 	{
+		if(name == "") name = "NONE";
 		return images.get(name);
 	}
 	
