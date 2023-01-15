@@ -2,8 +2,6 @@ package luna2d.renderables;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
-import luna2d.Log;
 import luna2d.Scene;
 
 public class TextDisplay extends Renderable

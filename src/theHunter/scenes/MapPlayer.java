@@ -5,23 +5,86 @@ import java.awt.event.MouseEvent;
 
 import luna2d.Log;
 import luna2d.Scene;
+import theHunter.Ground;
+import theHunter.ObjectTypes;
 import theHunter.Player;
+import theHunter.TheHunter;
+import theHunter.objects.Tree;
 
 public class MapPlayer extends Scene
 {
 
+	private static int[][] mapData;
+	private static int[][] mapDataGrounds;
+	
 	public MapPlayer(String name) 
 	{
-		super(name);		
+		super(name);	
+		mapData = new int[TheHunter.ROWS][TheHunter.COLUMNS];
 	}
 
 	@Override
 	public void start() 
 	{
 		Log.println("Started Map Player");
+	}
+	
+	public void loadAndStartMap(String name)
+	{
+		mapData = TheHunter.loadMapOrGrounds("map1", true);
+		mapDataGrounds = TheHunter.loadMapOrGrounds("map1", false);
 		
-		Player p = new Player(100, 100, 0, true, this);
+		// Populate grounds
+		for (int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for (int c = 0; c < TheHunter.COLUMNS; c++)
+			{
+				int x = c * 16;
+				int y = TheHunter.GRIDY_OFFSET + r * 16;
+				Ground g = new Ground(this, x, y);
+				g.updateGroundType(ObjectTypes.values()[mapDataGrounds[r][c]]);
+			}
+		}
 		
+		// Populate objects
+		for (int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for (int c = 0; c < TheHunter.COLUMNS; c++)
+			{
+				int x = c * 16;
+				int y = TheHunter.GRIDY_OFFSET + r * 16;
+				
+				ObjectTypes objectType = ObjectTypes.values()[mapData[r][c]];
+				
+				switch(objectType)
+				{
+				case Empty:
+					break;
+				case Bush:
+					break;
+				case GndDirt:
+					break;
+				case GndGrass:
+					break;
+				case GndRock:
+					break;
+				case GndWater:
+					break;
+				case Player:
+					new Player(x, y, this);
+					break;
+				case Tree:
+					new Tree(x, y, this);
+					break;
+				case Water:
+					break;
+				case Wolf:
+					break;
+				default:
+					break;
+				}
+			}
+		}
 	}
 
 	@Override

@@ -59,16 +59,17 @@ public abstract class Scene
 		this.objHandler.getRenderables().clear();
 	}
 	
-	public void openScene(String sceneName)
+	public Scene openScene(String sceneName)
 	{
 		if (this.game == null)
 		{
 			Log.println("No game to end");
-			return;
+			return null;
 		}
 		
 		SceneManager sceneManager = this.game.getSceneManager();
-		sceneManager.openScene(sceneName);
+		Scene s = sceneManager.openScene(sceneName);
+		return s;
 	}
 	
 	public void endGame()

@@ -2,20 +2,31 @@ package theHunter;
 
 import java.awt.Color;
 
+import luna2d.ColorHandler;
 import luna2d.Scene;
 import luna2d.renderables.Rect;
 
 public class Ground extends Rect
 {
 
-	public Ground(Scene inScene, int x, int y, ObjectTypes gndType) 
+	private int objectType;
+	
+	public Ground(Scene inScene, int x, int y) 
 	{
-		super(inScene, x, y, 16, 16, true, TheHunter.GrassColor);	
+		super(inScene, x, y, 16, 16, true, ColorHandler.getColor("GrassGreen"));
+		this.objectType = ObjectTypes.GndGrass.intValue;
+	}
+	
+	public int getObjectType()
+	{
+		return this.objectType;
 	}
 	
 	public void updateGroundType(ObjectTypes t)
 	{
-		Color c = TheHunter.GrassColor;
+		this.objectType = t.intValue;
+		
+		Color c = ColorHandler.getColor("GrassGreen");
 		
 		switch(t)
 		{
@@ -24,15 +35,13 @@ public class Ground extends Rect
 		case Empty:
 			break;
 		case GndDirt:
-			c = TheHunter.DirtColor;
 			break;
 		case GndGrass:
-			c = TheHunter.GrassColor;
+			c = ColorHandler.getColor("GrassGreen");
 			break;
 		case GndRock:
 			break;
 		case GndWater:
-			c = TheHunter.WaterColor;
 			break;
 		case Player:
 			break;

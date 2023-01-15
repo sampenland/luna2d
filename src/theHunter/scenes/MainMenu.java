@@ -3,20 +3,12 @@ package theHunter.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import luna2d.Game;
 import luna2d.Log;
-import luna2d.Maths;
-import luna2d.ResourceHandler;
 import luna2d.Scene;
-import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
-import theHunter.TheHunter;
 
 public class MainMenu extends Scene
-{	
-	private Sprite s;
-	
+{		
 	public MainMenu(String name) 
 	{
 		super(name);
@@ -29,19 +21,7 @@ public class MainMenu extends Scene
 		new TextDisplay(this, "Main Menu", 200, 150, Color.GREEN);
 		new TextDisplay(this, "(E) Map Editor", 200, 300, Color.GREEN);
 		new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN);
-		new TextDisplay(this, "(Q) Quit", 200, 400, Color.GREEN);
-		
-		loadImages();
-		
-	}
-	
-	private void loadImages()
-	{
-		ResourceHandler.addImage("Player", "player-idle_16x16_4-frames.png");
-		ResourceHandler.addImage("BerryBush", "berry-bush.png");
-		ResourceHandler.addImage("Tree", "tree.png");
-		ResourceHandler.addImage("Water", "water.png");
-		ResourceHandler.addImage("Wolf", "wolf.png");
+		new TextDisplay(this, "(Q) Quit", 200, 400, Color.GREEN);		
 	}
 	
 	public void update()
@@ -60,7 +40,8 @@ public class MainMenu extends Scene
 		
 		if (this.isKeyPressed(KeyEvent.VK_P))
 		{
-			this.openScene("MapPlayer");
+			MapPlayer mapPlayer = (MapPlayer)this.openScene("MapPlayer");
+			mapPlayer.loadAndStartMap("map1");
 		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_E))

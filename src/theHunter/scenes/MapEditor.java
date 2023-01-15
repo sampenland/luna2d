@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Timer;
 
 import luna2d.Game;
@@ -16,14 +19,10 @@ import luna2d.renderables.TextDisplay;
 import luna2d.timers.SceneTimer;
 import theHunter.Ground;
 import theHunter.ObjectTypes;
+import theHunter.TheHunter;
 
 public class MapEditor extends Scene
-{
-
-	private final int GRIDY = 5;
-	private final int ROWS = 37;
-	private final int COLUMNS = 49;
-	
+{	
 	private int playerRow = 0;
 	private int playerCol = 0;
 	
@@ -60,19 +59,20 @@ public class MapEditor extends Scene
 	public void start() 
 	{		
 		this.setMouseEnabled(true);
-		this.mapDataSprites = new Sprite[ROWS][COLUMNS];
-		this.mapDataGrounds = new Ground[ROWS][COLUMNS];
+		this.mapDataSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
+		this.mapDataGrounds = new Ground[TheHunter.ROWS][TheHunter.COLUMNS];
 		
-		for(int r = 0; r < this.ROWS; r++)
+		for(int r = 0; r < TheHunter.ROWS; r++)
 		{
-			for(int c = 0; c < this.COLUMNS; c++)
+			for(int c = 0; c < TheHunter.COLUMNS; c++)
 			{				
-				mapDataGrounds[r][c] = new Ground(this, c * 16, GRIDY + r * 16, ObjectTypes.GndGrass);
-				mapDataSprites[r][c] = new Sprite(this, "", c * 16, GRIDY + r * 16, 1.0f);
+				mapDataGrounds[r][c] = new Ground(this, c * 16, TheHunter.GRIDY_OFFSET + r * 16);
+				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1.0f);
+				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
 			}
 		}
 		
-		new Grid(this, 0, GRIDY, ROWS, COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.5f));
+		new Grid(this, 0, TheHunter.GRIDY_OFFSET, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.5f));
 		
 		this.setInputEnabled(false);
 		
@@ -83,6 +83,7 @@ public class MapEditor extends Scene
 		this.currentSelectionSprite.visible = false;
 		
 		mapDataSprites[this.playerRow][this.playerCol].updateImageRef("Player", true, 16, 16);
+		mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Player.intValue);
 	}
 	
 	private void createSelectionSprites()
@@ -183,6 +184,11 @@ public class MapEditor extends Scene
 		{
 			userSwitching();
 		}
+		
+		if (this.isKeyPressed(KeyEvent.VK_S))
+		{
+			this.saveMap("map1");
+		}
 	}
 	
 	private void userSwitching()
@@ -232,7 +238,7 @@ public class MapEditor extends Scene
 		int x = Game.mouseX;
 		int y = Game.mouseY;
 		
-		Point gPos = Maths.convertToGrid(x, y, 16, 0, GRIDY);
+		Point gPos = Maths.convertToGrid(x, y, 16, 0, TheHunter.GRIDY_OFFSET);
 		
 		switch(this.mouseStatus)
 		{
@@ -248,7 +254,11 @@ public class MapEditor extends Scene
 				if (this.currentSelection == ObjectTypes.Player)
 				{
 					this.mapDataSprites[gPos.y][gPos.x].updateImageRef("Player", true, true);
+					this.mapDataSprites[gPos.y][gPos.x].setObjectType(ObjectTypes.Player.intValue);
+					
 					this.mapDataSprites[this.playerRow][this.playerCol].updateImageRef("", false, false);
+					this.mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Empty.intValue);
+					
 					this.playerCol = gPos.x;
 					this.playerRow = gPos.y;
 				}
@@ -261,15 +271,85 @@ public class MapEditor extends Scene
 	@Override
 	public void onMousePressed(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
+	}
+	
+	private void saveMap(String name)
+	{
+		String path = TheHunter.MAP_DIR + "/" + name + ".thm";
 		
+		StringBuilder builder = new StringBuilder();
+		
+		for(int r = 0; r < TheHunter.ROWS; r++)//for each row
+		{
+		   for(int c = 0; c < TheHunter.COLUMNS; c++)//for each column
+		   {
+			   int oType = this.mapDataSprites[r][c].getObjectType();
+			   builder.append(oType + "");
+
+			   if(c < TheHunter.COLUMNS - 1)
+			   {
+				   builder.append(",");
+			   }
+		   }
+		   
+		   builder.append("\n");
+		
+		}
+		
+		BufferedWriter writer;
+		try
+		{
+			writer = new BufferedWriter(new FileWriter(path));
+			writer.write(builder.toString());
+			writer.close();	
+			
+			this.saveGrounds(name);
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveGrounds(String name)
+	{
+		String path = TheHunter.MAP_DIR + "/" + name + ".thmg";
+		
+		StringBuilder builder = new StringBuilder();
+		
+		for(int r = 0; r < TheHunter.ROWS; r++)//for each row
+		{
+		   for(int c = 0; c < TheHunter.COLUMNS; c++)//for each column
+		   {
+			   int oType = this.mapDataGrounds[r][c].getObjectType();
+			   builder.append(oType + "");
+
+			   if(c < TheHunter.COLUMNS - 1)
+			   {
+				   builder.append(",");
+			   }
+		   }
+		   
+		   builder.append("\n");
+		
+		}
+		
+		BufferedWriter writer;
+		try
+		{
+			writer = new BufferedWriter(new FileWriter(path));
+			writer.write(builder.toString());
+			writer.close();			
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 }

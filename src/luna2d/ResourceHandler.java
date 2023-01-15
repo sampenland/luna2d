@@ -14,7 +14,6 @@ public class ResourceHandler
 	
 	public static BufferedImage addImage(String name, String path)
 	{
-
 		if (name == "")
 		{
 			name = "NONE";

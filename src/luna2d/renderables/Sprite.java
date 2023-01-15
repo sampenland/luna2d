@@ -23,6 +23,8 @@ public class Sprite extends Renderable
 	private SpriteTimer nextFrameTask;
 	private Timer nextFrameTimer;
 	
+	private int objectType = -1;
+	
 	public boolean visible = true;
 	
 	public Sprite(Scene inScene, String name, int x, int y, float scale) 
@@ -129,6 +131,16 @@ public class Sprite extends Renderable
 		this.nextFrameTimer = new Timer("Animator");
 		this.nextFrameTimer.scheduleAtFixedRate(nextFrameTask, msBetweenFrames, msBetweenFrames);
 		
+	}
+	
+	public void setObjectType(int t)
+	{
+		this.objectType = t;
+	}
+	
+	public int getObjectType()
+	{
+		return this.objectType;
 	}
 	
 	public void updateImageRef(String name, boolean visible, boolean reset)

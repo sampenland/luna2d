@@ -27,14 +27,15 @@ public class Game extends Canvas implements Runnable {
 		
 	public void init(int width, int height, String title, Color bkgColor, String resourceDir)
 	{
-		this.WIDTH = width;
-		this.HEIGHT = height;
+		WIDTH = width;
+		HEIGHT = height;
+		resDir = resourceDir;
+		
 		this.title = title;
-		this.bkgColor = bkgColor;
-		this.resDir = resourceDir;
+		this.bkgColor = bkgColor;		
 		
 		sceneManager = new SceneManager(this);		
-		window = new Window(this.WIDTH, this.HEIGHT, this.title, this);
+		window = new Window(WIDTH, HEIGHT, this.title, this);
 		ResourceHandler.addImage("", ""); // Creates "NONE" empty image
 	}
 	
@@ -68,12 +69,13 @@ public class Game extends Canvas implements Runnable {
 		if (this.inputHandler == null)
 		{
 			this.inputHandler = new InputHandler(this);
-			this.addKeyListener(inputHandler);
-			
+			this.addKeyListener(inputHandler);			
+		}
+		
+		if (this.mouseHandler == null)
+		{
 			this.mouseHandler = new MouseHandler(this);
 			this.addMouseListener(mouseHandler);
-			
-			Log.println("Input and Mouse initialized.");
 		}
 		
 		this.sceneManager.update();
@@ -91,7 +93,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		
 		g.setColor(this.bkgColor);
-		g.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		this.sceneManager.render(g);
 		
@@ -130,7 +132,7 @@ public class Game extends Canvas implements Runnable {
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
-		int frames = 0;
+		int framesPerSecond = 0;
 		
 		while (this.gameRunning)
 		{
@@ -152,13 +154,12 @@ public class Game extends Canvas implements Runnable {
 				render();
 			}
 			
-			frames++;
+			framesPerSecond++;
 				
 			if(System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
-				//Log.println("FPS: " + frames);
-				frames = 0;
+				framesPerSecond = 0;
 			}
 		
 		}

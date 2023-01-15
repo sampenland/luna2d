@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import luna2d.timers.SceneTimer;
 
@@ -25,7 +24,7 @@ public class SceneManager
 	
 	public void startEngine(String name)
 	{
-		this.running = this.openScene(name);
+		this.running = this.openScene(name) != null;
 	}
 	
 	public void stopEngine()
@@ -39,7 +38,7 @@ public class SceneManager
 		this.running = false;
 	}
 	
-	public boolean openScene(String sceneName)
+	public Scene openScene(String sceneName)
 	{
 		for(int i = 0; i < this.scenes.size(); i++)
 		{
@@ -58,7 +57,7 @@ public class SceneManager
 				this.currentScene.setGame(this.game);
 				this.currentScene.start();
 				
-				// Wait a 750 milliseconds before enabling input
+				// Wait a 350 milliseconds before enabling input
 				SceneTimer reenableInput = new SceneTimer(this.currentScene) {
 					@Override
 					public void run() 
@@ -67,14 +66,14 @@ public class SceneManager
 					}
 				};
 				Timer ticker = new Timer("T-" + (new Date()).getTime()); 
-				ticker.schedule(reenableInput, 750);
+				ticker.schedule(reenableInput, 350);
 				
-				return true;
+				return this.currentScene;
 			}
 		}
 		
 		Log.println("Scene: " + sceneName + " NOT FOUND in Scene Manager scenes list");
-		return false;
+		return null;
 	}
 	
 	public Scene getCurrentScene() { return this.currentScene; }

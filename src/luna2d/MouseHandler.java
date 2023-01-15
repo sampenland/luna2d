@@ -13,7 +13,12 @@ public class MouseHandler implements MouseListener
 	public MouseHandler(Game g)
 	{
 		this.game = g;
-		if (this.game == null || this.game.getObjectHandler() == null || this.game.getSceneManager() == null) return;
+		if (this.game == null || this.game.getObjectHandler() == null || this.game.getSceneManager() == null) 
+		{
+			Log.println("Could not initialize mouse handler");
+			return;
+		}
+		
 		this.objHandler = this.game.getObjectHandler();
 		this.sceneManager = this.game.getSceneManager();
 	}
