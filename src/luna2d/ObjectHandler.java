@@ -7,13 +7,12 @@ import java.util.LinkedList;
 import luna2d.renderables.Renderable;
 
 public class ObjectHandler 
-{
-
+{	
 	private static LinkedList<GameObject> objects;
 	private static LinkedList<Renderable> renderables;
 	
 	public ObjectHandler()
-	{
+	{		
 		objects = new LinkedList<GameObject>();
 		renderables = new LinkedList<Renderable>();
 	}
@@ -80,7 +79,7 @@ public class ObjectHandler
 		for(int i = 0; i < renderables.size(); i++)
 		{
 			Renderable temp = renderables.get(i);
-			temp.update();
+			temp.gameUpdate();
 		}
 	}
 	

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import luna2d.Game;
 import luna2d.Scene;
 
 public class FillBar extends Renderable
@@ -24,9 +25,10 @@ public class FillBar extends Renderable
 	private int value;
 	private int max;
 	
-	public FillBar(int value, int x, int y, int w, int h, int outlineSize, Color bkgColor, Color outlineColor, Color valueColor, Scene inScene) 
+	public FillBar(int value, int x, int y, int w, int h, int outlineSize, int scale,
+			Color bkgColor, Color outlineColor, Color valueColor, Scene inScene) 
 	{
-		super(inScene);
+		super(inScene, scale);
 		
 		this.x = x;
 		this.y = y;
@@ -49,6 +51,11 @@ public class FillBar extends Renderable
 		
 	}
 	
+	public int getWidth()
+	{
+		return this.bkgRect.width;
+	}
+	
 	protected void setMax(int max)
 	{
 		this.max = max;
@@ -58,13 +65,18 @@ public class FillBar extends Renderable
 	public void render(Graphics g) 
 	{
 		g.setColor(outlineColor);
-		g.fillRect(this.outlineRect.x, this.outlineRect.y, this.outlineRect.width, this.outlineRect.height);
+		g.fillRect(Game.CAMERA_X + this.outlineRect.x, Game.CAMERA_Y + this.outlineRect.y, 
+				Math.round(this.outlineRect.width * this.scale * Game.CAMERA_SCALE), 
+				Math.round(this.outlineRect.height * this.scale * Game.CAMERA_SCALE));
 		
 		g.setColor(bkgColor);
-		g.fillRect(this.bkgRect.x, this.bkgRect.y, this.bkgRect.width, this.bkgRect.height);
+		g.fillRect(Game.CAMERA_X + this.bkgRect.x, Game.CAMERA_Y + this.bkgRect.y, 
+				this.bkgRect.width, this.bkgRect.height);
 		
 		g.setColor(valueColor);
-		g.fillRect(this.valueRect.x, this.valueRect.y, this.valueRect.width, this.valueRect.height);
+		g.fillRect(Game.CAMERA_X + this.valueRect.x, Game.CAMERA_Y + this.valueRect.y, 
+				Math.round(this.valueRect.width * this.scale * Game.CAMERA_SCALE), 
+				Math.round(this.valueRect.height * this.scale * Game.CAMERA_SCALE));
 	}
 
 	@Override
@@ -85,7 +97,7 @@ public class FillBar extends Renderable
 	}
 
 	@Override
-	public void updatePosition(int x, int y) 
+	public void updateScreenPosition(int x, int y) 
 	{
 		this.x = x;
 		this.y = y;		

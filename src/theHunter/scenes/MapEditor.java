@@ -66,20 +66,20 @@ public class MapEditor extends Scene
 		{
 			for(int c = 0; c < TheHunter.COLUMNS; c++)
 			{				
-				mapDataGrounds[r][c] = new Ground(this, c * 16, TheHunter.GRIDY_OFFSET + r * 16);
-				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1.0f);
+				mapDataGrounds[r][c] = new Ground(this, c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
 				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
 			}
 		}
 		
-		new Grid(this, 0, TheHunter.GRIDY_OFFSET, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.5f));
+		new Grid(this, 0, TheHunter.GRIDY_OFFSET, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.5f), 1);
 		
 		this.setInputEnabled(false);
 		
 		this.statusLabel = new TextDisplay(this, "Idle", Game.WIDTH / 2 - 64, Game.HEIGHT - 64, Color.WHITE);
 		createSelectionSprites();
 		
-		this.currentSelectionSprite = new Sprite(this, "Player", 0, 0, 1.0f, 16, 16);
+		this.currentSelectionSprite = new Sprite(this, "Player", 0, 0, 1, 16, 16);
 		this.currentSelectionSprite.visible = false;
 		
 		mapDataSprites[this.playerRow][this.playerCol].updateImageRef("Player", true, 16, 16);
@@ -141,7 +141,7 @@ public class MapEditor extends Scene
 		if (this.currentSelectionSprite == null) return;
 		
 		this.currentSelectionSprite.visible = true;
-		this.currentSelectionSprite.updatePosition(Game.mouseX, Game.mouseY);
+		this.currentSelectionSprite.updateScreenPosition(Game.mouseX, Game.mouseY);
 		
 		if (this.currentSelection != this.lastSelection)
 		{

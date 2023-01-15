@@ -3,6 +3,7 @@ package luna2d.renderables;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import luna2d.Game;
 import luna2d.Scene;
 
 public class Grid extends Renderable
@@ -11,9 +12,9 @@ public class Grid extends Renderable
 	private int x, y, rows, columns, cellSize;
 	private Color gridColor;
 	
-	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor) 
+	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale) 
 	{
-		super(inScene);
+		super(inScene, scale);
 		
 		this.x = x;
 		this.y = y;
@@ -35,7 +36,9 @@ public class Grid extends Renderable
 				int cx = col * cellSize;
 				int cy = row * cellSize;
 				
-				g.drawRect(this.x + cx, this.y + cy, cellSize, cellSize);
+				g.drawRect(this.x + cx, this.y + cy, 
+						Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
+						Math.round(cellSize * this.scale * Game.CAMERA_SCALE));
 			}
 		}
 	}
@@ -45,7 +48,7 @@ public class Grid extends Renderable
 	{}
 
 	@Override
-	public void updatePosition(int x, int y) 
+	public void updateScreenPosition(int x, int y) 
 	{
 		this.x = x;
 		this.y = y;

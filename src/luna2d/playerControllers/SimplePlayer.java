@@ -1,40 +1,43 @@
-package theHunter;
+package luna2d.playerControllers;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import luna2d.Log;
+import luna2d.Game;
+import luna2d.GameObject;
 import luna2d.Scene;
-import luna2d.playerControllers.SimplePlayer;
-import luna2d.renderables.FillBar;
+import luna2d.renderables.Sprite;
 
-public class Player extends SimplePlayer
+public class SimplePlayer extends GameObject
 {
-	private FillBar healthBar;
+	protected int moveSpeed = 1;
+	protected int health = 100;
 	
-	public Player(Scene inScene, String imageName, int x, int y, int scale, int cellSize, int frames,
-			int msBetweenFrames) 
+	protected Sprite sprite;
+	
+	public SimplePlayer(Scene inScene, String imageName, int x, int y, int scale, int cellSize, int frames, int msBetweenFrames) 
 	{
-		super(inScene, imageName, x, y, scale, cellSize, frames, msBetweenFrames);
+		super(0, 0, Game.PLAYER_ID, true, inScene);
 		
-		healthBar = new FillBar(this.health, this.sprite.getScreenX(), this.sprite.getScreenY(), 
-				this.sprite.getWidth() * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
-		
+		sprite = new Sprite(inScene, imageName, x, y, scale, cellSize, frames, msBetweenFrames);
+		sprite.setFixedScreenPosition(true);
+		sprite.updateScreenPosition(Game.WIDTH / 2 - sprite.getWidth(), Game.HEIGHT / 2 - sprite.getHeight());
+	}
+	
+	public void setMoveSpeed(int speed)
+	{
+		this.moveSpeed = speed;
 	}
 
 	@Override
 	protected void render(Graphics g) 
 	{	
-		healthBar.render(g);
 	}
 
 	@Override
 	protected void update() 
 	{
-		Log.println(sprite.getScreenX() + ", " + sprite.getScreenY());
-		
 		if (this.isKeyPressed(KeyEvent.VK_W) || this.isKeyPressed(KeyEvent.VK_UP))
 		{
 			this.worldY -= this.moveSpeed;
@@ -79,12 +82,6 @@ public class Player extends SimplePlayer
 		{
 			this.getGame().updateScale(5);
 		}
-		
-		healthBar.updateScreenPosition(
-				sprite.getScreenX() - this.sprite.getWidth() / 2 - this.healthBar.getWidth() / 2,  
-				sprite.getScreenY() - this.sprite.getHeight());
-		
-		healthBar.setValue(this.health);
 	}
 
 	@Override
@@ -101,5 +98,4 @@ public class Player extends SimplePlayer
 	protected void onMouseReleased(MouseEvent e) 
 	{	
 	}
-
 }

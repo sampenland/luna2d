@@ -7,10 +7,9 @@ import java.util.HashMap;
 import luna2d.renderables.Renderable;
 
 public abstract class GameObject 
-{
-
+{	
 	public boolean inputEnabled = false;
-	protected int x, y, objectType;
+	protected int worldX, worldY, screenX, screenY, objectType;
 	protected HashMap<Integer, Boolean> keys;
 
 	private Scene inScene;
@@ -20,12 +19,33 @@ public abstract class GameObject
 		this.inScene = inScene;
 		this.keys = new HashMap<Integer, Boolean>();
 		
-		this.x = x;
-		this.y = y;
+		this.worldX = x;
+		this.worldY = y;
 		this.objectType = objectType;
 		this.inputEnabled = inputEnabled;
 		
 		this.inScene.getObjectHandler().addObject(this);
+	}
+	
+	public int getWorldX()
+	{
+		return this.worldX;
+	}
+	
+	public int getWorldY()
+	{
+		return this.worldY;
+	}
+	
+	public void updateWorldPosition(int x, int y)
+	{
+		this.worldX = x;
+		this.worldY = y;
+	}
+	
+	protected Game getGame()
+	{
+		return this.inScene.getGame();
 	}
 	
 	protected void addObjectToHandler(GameObject o) 

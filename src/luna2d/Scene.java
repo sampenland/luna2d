@@ -48,6 +48,11 @@ public abstract class Scene
 		this.game = g;
 	}
 	
+	public Game getGame()
+	{
+		return this.game;
+	}
+	
 	public ObjectHandler getObjectHandler() { return this.objHandler; }
 	
 	public abstract void start();

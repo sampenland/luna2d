@@ -11,9 +11,9 @@ public class Ground extends Rect
 
 	private int objectType;
 	
-	public Ground(Scene inScene, int x, int y) 
+	public Ground(Scene inScene, int x, int y, int scale) 
 	{
-		super(inScene, x, y, 16, 16, true, ColorHandler.getColor("GrassGreen"));
+		super(inScene, x, y, 16, 16, true, ColorHandler.getColor("GrassGreen"), scale);
 		this.objectType = ObjectTypes.GndGrass.intValue;
 	}
 	

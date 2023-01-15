@@ -10,6 +10,12 @@ public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = -2680723036795663013L;
 	
+	public static final int PLAYER_ID = -99;
+	
+	public static int CAMERA_X = 0;
+	public static int CAMERA_Y = 0;
+	public static int CAMERA_SCALE = 1;
+	
 	protected Window window;
 	public SceneManager sceneManager;
 	private InputHandler inputHandler;
@@ -37,6 +43,17 @@ public class Game extends Canvas implements Runnable {
 		sceneManager = new SceneManager(this);		
 		window = new Window(WIDTH, HEIGHT, this.title, this);
 		ResourceHandler.addImage("", ""); // Creates "NONE" empty image
+	}
+	
+	public void updateScale(int scale)
+	{
+		CAMERA_SCALE = scale;
+		
+		if (this.getObjectHandler() == null)
+		{
+			Log.println("Object handler not initialized. Failed to update scale.");
+			return;
+		}		
 	}
 	
 	public void setBkgColor(Color c)

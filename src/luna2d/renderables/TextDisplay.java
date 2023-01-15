@@ -13,7 +13,7 @@ public class TextDisplay extends Renderable
 	
 	public TextDisplay(Scene inScene, String text, int x, int y, Color c) 
 	{
-		super(inScene);
+		super(inScene, 1);
 		
 		this.text = text;
 		this.textColor = c;
@@ -40,7 +40,7 @@ public class TextDisplay extends Renderable
 	}
 
 	@Override
-	public void updatePosition(int x, int y) 
+	public void updateScreenPosition(int x, int y) 
 	{
 		this.x = x;
 		this.y = y;

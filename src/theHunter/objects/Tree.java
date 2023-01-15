@@ -16,7 +16,7 @@ public class Tree extends GameObject
 	public Tree(int x, int y, Scene inScene) 
 	{
 		super(x, y, ObjectTypes.Tree.intValue, false, inScene);
-		sprite = new Sprite(inScene, "Tree", x, y, 1.0f);
+		sprite = new Sprite(inScene, "Tree", x, y, 1);
 	}
 
 	@Override
@@ -28,7 +28,6 @@ public class Tree extends GameObject
 	@Override
 	protected void update() 
 	{
-		sprite.updatePosition(this.x, this.y);
 	}
 
 	@Override

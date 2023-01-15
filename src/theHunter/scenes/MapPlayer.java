@@ -41,7 +41,7 @@ public class MapPlayer extends Scene
 			{
 				int x = c * 16;
 				int y = TheHunter.GRIDY_OFFSET + r * 16;
-				Ground g = new Ground(this, x, y);
+				Ground g = new Ground(this, x, y, 1);
 				g.updateGroundType(ObjectTypes.values()[mapDataGrounds[r][c]]);
 			}
 		}
@@ -71,7 +71,7 @@ public class MapPlayer extends Scene
 				case GndWater:
 					break;
 				case Player:
-					new Player(x, y, this);
+					new Player(this, "Player", x, y, 1, 16, 4, 250);
 					break;
 				case Tree:
 					new Tree(x, y, this);

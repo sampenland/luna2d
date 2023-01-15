@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import luna2d.Game;
 import luna2d.Scene;
 
 public class Rect extends Renderable
@@ -13,9 +14,9 @@ public class Rect extends Renderable
 	private Rectangle rect;
 	private boolean filled = true;
 	
-	public Rect(Scene inScene, int x, int y, int w, int h, boolean filled, Color c) 
+	public Rect(Scene inScene, int x, int y, int w, int h, boolean filled, Color c, int scale) 
 	{
-		super(inScene);
+		super(inScene, scale);
 		
 		this.color = c;
 		
@@ -35,11 +36,15 @@ public class Rect extends Renderable
 		
 		if (this.filled)
 		{
-			g.fillRect(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
+			g.fillRect(Game.CAMERA_X + this.rect.x, Game.CAMERA_Y + this.rect.y, 
+					Math.round(this.rect.width * this.scale * Game.CAMERA_SCALE), 
+					Math.round(this.rect.height * this.scale * Game.CAMERA_SCALE));
 		}
 		else
 		{
-			g.drawRect(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
+			g.drawRect(Game.CAMERA_X + this.rect.x, Game.CAMERA_Y + this.rect.y, 
+					Math.round(this.rect.width * this.scale * Game.CAMERA_SCALE), 
+					Math.round(this.rect.height * this.scale * Game.CAMERA_SCALE));
 		}
 		
 	}
@@ -51,7 +56,7 @@ public class Rect extends Renderable
 	}
 
 	@Override
-	public void updatePosition(int x, int y) 
+	public void updateScreenPosition(int x, int y) 
 	{
 		this.rect.x = x;
 		this.rect.y = y;
