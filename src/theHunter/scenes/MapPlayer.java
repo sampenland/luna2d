@@ -3,6 +3,7 @@ package theHunter.scenes;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import theHunter.Ground;
@@ -85,6 +86,10 @@ public class MapPlayer extends Scene
 				}
 			}
 		}
+		
+		// Zoom in
+		this.getGame().updateScale(5);
+		
 	}
 
 	@Override

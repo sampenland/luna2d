@@ -234,7 +234,7 @@ public class Sprite extends Renderable
 			if (this.fixedScreenPosition)
 			{
 				drawX = this.drawRect.x - (Game.CAMERA_SCALE * this.frameWidth / 2);
-				drawY = this.drawRect.y - (Game.CAMERA_SCALE * this.drawRect.height);
+				drawY = this.drawRect.y - (Game.CAMERA_SCALE * this.drawRect.height / 2);
 				drawX2 = drawX + Math.round(this.frameWidth * this.scale * Game.CAMERA_SCALE);
 				drawY2 = drawY + Math.round(this.drawRect.height * this.scale * Game.CAMERA_SCALE);
 				

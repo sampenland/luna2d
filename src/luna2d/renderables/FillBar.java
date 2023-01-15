@@ -53,7 +53,7 @@ public class FillBar extends Renderable
 	
 	public int getWidth()
 	{
-		return this.bkgRect.width;
+		return this.bkgRect.width * Game.CAMERA_SCALE;
 	}
 	
 	protected void setMax(int max)
@@ -64,20 +64,23 @@ public class FillBar extends Renderable
 	@Override
 	public void render(Graphics g) 
 	{
+		int drawX = Game.CAMERA_X * Game.CAMERA_SCALE;
+		int drawY = Game.CAMERA_Y * Game.CAMERA_SCALE;
+		
 		g.setColor(outlineColor);
-		g.fillRect(Game.CAMERA_X + this.outlineRect.x, Game.CAMERA_Y + this.outlineRect.y, 
+		g.fillRect(drawX + this.outlineRect.x, drawY + this.outlineRect.y, 
 				Math.round(this.outlineRect.width * this.scale * Game.CAMERA_SCALE), 
 				Math.round(this.outlineRect.height * this.scale * Game.CAMERA_SCALE));
 		
 		g.setColor(bkgColor);
-		g.fillRect(Game.CAMERA_X + this.bkgRect.x, Game.CAMERA_Y + this.bkgRect.y, 
+		g.fillRect(drawX + this.bkgRect.x, drawY + this.bkgRect.y, 
 				this.bkgRect.width, this.bkgRect.height);
 		
 		g.setColor(valueColor);
-		g.fillRect(Game.CAMERA_X + this.valueRect.x, Game.CAMERA_Y + this.valueRect.y, 
-				Math.round(this.valueRect.width * this.scale * Game.CAMERA_SCALE), 
-				Math.round(this.valueRect.height * this.scale * Game.CAMERA_SCALE));
-	}
+		g.fillRect(drawX + this.valueRect.x, drawY + this.valueRect.y, 
+				Math.round(this.valueRect.width * this.scale * Game.CAMERA_SCALE) + this.outlineSize, 
+				Math.round(this.outlineRect.height * this.scale * Game.CAMERA_SCALE) - this.outlineSize * 2);
+		}
 
 	@Override
 	public void update() 

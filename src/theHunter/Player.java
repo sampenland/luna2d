@@ -81,7 +81,7 @@ public class Player extends SimplePlayer
 		}
 		
 		healthBar.updateScreenPosition(
-				sprite.getScreenX() - this.sprite.getWidth() / 2 - this.healthBar.getWidth() / 2,  
+				sprite.getScreenX() - this.sprite.getWidth(),  
 				sprite.getScreenY() - this.sprite.getHeight());
 		
 		healthBar.setValue(this.health);
