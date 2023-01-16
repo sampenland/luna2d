@@ -10,13 +10,13 @@ import luna2d.renderables.Grid;
 
 public class MapGrounds extends Grid
 {	
-	public MapGrounds(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int[][] fillTypes) 
+	public MapGrounds(Scene inScene, int x, int y, Color gridColor, int scale, int[][] fillTypes) 
 	{
-		super(inScene, x, y, rows, columns, cellSize, gridColor, scale, fillTypes);
+		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, gridColor, scale, fillTypes);
 	}
 	
 	@Override
-	public void render(Graphics g) 
+	public void render(Graphics g)
 	{		
 		for(int row = 0; row < rows; row++)
 		{
@@ -62,18 +62,21 @@ public class MapGrounds extends Grid
 				int cx = col * cellSize * this.scale;
 				int cy = row * cellSize * this.scale;
 				
+				int drawX = Game.CAMERA_X + this.x + cx;
+				int drawY = Game.CAMERA_Y + this.y + cy;
+				
 				if (this.fillTypes != null)
-				{					
-					g.fillRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
-							Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
-							Math.round(cellSize * this.scale * Game.CAMERA_SCALE));	
+				{		
+					g.fillRect(drawX, drawY, 
+							Math.round(cellSize * this.scale), 
+							Math.round(cellSize * this.scale));	
 				}
 				
 				g.setColor(gridColor);
 				
-				g.drawRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
-						Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
-						Math.round(cellSize * this.scale * Game.CAMERA_SCALE));
+				g.drawRect(drawX, drawY, 
+						Math.round(cellSize * this.scale), 
+						Math.round(cellSize * this.scale));
 			}
 		}
 	}

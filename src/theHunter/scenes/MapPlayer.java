@@ -37,15 +37,15 @@ public class MapPlayer extends Scene
 		mapData = TheHunter.loadMapOrGrounds("map1", true);
 		mapDataGrounds = TheHunter.loadMapOrGrounds("map1", false);
 		
-		new MapGrounds(this, 0, 0, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
+		new MapGrounds(this, 0, 0, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
 		
 		// Populate objects
 		for (int r = 0; r < TheHunter.ROWS; r++)
 		{
 			for (int c = 0; c < TheHunter.COLUMNS; c++)
 			{
-				int x = c * 16 * MAP_SCALE;
-				int y = (r * 16) * MAP_SCALE;
+				int x = c * TheHunter.CELL_SIZE * MAP_SCALE;
+				int y = (r * TheHunter.CELL_SIZE) * MAP_SCALE;
 				
 				ObjectTypes objectType = ObjectTypes.values()[mapData[r][c]];
 				
@@ -53,28 +53,39 @@ public class MapPlayer extends Scene
 				{
 				case Empty:
 					break;
+					
 				case Bush:
 					break;
+					
 				case GndDirt:
 					break;
+					
 				case GndGrass:
 					break;
+					
 				case GndRock:
 					break;
+					
 				case GndWater:
 					break;
+					
 				case Player:
-					Game.CAMERA_X = x - Game.WIDTH;
-					Game.CAMERA_Y = y - Game.HEIGHT;
-					new Player(this, "Player", 0, 0, 1, 16, 4, 250);
+					Player p = new Player(this, "Player", 0, 0, 1, 16, 4, 250);
+					x = x - Game.WIDTH / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
+					y = y - Game.HEIGHT / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
+					p.updateWorldPosition(x, y);
 					break;
+					
 				case Tree:
 					new Tree(this, x, y, 1);
 					break;
+					
 				case Water:
 					break;
+					
 				case Wolf:
 					break;
+					
 				default:
 					break;
 				}

@@ -20,9 +20,32 @@ public class SimplePlayer extends GameObject
 	{
 		super(0, 0, Game.PLAYER_ID, true, inScene);
 		
-		sprite = new Sprite(inScene, imageName, x, y, scale, cellSize, frames, msBetweenFrames);
+		this.worldX = x;
+		this.worldY = y;
+		
+		sprite = new Sprite(inScene, imageName, 0, 0, scale, cellSize, frames, msBetweenFrames);
 		sprite.setFixedScreenPosition(true);
 		sprite.updateScreenPosition(Game.WIDTH / 2 - sprite.getWidth(), Game.HEIGHT / 2 - sprite.getHeight());
+	}
+	
+	public int getGridX()
+	{
+		return this.worldX / this.sprite.getWidth();
+	}
+	
+	public int getGridY()
+	{
+		return this.worldY / this.sprite.getHeight();
+	}
+	
+	public int getWidth()
+	{
+		return this.sprite.getWidth();
+	}
+	
+	public int getHeight()
+	{
+		return this.sprite.getHeight();
 	}
 	
 	public void setZoomingEnabled(boolean val)
