@@ -1,0 +1,13 @@
+MAP_RENDER_DISTANCE = 2 	// how far away to start culling maps
+
+gridX, gridY = getPlayerPosition()
+playerMapRow, playerMapColumn = getPlayerMapPosition()
+
+for (int mapRow = 0; mapRow < totalMapRows; mapRow++)
+{
+	
+	if (abs(playerMapRow - mapRow) > MAP_RENDER_DISTANCE)
+	{
+		continue // cull map, do not render
+	}
+}
