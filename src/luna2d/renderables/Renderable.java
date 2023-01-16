@@ -8,7 +8,7 @@ public abstract class Renderable
 {
 	private Scene inScene;
 	
-	protected int worldX, worldY, screenX, screenY;
+	public int worldX, worldY, screenX, screenY;
 	protected int scale;
 	
 	public Renderable(Scene inScene, int scale)

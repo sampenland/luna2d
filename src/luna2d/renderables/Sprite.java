@@ -241,8 +241,8 @@ public class Sprite extends Renderable
 			}
 			else 
 			{
-				drawX = Game.CAMERA_X + this.drawRect.x;
-				drawY = Game.CAMERA_Y + this.drawRect.y;
+				drawX = (Game.CAMERA_X * Game.CAMERA_SCALE) + this.drawRect.x;
+				drawY = (Game.CAMERA_Y * Game.CAMERA_SCALE) + this.drawRect.y;
 				
 				drawX2 = Game.CAMERA_X + this.drawRect.x +
 						Math.round(this.drawRect.width * this.scale * Game.CAMERA_SCALE);

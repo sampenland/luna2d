@@ -14,6 +14,8 @@ public class Game extends Canvas implements Runnable {
 	
 	public static int CAMERA_X = 0;
 	public static int CAMERA_Y = 0;
+	private static int CAMERA_X_OFFSET = 0;
+	private static int CAMERA_Y_OFFSET = 0;
 	public static int CAMERA_SCALE = 1;
 	
 	protected Window window;
@@ -56,6 +58,12 @@ public class Game extends Canvas implements Runnable {
 		}		
 	}
 	
+	public void updateCameraOffset(int x, int y)
+	{
+		CAMERA_X_OFFSET = x;
+		CAMERA_Y_OFFSET = y;
+	}
+	
 	public void setBkgColor(Color c)
 	{
 		this.bkgColor = c;
@@ -81,6 +89,9 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick()
 	{
+		CAMERA_X = -CAMERA_X_OFFSET;
+		CAMERA_Y = -CAMERA_Y_OFFSET;
+		
 		if (this.sceneManager == null) return;
 		
 		if (this.inputHandler == null)

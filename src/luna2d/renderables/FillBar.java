@@ -11,6 +11,7 @@ public class FillBar extends Renderable
 {
 
 	private int x, y, w, h;
+	protected boolean fixedScreenPosition = false;
 	
 	private Rectangle bkgRect;
 	private Color bkgColor;
@@ -51,6 +52,11 @@ public class FillBar extends Renderable
 		
 	}
 	
+	public void setFixedScreenPosition(boolean val)
+	{
+		this.fixedScreenPosition = val;
+	}
+	
 	public int getWidth()
 	{
 		return this.bkgRect.width * Game.CAMERA_SCALE;
@@ -64,8 +70,18 @@ public class FillBar extends Renderable
 	@Override
 	public void render(Graphics g) 
 	{
-		int drawX = Game.CAMERA_X * Game.CAMERA_SCALE;
-		int drawY = Game.CAMERA_Y * Game.CAMERA_SCALE;
+		int drawX, drawY;
+		
+		if(this.fixedScreenPosition)
+		{
+			drawX = 0;
+			drawY = 0;
+		}
+		else
+		{
+			drawX = Game.CAMERA_X * Game.CAMERA_SCALE;
+			drawY = Game.CAMERA_Y * Game.CAMERA_SCALE;
+		}
 		
 		g.setColor(outlineColor);
 		g.fillRect(drawX + this.outlineRect.x, drawY + this.outlineRect.y, 

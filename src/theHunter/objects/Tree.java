@@ -1,48 +1,12 @@
 package theHunter.objects;
 
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-
-import luna2d.GameObject;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
-import theHunter.ObjectTypes;
 
-public class Tree extends GameObject
+public class Tree extends Sprite
 {
-
-	Sprite sprite;
-	
-	public Tree(int x, int y, Scene inScene) 
+	public Tree(Scene inScene, int x, int y, int scale)
 	{
-		super(x, y, ObjectTypes.Tree.intValue, false, inScene);
-		sprite = new Sprite(inScene, "Tree", x, y, 1);
+		super(inScene, "Tree", x, y, scale);
 	}
-
-	@Override
-	protected void render(Graphics g) 
-	{
-		
-	}
-
-	@Override
-	protected void update() 
-	{
-	}
-
-	@Override
-	protected void onMouseClick(MouseEvent e) 
-	{		
-	}
-
-	@Override
-	protected void onMousePressed(MouseEvent e) 
-	{	
-	}
-
-	@Override
-	protected void onMouseReleased(MouseEvent e) 
-	{	
-	}
-
 }

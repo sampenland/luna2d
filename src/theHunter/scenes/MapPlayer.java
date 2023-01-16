@@ -1,12 +1,11 @@
 package theHunter.scenes;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
-import theHunter.Ground;
+import luna2d.renderables.Grid;
 import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
@@ -15,9 +14,10 @@ import theHunter.objects.Tree;
 public class MapPlayer extends Scene
 {
 
+	private final int MAP_SCALE = 5;
 	private static int[][] mapData;
 	private static int[][] mapDataGrounds;
-	
+		
 	public MapPlayer(String name) 
 	{
 		super(name);	
@@ -35,17 +35,7 @@ public class MapPlayer extends Scene
 		mapData = TheHunter.loadMapOrGrounds("map1", true);
 		mapDataGrounds = TheHunter.loadMapOrGrounds("map1", false);
 		
-		// Populate grounds
-		for (int r = 0; r < TheHunter.ROWS; r++)
-		{
-			for (int c = 0; c < TheHunter.COLUMNS; c++)
-			{
-				int x = c * 16;
-				int y = TheHunter.GRIDY_OFFSET + r * 16;
-				Ground g = new Ground(this, x, y, 1);
-				g.updateGroundType(ObjectTypes.values()[mapDataGrounds[r][c]]);
-			}
-		}
+		new Grid(this, 0, 0, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
 		
 		// Populate objects
 		for (int r = 0; r < TheHunter.ROWS; r++)
@@ -75,7 +65,7 @@ public class MapPlayer extends Scene
 					new Player(this, "Player", x, y, 1, 16, 4, 250);
 					break;
 				case Tree:
-					new Tree(x, y, this);
+					new Tree(this, x, y, 1);
 					break;
 				case Water:
 					break;
@@ -88,8 +78,7 @@ public class MapPlayer extends Scene
 		}
 		
 		// Zoom in
-		this.getGame().updateScale(5);
-		
+		this.getGame().updateScale(MAP_SCALE);
 	}
 
 	@Override

@@ -62,17 +62,17 @@ public class MapEditor extends Scene
 		this.mapDataSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
 		this.mapDataGrounds = new Ground[TheHunter.ROWS][TheHunter.COLUMNS];
 		
+		new Grid(this, 0, TheHunter.GRIDY_OFFSET, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.5f), 1, null);
+		
 		for(int r = 0; r < TheHunter.ROWS; r++)
 		{
 			for(int c = 0; c < TheHunter.COLUMNS; c++)
 			{				
-				mapDataGrounds[r][c] = new Ground(this, c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+				//mapDataGrounds[r][c] = new Ground(this, c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
 				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
 				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
 			}
 		}
-		
-		new Grid(this, 0, TheHunter.GRIDY_OFFSET, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(1.0f, 1.0f, 0.0f, 0.5f), 1);
 		
 		this.setInputEnabled(false);
 		

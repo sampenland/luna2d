@@ -11,7 +11,8 @@ import luna2d.renderables.Sprite;
 
 public class SimplePlayer extends GameObject
 {
-	protected int moveSpeed = 1;
+	private boolean zoomingEnabled = false;
+	protected int moveSpeed = 5;
 	protected int health = 100;
 	
 	protected Sprite sprite;
@@ -25,6 +26,11 @@ public class SimplePlayer extends GameObject
 		sprite.updateScreenPosition(Game.WIDTH / 2 - sprite.getWidth(), Game.HEIGHT / 2 - sprite.getHeight());
 	}
 	
+	public void setZoomingEnabled(boolean val)
+	{
+		this.zoomingEnabled = val;
+	}
+	
 	public void setMoveSpeed(int speed)
 	{
 		this.moveSpeed = speed;
@@ -36,7 +42,12 @@ public class SimplePlayer extends GameObject
 	}
 
 	@Override
-	protected void update() 
+	protected void update()
+	{
+		this.playerUpdate();
+	}
+	
+	public void playerUpdate() 
 	{
 		if (this.isKeyPressed(KeyEvent.VK_W) || this.isKeyPressed(KeyEvent.VK_UP))
 		{
@@ -58,29 +69,34 @@ public class SimplePlayer extends GameObject
 			this.worldX += this.moveSpeed;
 		}
 		
-		if (this.isKeyPressed(KeyEvent.VK_1)) 
-		{
-			this.getGame().updateScale(1);
-		}
+		this.getGame().updateCameraOffset(this.worldX, this.worldY);
 		
-		if (this.isKeyPressed(KeyEvent.VK_2)) 
+		if (this.zoomingEnabled)
 		{
-			this.getGame().updateScale(2);
-		}
-		
-		if (this.isKeyPressed(KeyEvent.VK_3)) 
-		{
-			this.getGame().updateScale(3);
-		}
-		
-		if (this.isKeyPressed(KeyEvent.VK_4)) 
-		{
-			this.getGame().updateScale(4);
-		}
-		
-		if (this.isKeyPressed(KeyEvent.VK_5)) 
-		{
-			this.getGame().updateScale(5);
+			if (this.isKeyPressed(KeyEvent.VK_1)) 
+			{
+				this.getGame().updateScale(1);
+			}
+			
+			if (this.isKeyPressed(KeyEvent.VK_2)) 
+			{
+				this.getGame().updateScale(2);
+			}
+			
+			if (this.isKeyPressed(KeyEvent.VK_3)) 
+			{
+				this.getGame().updateScale(3);
+			}
+			
+			if (this.isKeyPressed(KeyEvent.VK_4)) 
+			{
+				this.getGame().updateScale(4);
+			}
+			
+			if (this.isKeyPressed(KeyEvent.VK_5)) 
+			{
+				this.getGame().updateScale(5);
+			}	
 		}
 	}
 

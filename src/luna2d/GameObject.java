@@ -58,6 +58,11 @@ public abstract class GameObject
 		this.inScene.getObjectHandler().addRenderable(r);
 	}
 	
+	public void gameUpdate()
+	{
+		this.update();
+	}
+	
 	protected abstract void render(Graphics g);
 	protected abstract void update();
 	

@@ -3,8 +3,10 @@ package luna2d.renderables;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Scene;
+import theHunter.ObjectTypes;
 
 public class Grid extends Renderable
 {
@@ -12,7 +14,9 @@ public class Grid extends Renderable
 	private int x, y, rows, columns, cellSize;
 	private Color gridColor;
 	
-	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale) 
+	private int[][] grounds;
+	
+	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int[][] grounds) 
 	{
 		super(inScene, scale);
 		
@@ -22,21 +26,67 @@ public class Grid extends Renderable
 		this.columns = columns;
 		this.cellSize = cellSize;
 		this.gridColor = gridColor;
+		this.scale = scale;
+		this.grounds = grounds;
 	}
-
+	
 	@Override
 	public void render(Graphics g) 
-	{
-		g.setColor(gridColor);
-		
+	{		
 		for(int row = 0; row < rows; row++)
 		{
 			for(int col = 0; col < columns; col++)
 			{
-				int cx = col * cellSize;
-				int cy = row * cellSize;
+				if (this.grounds != null)
+				{
+					Color groundColor = Color.black;
+					
+					ObjectTypes gndType = ObjectTypes.values()[this.grounds[row][col]];
+					
+					switch(gndType)
+					{
+					case Bush:
+						break;
+					case Empty:
+						break;
+					case GndDirt:
+						break;
+					case GndGrass:
+						groundColor = ColorHandler.getColor("GrassGreen");
+						break;
+					case GndRock:
+						break;
+					case GndWater:
+						break;
+					case Player:
+						break;
+					case Tree:
+						break;
+					case Water:
+						break;
+					case Wolf:
+						break;
+					default:
+						break;
+					
+					}
+					
+					g.setColor(groundColor);
+				}
 				
-				g.drawRect(this.x + cx, this.y + cy, 
+				int cx = col * cellSize * this.scale;
+				int cy = row * cellSize * this.scale;
+				
+				if (this.grounds != null)
+				{					
+					g.fillRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
+							Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
+							Math.round(cellSize * this.scale * Game.CAMERA_SCALE));	
+				}
+				
+				g.setColor(gridColor);
+				
+				g.drawRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
 						Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
 						Math.round(cellSize * this.scale * Game.CAMERA_SCALE));
 			}
