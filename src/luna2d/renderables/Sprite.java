@@ -241,14 +241,10 @@ public class Sprite extends Renderable
 			}
 			else 
 			{
-				drawX = (Game.CAMERA_X * Game.CAMERA_SCALE) + this.drawRect.x;
-				drawY = (Game.CAMERA_Y * Game.CAMERA_SCALE) + this.drawRect.y;
-				
-				drawX2 = Game.CAMERA_X + this.drawRect.x +
-						Math.round(this.drawRect.width * this.scale * Game.CAMERA_SCALE);
-				
-				drawY2 = Game.CAMERA_Y + this.drawRect.y + 
-						Math.round(this.drawRect.height * this.scale* Game.CAMERA_SCALE);
+				drawX = Game.CAMERA_X + this.worldX;
+				drawY = Game.CAMERA_Y + this.worldY;				
+				drawX2 = drawX + Math.round(this.drawRect.width * this.scale * Game.CAMERA_SCALE);				
+				drawY2 = drawY + Math.round(this.drawRect.height * this.scale* Game.CAMERA_SCALE);
 			}
 			
 			g.drawImage(imgRef, 
@@ -271,11 +267,6 @@ public class Sprite extends Renderable
 		{
 			this.drawRect.x = this.screenX;
 			this.drawRect.y = this.screenY;
-		}
-		else
-		{
-			this.drawRect.x = Game.CAMERA_X + this.worldX + this.screenX;
-			this.drawRect.y = Game.CAMERA_X + this.worldY + this.screenY;	
 		}
 	}
 	

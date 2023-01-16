@@ -3,9 +3,11 @@ package theHunter.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
-import luna2d.renderables.Grid;
+import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
@@ -35,15 +37,15 @@ public class MapPlayer extends Scene
 		mapData = TheHunter.loadMapOrGrounds("map1", true);
 		mapDataGrounds = TheHunter.loadMapOrGrounds("map1", false);
 		
-		new Grid(this, 0, 0, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
+		new MapGrounds(this, 0, 0, TheHunter.ROWS, TheHunter.COLUMNS, 16, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
 		
 		// Populate objects
 		for (int r = 0; r < TheHunter.ROWS; r++)
 		{
 			for (int c = 0; c < TheHunter.COLUMNS; c++)
 			{
-				int x = c * 16;
-				int y = TheHunter.GRIDY_OFFSET + r * 16;
+				int x = c * 16 * MAP_SCALE;
+				int y = (r * 16) * MAP_SCALE;
 				
 				ObjectTypes objectType = ObjectTypes.values()[mapData[r][c]];
 				
@@ -62,7 +64,9 @@ public class MapPlayer extends Scene
 				case GndWater:
 					break;
 				case Player:
-					new Player(this, "Player", x, y, 1, 16, 4, 250);
+					Game.CAMERA_X = x - Game.WIDTH;
+					Game.CAMERA_Y = y - Game.HEIGHT;
+					new Player(this, "Player", 0, 0, 1, 16, 4, 250);
 					break;
 				case Tree:
 					new Tree(this, x, y, 1);

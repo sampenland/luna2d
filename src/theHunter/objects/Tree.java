@@ -9,4 +9,11 @@ public class Tree extends Sprite
 	{
 		super(inScene, "Tree", x, y, scale);
 	}
+	
+	@Override
+	public void update()
+	{
+		super.update();		
+	}
+	
 }

@@ -63,15 +63,12 @@ public class ObjectHandler
 	
 	public void renderAllRenderables(Graphics g)
 	{
-		int j = 0;
 		for(int i = 0; i < renderables.size(); i++)
 		{
 			Renderable temp = renderables.get(i);
 			if (!screenBounds.contains(new Point(temp.screenX, temp.screenY))) continue;
-			j++;
 			temp.render(g);
 		}
-		Log.println("Objects displayed: " + j);
 	}
 	
 	public void updateAllObjects()
