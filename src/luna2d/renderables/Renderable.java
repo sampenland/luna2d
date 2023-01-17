@@ -3,6 +3,7 @@ package luna2d.renderables;
 import java.awt.Graphics;
 
 import luna2d.Scene;
+import luna2d.ui.UIMenu;
 
 public abstract class Renderable 
 {
@@ -12,6 +13,8 @@ public abstract class Renderable
 	protected int scale;
 	public boolean visible;
 	protected boolean customRender; // Means it will not be drawn from automatically but manually
+	private boolean destroyNow;
+	public UIMenu inMenu;
 	
 	public Renderable(Scene inScene, int scale)
 	{
@@ -21,6 +24,22 @@ public abstract class Renderable
 		this.worldX = this.worldY = this.screenX = this.screenY = 0;
 		this.visible = true;
 		this.customRender = false;
+		this.destroyNow = false;
+	}
+	
+	public void setInMenu(UIMenu menu)
+	{
+		this.inMenu = menu;
+	}
+	
+	public void destroy()
+	{
+		this.destroyNow = true;
+	}
+	
+	public boolean getDestroyNow()
+	{
+		return this.destroyNow;
 	}
 	
 	public void setCustomRender(boolean val)

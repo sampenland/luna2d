@@ -4,11 +4,11 @@ import java.util.TimerTask;
 
 import luna2d.Scene;
 
-public class SceneTimer extends TimerTask
+public class SceneTask extends TimerTask
 {
 	protected Scene scene;
 	
-	public SceneTimer(Scene scene)
+	public SceneTask(Scene scene)
 	{
 		this.scene = scene;
 	}

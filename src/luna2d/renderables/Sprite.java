@@ -9,7 +9,7 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.ResourceHandler;
 import luna2d.Scene;
-import luna2d.timers.SpriteTimer;
+import luna2d.timers.SpriteTask;
 
 public class Sprite extends Renderable
 {
@@ -25,7 +25,7 @@ public class Sprite extends Renderable
 	private int currentFrame;
 	private int frames;
 	private int frameWidth;
-	private SpriteTimer nextFrameTask;
+	private SpriteTask nextFrameTask;
 	private Timer nextFrameTimer;
 	
 	private int objectType = -1;
@@ -125,7 +125,7 @@ public class Sprite extends Renderable
 		this.worldX = x;
 		this.worldY = y;
 		
-		this.nextFrameTask = new SpriteTimer(this)
+		this.nextFrameTask = new SpriteTask(this)
 		{
 			@Override
 			public void run()

@@ -6,7 +6,7 @@ import luna2d.Scene;
 
 public abstract class UI 
 {
-	private Scene inScene;
+	protected Scene inScene;
 	
 	public int worldX, worldY, screenX, screenY;
 	protected int scale;

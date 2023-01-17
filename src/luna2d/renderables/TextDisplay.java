@@ -2,8 +2,6 @@ package luna2d.renderables;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
-import luna2d.Log;
 import luna2d.Scene;
 
 public class TextDisplay extends Renderable
@@ -21,6 +19,7 @@ public class TextDisplay extends Renderable
 		this.textColor = c;
 		this.x = x;
 		this.y = y;
+		this.visible = true;
 	}
 	
 	public void updateText(String text)

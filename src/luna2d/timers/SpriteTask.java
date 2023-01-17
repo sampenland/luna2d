@@ -4,11 +4,11 @@ import java.util.TimerTask;
 
 import luna2d.renderables.Sprite;
 
-public class SpriteTimer extends TimerTask
+public class SpriteTask extends TimerTask
 {
 	protected Sprite sprite;
 	
-	public SpriteTimer(Sprite scene)
+	public SpriteTask(Sprite scene)
 	{
 		this.sprite = scene;
 	}

@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
-
-import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
@@ -29,9 +27,23 @@ public class UIMenu extends UI
 		this.visible = false;
 		this.scale = scale;
 		
-		this.drawRect = new Rectangle(x, y, width, height);		
+		this.drawRect = new Rectangle(x, y, width, height);	
+		
+		this.screenX = x;
+		this.screenY = y;
+		
 		this.bkgColor = bkgColor;
 		this.visible = false;
+	}
+	
+	public int getWidth()
+	{
+		return this.drawRect.width;
+	}
+	
+	public int getHeight()
+	{
+		return this.drawRect.height;
 	}
 	
 	protected void addSprite(Sprite sprite)
@@ -40,7 +52,7 @@ public class UIMenu extends UI
 		sprites.add(sprite);
 	}
 	
-	protected void removeSprite(Sprite sprite)
+	public void removeSprite(Sprite sprite)
 	{
 		sprites.remove(sprite);
 	}
@@ -51,9 +63,15 @@ public class UIMenu extends UI
 		textDisplays.add(textDisplay);
 	}
 	
-	protected void removeTextDisplay(TextDisplay textDisplay)
+	public void removeTextDisplay(TextDisplay textDisplay)
 	{
 		textDisplays.remove(textDisplay);
+	}
+	
+	public void clearAllRenderables()
+	{
+		textDisplays.clear();
+		sprites.clear();
 	}
 	
 	public void toggleVisible()
@@ -66,6 +84,11 @@ public class UIMenu extends UI
 		{
 			this.show();
 		}
+	}
+	
+	protected boolean isKeyPressed(int keycode)
+	{
+		return this.inScene.isKeyPressed(keycode);
 	}
 
 	@Override

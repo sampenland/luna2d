@@ -14,7 +14,7 @@ import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
-import luna2d.timers.SceneTimer;
+import luna2d.timers.SceneTask;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
 import theHunter.TheHunter;
@@ -34,7 +34,7 @@ public class MapEditor extends Scene
 	
 	private MOUSE_STATUS mouseStatus;
 	private boolean disableSwitching = false;
-	private SceneTimer resetInputTask;
+	private SceneTask resetInputTask;
 	private Timer resetInputTimer;
 	
 	private ObjectTypes currentSelection;
@@ -46,7 +46,7 @@ public class MapEditor extends Scene
 	private Sprite[][] selectionSprites;
 	
 	private TextDisplay statusLabel;
-	private MapEditorMenu detailedMenu;
+	public MapEditorMenu detailedMenu;
 	
 	public MapEditor(String name) 
 	{
@@ -240,11 +240,6 @@ public class MapEditor extends Scene
 		{
 			this.detailedMenu.toggleVisible();
 		}
-		
-		if (this.isKeyPressed(KeyEvent.VK_S))
-		{
-			this.saveMap("map1");
-		}
 	}
 	
 	private void userSwitching()
@@ -274,7 +269,7 @@ public class MapEditor extends Scene
 			// Wait 500 before you can tab again
 			this.disableSwitching = true;
 
-			resetInputTask = new SceneTimer(this)
+			resetInputTask = new SceneTask(this)
 			{
 				@Override
 				public void run() 
@@ -357,7 +352,7 @@ public class MapEditor extends Scene
 	{
 	}
 	
-	private void saveMap(String name)
+	public void saveMap(String name)
 	{
 		String path = TheHunter.MAP_DIR + "/" + name + ".thm";
 		

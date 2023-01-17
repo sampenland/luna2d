@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
 
-import luna2d.timers.SceneTimer;
+import luna2d.timers.SceneTask;
 
 public class SceneManager 
 {
@@ -58,7 +58,7 @@ public class SceneManager
 				this.currentScene.start();
 				
 				// Wait a 350 milliseconds before enabling input
-				SceneTimer reenableInput = new SceneTimer(this.currentScene) {
+				SceneTask reenableInput = new SceneTask(this.currentScene) {
 					@Override
 					public void run() 
 					{

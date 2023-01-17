@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
+import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.UI;
 
@@ -32,6 +33,11 @@ public class ObjectHandler
 	public LinkedList<Renderable> getRenderables()
 	{
 		return renderables;
+	}
+	
+	public LinkedList<UI> getUIs()
+	{
+		return uis;
 	}
 	
 	public void addObject(GameObject o)
@@ -104,10 +110,29 @@ public class ObjectHandler
 	
 	public void updateAllRenderables()
 	{
+		LinkedList<Renderable> removes = new LinkedList<Renderable>();
+		
 		for(int i = 0; i < renderables.size(); i++)
 		{
 			Renderable temp = renderables.get(i);
+			if (temp.getDestroyNow()) 
+			{
+				removes.add(temp);
+				continue;
+			}
+			
 			temp.gameUpdate();
+		}
+		
+		for(Renderable remove : removes)
+		{
+			if (remove.inMenu != null)
+			{
+				if (remove instanceof FadingTextDisplay)
+				{
+					remove.inMenu.removeTextDisplay((FadingTextDisplay)remove);
+				}
+			}
 		}
 	}
 	
