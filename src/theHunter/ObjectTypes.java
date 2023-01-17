@@ -2,20 +2,22 @@ package theHunter;
 
 public enum ObjectTypes 
 {	
-	Empty(0),
-	Player(1),
-	Tree(2),
-	Bush(3),
-	Water(4),
-	Wolf(5),
-	GndGrass(6),
-	GndDirt(7),
-	GndRock(8),
-	GndWater(9);
+	Empty(0, "NONE"),
+	Player(1, "Player"),
+	Tree(2, "Tree"),
+	Bush(3, "BerryBush"),
+	Water(4, "Water"),
+	Wolf(5, "Wolf"),
+	GndGrass(6, ""),
+	GndDirt(7, ""),
+	GndRock(8, ""),
+	GndWater(9, "");
 	
 	public final int intValue;
-	private ObjectTypes(int v)
+	public final String imgName;
+	private ObjectTypes(int v, String imgName)
 	{
 		this.intValue = v;
+		this.imgName = imgName;
 	}
 }

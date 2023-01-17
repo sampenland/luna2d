@@ -15,6 +15,11 @@ public class MapGrounds extends Grid
 		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, gridColor, scale, fillTypes);
 	}
 	
+	public void updateFillTypes(int[][] fillTypes)
+	{
+		this.fillTypes = fillTypes;
+	}
+	
 	@Override
 	public void render(Graphics g)
 	{		

@@ -14,6 +14,7 @@ import luna2d.timers.SpriteTimer;
 public class Sprite extends Renderable
 {
 
+	private String imageName;
 	private BufferedImage imgRef;
 	private Rectangle drawRect;
 	protected boolean fixedScreenPosition = false;
@@ -45,6 +46,7 @@ public class Sprite extends Renderable
 		this.drawRect = new Rectangle();
 		
 		imgRef = ResourceHandler.getImage(name);
+		this.imageName = name;
 		
 		if (imgRef == null)
 		{
@@ -78,6 +80,7 @@ public class Sprite extends Renderable
 		this.drawRect = new Rectangle();
 		
 		imgRef = ResourceHandler.getImage(name);
+		this.imageName = name;
 		
 		if (imgRef == null)
 		{
@@ -108,6 +111,7 @@ public class Sprite extends Renderable
 		this.drawRect = new Rectangle();
 		
 		imgRef = ResourceHandler.getImage(name);
+		this.imageName = name;
 		
 		if (imgRef == null)
 		{
@@ -148,9 +152,16 @@ public class Sprite extends Renderable
 		return this.objectType;
 	}
 	
+	public String getImageName()
+	{
+		return this.imageName;
+	}
+	
 	public void updateImageRef(String name, boolean visible, boolean reset)
 	{
 		this.imgRef = ResourceHandler.getImage(name);
+		this.imageName = name;
+		
 		this.visible = visible;
 		
 		if (reset)
@@ -171,6 +182,8 @@ public class Sprite extends Renderable
 	public void updateImageRef(String name, boolean visible, int w, int h)
 	{
 		this.imgRef = ResourceHandler.getImage(name);
+		this.imageName = name;
+		
 		this.visible = visible;
 		
 		this.drawRect.width = w;
