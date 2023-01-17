@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
+import luna2d.lights.Light;
 import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.UI;
@@ -15,6 +16,7 @@ public class ObjectHandler
 	private static LinkedList<GameObject> objects;
 	private static LinkedList<Renderable> renderables;
 	private static LinkedList<UI> uis;
+	private static LinkedList<Light> lights;
 	
 	private Rectangle screenBounds = new Rectangle(-16, -16, Game.WIDTH, Game.HEIGHT);
 	
@@ -23,6 +25,12 @@ public class ObjectHandler
 		objects = new LinkedList<GameObject>();
 		renderables = new LinkedList<Renderable>();
 		uis = new LinkedList<UI>();
+		lights = new LinkedList<Light>();
+	}
+	
+	public LinkedList<Light> getLights()
+	{
+		return lights;
 	}
 	
 	public LinkedList<GameObject> getObjects()

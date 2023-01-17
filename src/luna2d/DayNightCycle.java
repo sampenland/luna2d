@@ -18,6 +18,7 @@ public abstract class DayNightCycle
 	private Color dawnColor, dayColor, dustColor, nightColor, currentColor;
 	
 	private int nightHours;
+	private float alpha;
 	
 	public DayNightCycle(int msOfInGameMinute, int startOfDayHour, int startOfNightHour, Color dawnColor, Color dayColor, Color dustColor, Color nightColor)
 	{
@@ -80,6 +81,7 @@ public abstract class DayNightCycle
 			}
 		}
 		
+		this.gameUpdate();
 		this.update();
 	}
 	
@@ -114,7 +116,11 @@ public abstract class DayNightCycle
 	
 	public void render(Graphics g)
 	{
-		float alpha = 0.2f;
+	}
+	
+	public void gameUpdate()
+	{
+		this.alpha = 0.2f;
 		
 		// DAWN
 		if (this.inGameHours >= this.startOfDayHour - 1 && this.inGameHours < this.startOfDayHour)
@@ -125,7 +131,7 @@ public abstract class DayNightCycle
 		else if (this.inGameHours >= this.startOfDayHour && this.inGameHours < this.startOfNightHour - 1)
 		{
 			this.currentColor = this.dayColor;
-			alpha = 0.1f;
+			this.alpha = 0.1f;
 		}
 		else if (this.inGameHours >= this.startOfNightHour - 1 && this.inGameHours < this.startOfNightHour)
 		{
@@ -134,13 +140,10 @@ public abstract class DayNightCycle
 		else
 		{
 			this.currentColor = this.nightColor;
-			alpha = (float)this.inGameHours / this.nightHours;
-			if (alpha > 0.8) alpha = 0.8f;
-			if (this.inGameHours == 0) alpha = 0.8f;
+			this.alpha = (float)this.inGameHours / this.nightHours;
+			if (this.alpha > 0.8) this.alpha = 0.8f;
+			if (this.inGameHours == 0) this.alpha = 0.8f;
 		}
-		
-		g.setColor(new Color(this.currentColor.getRed() / 255, this.currentColor.getGreen() / 255, this.currentColor.getBlue() / 255, alpha));
-		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 	}
 	
 	public abstract void update();

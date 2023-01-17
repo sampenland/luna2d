@@ -3,7 +3,9 @@ package luna2d;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.LinkedList;
 
+import luna2d.lights.Light;
 import luna2d.renderables.Renderable;
 
 public abstract class Scene
@@ -134,17 +136,17 @@ public abstract class Scene
 		this.objHandler.renderAllRenderables(g);
 		this.objHandler.renderAllUIs(g);
 		
-		if(this.dayNightCycle != null)
-		{
-			this.dayNightCycle.render(g);
-		}
+		// Render lights with over-top Day/Night cycle background
+		LinkedList<Light> lights = this.objHandler.getLights();
+		
+		
 	}
 	
 	void backgroundUpdate()
 	{
 		this.objHandler.updateAllObjects();
 		this.objHandler.updateAllRenderables();
-		this.objHandler.updateAllUIs();
+		this.objHandler.updateAllUIs();		
 		this.update();
 	}
 	

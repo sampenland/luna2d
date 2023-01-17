@@ -12,6 +12,15 @@ public class ResourceHandler
 
 	private static HashMap<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 	
+	public static boolean initialized = false; 
+	
+	public static void init()
+	{
+		ResourceHandler.addImage("", ""); // Creates "NONE" empty image
+		ResourceHandler.addGlobalImage("GLOBAL_GlowLight", "glowLight.png");
+		initialized = true;
+	}
+	
 	public static BufferedImage addImage(String name, String path)
 	{
 		if (name == "")
@@ -22,6 +31,35 @@ public class ResourceHandler
 		}
 		
 		path = Game.resDir + path;
+		
+		BufferedImage img = null;
+		try 
+		{
+		    img = ImageIO.read(new File(path));
+		} 
+		catch (IOException e) 
+		{
+			Log.println("Load err: " + e.toString());
+			return null;
+		}
+		
+		if (img != null)
+		{
+			images.put(name, img);
+		}
+		
+		return images.get(name);
+		
+	}
+	
+	public static BufferedImage addGlobalImage(String name, String path)
+	{
+		if (name == "")
+		{
+			name = "NONE";
+			images.put(name, new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+			return images.get(name);
+		}
 		
 		BufferedImage img = null;
 		try 

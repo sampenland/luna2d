@@ -44,7 +44,6 @@ public class Game extends Canvas implements Runnable {
 		
 		sceneManager = new SceneManager(this);		
 		window = new Window(WIDTH, HEIGHT, this.title, this);
-		ResourceHandler.addImage("", ""); // Creates "NONE" empty image
 	}
 	
 	public void updateScale(int scale)
@@ -104,6 +103,11 @@ public class Game extends Canvas implements Runnable {
 		{
 			this.mouseHandler = new MouseHandler(this);
 			this.addMouseListener(mouseHandler);
+		}
+		
+		if (!ResourceHandler.initialized)
+		{
+			ResourceHandler.init();
 		}
 		
 		this.sceneManager.update();

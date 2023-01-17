@@ -105,7 +105,7 @@ public class MapPlayer extends Scene
 		this.getGame().updateScale(MAP_SCALE);
 		
 		// Startup day and night
-		this.setDayNightCycle(new DayNightCycleEngine(5, 8, 20, Color.orange, Color.white, Color.orange, Color.black), new DayNightCycleTime(8, 0, 0));
+		this.setDayNightCycle(new DayNightCycleEngine(500, 8, 20, Color.orange, Color.white, Color.orange, Color.black), new DayNightCycleTime(20, 0, 0));
 	}
 
 	@Override
