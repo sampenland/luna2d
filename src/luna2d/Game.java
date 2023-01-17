@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
 	private String title;
 	private Color bkgColor;
 	
-	public static String resDir;
+	public static String resDir; 
 		
 	public void init(int width, int height, String title, Color bkgColor, String resourceDir)
 	{

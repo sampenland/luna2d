@@ -2,15 +2,12 @@ package luna2d;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.Timer;
 
 import luna2d.timers.DayNightCycleTask;
 
-public class DayNightCycle 
+public abstract class DayNightCycle 
 {
-	
-	private Rectangle darknessRect;
 	private int inGameMinutes, inGameHours;
 	private long inGameDays;
 	
@@ -20,9 +17,17 @@ public class DayNightCycle
 	private int startOfDayHour, startOfNightHour;
 	private Color dawnColor, dayColor, dustColor, nightColor, currentColor;
 	
+	private int nightHours;
+	
 	public DayNightCycle(int msOfInGameMinute, int startOfDayHour, int startOfNightHour, Color dawnColor, Color dayColor, Color dustColor, Color nightColor)
 	{
-		this.darknessRect = new Rectangle(0, 0, Game.WIDTH, Game.HEIGHT);
+		if (this.startOfNightHour - this.startOfDayHour >= 24) 
+		{
+			Log.println("Too many hours in cycle");
+			return; 
+		}
+		
+		this.nightHours = this.startOfNightHour - this.startOfDayHour;
 		
 		this.startOfDayHour = startOfDayHour;
 		this.startOfNightHour = startOfNightHour;
@@ -41,10 +46,25 @@ public class DayNightCycle
 			}
 		};
 		
-		this.cycleTimer.schedule(cycleTask, msOfInGameMinute);
+		this.cycleTimer = new Timer("DayNightTimer");
+		this.cycleTimer.scheduleAtFixedRate(cycleTask, msOfInGameMinute, msOfInGameMinute);
 	}
 	
-	public void minuteTick()
+	public void setTime(int hours, int minutes, long days)
+	{
+		this.inGameHours = hours;
+		this.inGameMinutes = minutes;
+		this.inGameDays = days;
+	}
+	
+	public void setTime(DayNightCycleTime time)
+	{
+		this.inGameHours = time.hours;
+		this.inGameMinutes = time.minutes;
+		this.inGameDays = time.days;
+	}
+	
+	private void minuteTick()
 	{
 		this.inGameMinutes++;
 		
@@ -59,16 +79,22 @@ public class DayNightCycle
 				this.inGameDays++;
 			}
 		}
+		
+		this.update();
 	}
 	
 	public String getTime()
 	{
-		return this.inGameHours + ":" + this.inGameMinutes;
+		String mins = this.inGameMinutes + "";
+		if (mins.length() == 1) mins = "0" + mins;
+		return this.inGameHours + ":" + mins;
 	}
 	
 	public String getDaysAndTime()
 	{
-		return this.inGameDays + " Days   " + this.inGameHours + ":" + this.inGameMinutes;
+		String mins = this.inGameMinutes + "";
+		if (mins.length() == 1) mins = "0" + mins;
+		return this.inGameDays + " Days   " + this.inGameHours + ":" + mins;
 	}
 	
 	public int getMinutes()
@@ -88,8 +114,34 @@ public class DayNightCycle
 	
 	public void render(Graphics g)
 	{
-		g.setColor(this.currentColor);
-		g.drawRect(0, 0, Game.WIDTH, Game.HEIGHT);
+		float alpha = 0.2f;
+		
+		// DAWN
+		if (this.inGameHours >= this.startOfDayHour - 1 && this.inGameHours < this.startOfDayHour)
+		{
+			this.currentColor = this.dawnColor;
+		}
+		// DAY
+		else if (this.inGameHours >= this.startOfDayHour && this.inGameHours < this.startOfNightHour - 1)
+		{
+			this.currentColor = this.dayColor;
+			alpha = 0.1f;
+		}
+		else if (this.inGameHours >= this.startOfNightHour - 1 && this.inGameHours < this.startOfNightHour)
+		{
+			this.currentColor = this.dustColor;
+		}
+		else
+		{
+			this.currentColor = this.nightColor;
+			alpha = (float)this.inGameHours / this.nightHours;
+			if (alpha > 0.8) alpha = 0.8f;
+			if (this.inGameHours == 0) alpha = 0.8f;
+		}
+		
+		g.setColor(new Color(this.currentColor.getRed() / 255, this.currentColor.getGreen() / 255, this.currentColor.getBlue() / 255, alpha));
+		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 	}
 	
+	public abstract void update();
 }

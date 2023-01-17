@@ -16,13 +16,41 @@ public abstract class Scene
 	private boolean inputEnabled = false;
 	private boolean mouseEnabled = false;
 	
-	private Game game;
+	private Game game;	
+	private DayNightCycle dayNightCycle = null;
 	
 	public Scene(String name)
 	{
 		this.name = name;
 		this.keys = new HashMap<Integer, Boolean>();
 		this.objHandler = new ObjectHandler();
+		this.dayNightCycle = null;
+	}
+	
+	public void setDayNightCycle(DayNightCycle cycle, DayNightCycleTime time)
+	{
+		this.dayNightCycle = cycle;
+		this.dayNightCycle.setTime(time);
+	}
+	
+	public String getTime()
+	{
+		if (this.dayNightCycle != null)
+		{
+			return this.dayNightCycle.getTime();
+		}
+		
+		return "No day/night cycle";
+	}
+	
+	public String getDaysAndTime()
+	{
+		if (this.dayNightCycle != null)
+		{
+			return this.dayNightCycle.getDaysAndTime();
+		}
+		
+		return "No day/night cycle";
 	}
 	
 	public void setInputEnabled(boolean isEnabled)
@@ -105,6 +133,11 @@ public abstract class Scene
 		this.objHandler.renderAllObjects(g);
 		this.objHandler.renderAllRenderables(g);
 		this.objHandler.renderAllUIs(g);
+		
+		if(this.dayNightCycle != null)
+		{
+			this.dayNightCycle.render(g);
+		}
 	}
 	
 	void backgroundUpdate()
