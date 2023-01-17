@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Timer;
 
 import luna2d.Game;
-import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
@@ -19,6 +18,7 @@ import luna2d.timers.SceneTimer;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
 import theHunter.TheHunter;
+import theHunter.ui.MapEditorMenu;
 
 public class MapEditor extends Scene
 {	
@@ -46,6 +46,7 @@ public class MapEditor extends Scene
 	private Sprite[][] selectionSprites;
 	
 	private TextDisplay statusLabel;
+	private MapEditorMenu detailedMenu;
 	
 	public MapEditor(String name) 
 	{
@@ -106,6 +107,8 @@ public class MapEditor extends Scene
 		
 		mapDataSprites[this.playerRow][this.playerCol].updateImageRef("Player", true, 16, 16);
 		mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Player.intValue);
+		
+		this.detailedMenu = new MapEditorMenu(this, Game.WIDTH / 2 - 150, Game.HEIGHT / 2 - 100, 300, 200, new Color(0, 0, 0, 0.45f), 1);
 	}
 
 	@Override
@@ -233,6 +236,11 @@ public class MapEditor extends Scene
 			userSwitching();
 		}
 		
+		if (this.isKeyPressed(KeyEvent.VK_M)) 
+		{
+			this.detailedMenu.toggleVisible();
+		}
+		
 		if (this.isKeyPressed(KeyEvent.VK_S))
 		{
 			this.saveMap("map1");
@@ -298,7 +306,6 @@ public class MapEditor extends Scene
 				
 				if (this.selectionSprites[gPos.y][gPos.x] != null)
 				{		
-					Log.println(gPos.x, gPos.y);
 					int objType = this.selectionSprites[gPos.y][gPos.x].getObjectType();
 					this.currentSelection = ObjectTypes.values()[objType];
 					String img = ObjectTypes.values()[this.selectionSprites[gPos.y][gPos.x].getObjectType()].imgName;

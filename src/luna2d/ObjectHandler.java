@@ -7,11 +7,13 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import luna2d.renderables.Renderable;
+import luna2d.renderables.UI;
 
 public class ObjectHandler 
 {	
 	private static LinkedList<GameObject> objects;
 	private static LinkedList<Renderable> renderables;
+	private static LinkedList<UI> uis;
 	
 	private Rectangle screenBounds = new Rectangle(-16, -16, Game.WIDTH, Game.HEIGHT);
 	
@@ -19,6 +21,7 @@ public class ObjectHandler
 	{
 		objects = new LinkedList<GameObject>();
 		renderables = new LinkedList<Renderable>();
+		uis = new LinkedList<UI>();
 	}
 	
 	public LinkedList<GameObject> getObjects()
@@ -51,6 +54,16 @@ public class ObjectHandler
 		renderables.remove(r);
 	}
 	
+	public void addUI(UI u)
+	{
+		uis.add(u);
+	}
+	
+	public void removeUI(UI u)
+	{
+		uis.remove(u);
+	}
+	
 	public void renderAllObjects(Graphics g)
 	{
 		for(int i = 0; i < objects.size(); i++)
@@ -71,6 +84,15 @@ public class ObjectHandler
 		}
 	}
 	
+	public void renderAllUIs(Graphics g)
+	{
+		for(int i = 0; i < uis.size(); i++)
+		{
+			UI temp = uis.get(i);
+			temp.render(g);
+		}
+	}
+	
 	public void updateAllObjects()
 	{
 		for(int i = 0; i < objects.size(); i++)
@@ -85,6 +107,15 @@ public class ObjectHandler
 		for(int i = 0; i < renderables.size(); i++)
 		{
 			Renderable temp = renderables.get(i);
+			temp.gameUpdate();
+		}
+	}
+	
+	public void updateAllUIs()
+	{
+		for(int i = 0; i < uis.size(); i++)
+		{
+			UI temp = uis.get(i);
 			temp.gameUpdate();
 		}
 	}

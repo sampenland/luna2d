@@ -92,12 +92,14 @@ public abstract class Scene
 	{
 		this.objHandler.renderAllObjects(g);
 		this.objHandler.renderAllRenderables(g);
+		this.objHandler.renderAllUIs(g);
 	}
 	
 	void backgroundUpdate()
 	{
 		this.objHandler.updateAllObjects();
 		this.objHandler.updateAllRenderables();
+		this.objHandler.updateAllUIs();
 		this.update();
 	}
 	

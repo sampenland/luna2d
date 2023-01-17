@@ -2,6 +2,8 @@ package luna2d.renderables;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import luna2d.Log;
 import luna2d.Scene;
 
 public class TextDisplay extends Renderable
@@ -29,10 +31,13 @@ public class TextDisplay extends Renderable
 	@Override
 	public void render(Graphics g) 
 	{
+		if (!this.visible) return;
+		if (this.customRender) return;
+		
 		g.setColor(this.textColor);
 		g.drawString(this.text, this.x, this.y);
 	}
-
+	
 	@Override
 	public void update() 
 	{

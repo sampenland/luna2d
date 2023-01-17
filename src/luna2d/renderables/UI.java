@@ -4,28 +4,21 @@ import java.awt.Graphics;
 
 import luna2d.Scene;
 
-public abstract class Renderable 
+public abstract class UI 
 {
 	private Scene inScene;
 	
 	public int worldX, worldY, screenX, screenY;
 	protected int scale;
 	public boolean visible;
-	protected boolean customRender; // Means it will not be drawn from automatically but manually
 	
-	public Renderable(Scene inScene, int scale)
+	public UI(Scene inScene, int scale)
 	{
 		this.inScene = inScene;
-		this.inScene.getObjectHandler().addRenderable(this);
+		this.inScene.getObjectHandler().addUI(this);
 		this.scale = scale;
 		this.worldX = this.worldY = this.screenX = this.screenY = 0;
 		this.visible = true;
-		this.customRender = false;
-	}
-	
-	public void setCustomRender(boolean val)
-	{
-		this.customRender = val;
 	}
 	
 	public void updateWorldPosition(int x, int y)
@@ -51,14 +44,6 @@ public abstract class Renderable
 	}
 	
 	public abstract void render(Graphics g);
-	
-	public void customRender(Graphics g)
-	{
-		boolean cRender = this.customRender;
-		this.customRender = false;
-		this.render(g);
-		this.customRender = cRender;
-	}
 	
 	public void show()
 	{

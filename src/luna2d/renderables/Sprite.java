@@ -30,8 +30,6 @@ public class Sprite extends Renderable
 	
 	private int objectType = -1;
 	
-	public boolean visible = true;
-	
 	public Sprite(Scene inScene, String name, int x, int y, int scale) 
 	{
 		super(inScene, scale);
@@ -213,6 +211,7 @@ public class Sprite extends Renderable
 	{
 		if (!this.visible) return;
 		if (this.imgRef == null) return;
+		if (this.customRender) return;
 		
 		int drawX, drawY, drawX2, drawY2;
 		
