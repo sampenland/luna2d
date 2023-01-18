@@ -1,7 +1,11 @@
 package luna2d;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -55,6 +59,16 @@ public abstract class Scene
 		return "No day/night cycle";
 	}
 	
+	public boolean isDayTime()
+	{
+		if (this.dayNightCycle != null)
+		{
+			return this.dayNightCycle.isDayTime();
+		}
+		
+		return false;
+	}
+	
 	public void setInputEnabled(boolean isEnabled)
 	{
 		this.inputEnabled = isEnabled;
@@ -94,6 +108,7 @@ public abstract class Scene
 	{
 		this.objHandler.getUIs().clear();
 		this.objHandler.getObjects().clear();
+		this.objHandler.getLights().clear();
 		
 		for(Renderable r : this.objHandler.getRenderables())
 		{
@@ -133,13 +148,35 @@ public abstract class Scene
 	public void render(Graphics g)
 	{
 		this.objHandler.renderAllObjects(g);
-		this.objHandler.renderAllRenderables(g);
+		this.objHandler.renderAllRenderables(g);		
+		
+		if (this.dayNightCycle != null && !this.dayNightCycle.isDayTime())
+		{
+			// Render lights with over-top Day/Night cycle background
+			LinkedList<Light> lights = this.objHandler.getLights();
+			
+			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+			Graphics graphics = img.getGraphics();
+			graphics.setColor(this.dayNightCycle.getCurrentColor());
+			graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+			graphics.dispose();
+			
+			Graphics2D g2d = img.createGraphics();
+			g2d.setComposite(AlphaComposite.DstOut);
+			
+			for (Light light : lights)
+			{
+				BufferedImage lightImg = light.getImageRef();
+			    g2d.drawImage(lightImg, light.getScreenX(), light.getScreenY(), 
+			    		lightImg.getWidth() * Game.CAMERA_SCALE * light.getScale(), 
+			    		lightImg.getHeight() * Game.CAMERA_SCALE * light.getScale(), null);
+			}
+			
+			g2d.dispose();
+			g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);	
+		}
+			
 		this.objHandler.renderAllUIs(g);
-		
-		// Render lights with over-top Day/Night cycle background
-		LinkedList<Light> lights = this.objHandler.getLights();
-		
-		
 	}
 	
 	void backgroundUpdate()

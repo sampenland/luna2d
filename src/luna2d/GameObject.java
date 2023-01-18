@@ -12,7 +12,7 @@ public abstract class GameObject
 	protected int worldX, worldY, screenX, screenY, objectType;
 	protected HashMap<Integer, Boolean> keys;
 
-	private Scene inScene;
+	public Scene inScene;
 	
 	public GameObject(int x, int y, int objectType, boolean inputEnabled, Scene inScene)
 	{

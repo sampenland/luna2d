@@ -2,6 +2,7 @@ package luna2d;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.Timer;
 
 import luna2d.timers.DayNightCycleTask;
@@ -19,6 +20,8 @@ public abstract class DayNightCycle
 	
 	private int nightHours;
 	private float alpha;
+	
+	private BufferedImage imgRef;
 	
 	public DayNightCycle(int msOfInGameMinute, int startOfDayHour, int startOfNightHour, Color dawnColor, Color dayColor, Color dustColor, Color nightColor)
 	{
@@ -38,6 +41,8 @@ public abstract class DayNightCycle
 		this.dustColor = dustColor;
 		this.nightColor = nightColor;
 		
+		this.currentColor = dayColor;
+		
 		this.cycleTask = new DayNightCycleTask(this)
 		{
 			@Override
@@ -49,6 +54,18 @@ public abstract class DayNightCycle
 		
 		this.cycleTimer = new Timer("DayNightTimer");
 		this.cycleTimer.scheduleAtFixedRate(cycleTask, msOfInGameMinute, msOfInGameMinute);
+	}
+	
+	public boolean isDayTime()
+	{
+		return this.inGameHours >= this.startOfDayHour && this.inGameHours < this.startOfNightHour;
+	}
+	
+	public Color getCurrentColor()
+	{
+		return new Color(this.currentColor.getRed() / 255,
+				this.currentColor.getGreen() / 255, this.currentColor.getBlue() / 255, 
+				this.alpha);
 	}
 	
 	public void setTime(int hours, int minutes, long days)
@@ -96,7 +113,7 @@ public abstract class DayNightCycle
 	{
 		String mins = this.inGameMinutes + "";
 		if (mins.length() == 1) mins = "0" + mins;
-		return this.inGameDays + " Days   " + this.inGameHours + ":" + mins;
+		return "Day " + this.inGameDays + "    Time: " + this.inGameHours + ":" + mins;
 	}
 	
 	public int getMinutes()
@@ -112,6 +129,11 @@ public abstract class DayNightCycle
 	public long getDays()
 	{
 		return this.inGameDays;
+	}
+	
+	public float getAlpha()
+	{
+		return this.alpha;
 	}
 	
 	public void render(Graphics g)

@@ -26,6 +26,11 @@ public class TextDisplay extends Renderable
 	{
 		this.text = text;
 	}
+	
+	public void updateColor(Color c)
+	{
+		this.textColor = c;
+	}
 
 	@Override
 	public void render(Graphics g) 

@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import luna2d.Game;
 import luna2d.Scene;
 
-public class FillBar extends Renderable
+public class FillBar extends UI
 {
 
 	private int x, y, w, h;

@@ -6,12 +6,17 @@ import java.awt.event.MouseEvent;
 
 import luna2d.Game;
 import luna2d.Scene;
+import luna2d.lights.GlowLight;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
+import luna2d.renderables.TextDisplay;
 
 public class Player extends SimplePlayer
 {
 	private FillBar healthBar;
+	private GlowLight torch;
+	
+	private TextDisplay timeLabel;
 	
 	public Player(Scene inScene, String imageName, int x, int y, int scale, int cellSize, int frames,
 			int msBetweenFrames) 
@@ -23,6 +28,10 @@ public class Player extends SimplePlayer
 		healthBar.setFixedScreenPosition(true);
 
 		this.setZoomingEnabled(true);
+		
+		torch = new GlowLight(inScene, 0, 0, 2);
+		
+		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white);
 		
 	}
 
@@ -36,7 +45,12 @@ public class Player extends SimplePlayer
 	protected void update() 
 	{
 		super.update();
+		
+		this.timeLabel.updateText(this.inScene.getDaysAndTime());
+		
 		healthBar.setValue(this.health);
+		this.torch.updateScreenPosition(Game.WIDTH / 2 - this.torch.getWidth(), 
+				Game.HEIGHT / 2 - this.torch.getHeight());
 	}
 
 	@Override

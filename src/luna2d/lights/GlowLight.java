@@ -7,15 +7,12 @@ import luna2d.ResourceHandler;
 import luna2d.Scene;
 
 public class GlowLight extends Light
-{
-
-	BufferedImage imgRef;
-	
-	public GlowLight(Scene inScene, int worldX, int worldY) 
+{	
+	public GlowLight(Scene inScene, int worldX, int worldY, int scale) 
 	{
-		super(inScene, worldX, worldY);
+		super(inScene, worldX, worldY, scale);
 		this.imgRef = ResourceHandler.getImage("GLOBAL_GlowLight");
-	}
+	}	
 
 	@Override
 	public void update() 

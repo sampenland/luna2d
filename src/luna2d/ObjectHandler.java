@@ -68,6 +68,16 @@ public class ObjectHandler
 		renderables.remove(r);
 	}
 	
+	public void addLight(Light l)
+	{
+		lights.add(l);
+	}
+	
+	public void removeLight(Light l)
+	{
+		lights.remove(l);
+	}
+	
 	public void addUI(UI u)
 	{
 		uis.add(u);

@@ -9,6 +9,7 @@ import luna2d.DayNightCycleTime;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
+import luna2d.lights.GlowLight;
 import theHunter.DayNightCycleEngine;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
@@ -105,7 +106,7 @@ public class MapPlayer extends Scene
 		this.getGame().updateScale(MAP_SCALE);
 		
 		// Startup day and night
-		this.setDayNightCycle(new DayNightCycleEngine(500, 8, 20, Color.orange, Color.white, Color.orange, Color.black), new DayNightCycleTime(20, 0, 0));
+		this.setDayNightCycle(new DayNightCycleEngine(50, 8, 20, Color.orange, Color.white, Color.orange, Color.black), new DayNightCycleTime(8, 0, 0));
 	}
 
 	@Override
@@ -117,7 +118,6 @@ public class MapPlayer extends Scene
 	@Override
 	public void update() 
 	{
-		Log.println(this.getDaysAndTime());
 		checkKeys();
 	}
 	
