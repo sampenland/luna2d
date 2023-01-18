@@ -225,6 +225,11 @@ public class MapEditor extends Scene
 	
 	private void checkKeys()
 	{
+		if (this.detailedMenu != null && this.detailedMenu.visible)
+		{
+			return;
+		}
+		
 		if (this.isKeyPressed(KeyEvent.VK_ESCAPE))
 		{
 			this.openScene("MainMenu");

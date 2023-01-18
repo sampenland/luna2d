@@ -13,7 +13,11 @@ import luna2d.renderables.TextDisplay;
 
 public class Player extends SimplePlayer
 {
+	private float hunger;
+	private float hungerDrain = 0.08f;
+	
 	private FillBar healthBar;
+	private FillBar hungerBar;
 	private GlowLight torch;
 	
 	private TextDisplay timeLabel;
@@ -23,9 +27,16 @@ public class Player extends SimplePlayer
 	{
 		super(inScene, imageName, x, y, scale, cellSize, frames, msBetweenFrames);
 		
-		healthBar = new FillBar(this.health, Game.WIDTH / 2 - 96, Game.HEIGHT / 2 - 96, 
+		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
+		healthBar.setEnableCameraScaling(false);
 		healthBar.setFixedScreenPosition(true);
+		
+		this.hunger = 100;
+		new TextDisplay(inScene, "Hunger", 10, 35, Color.white);
+		hungerBar = new FillBar(Math.round(this.hunger), 60, 30, cellSize * 3, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
+		hungerBar.setEnableCameraScaling(false);
+		hungerBar.setFixedScreenPosition(true);
 
 		this.setZoomingEnabled(true);
 		
@@ -37,8 +48,7 @@ public class Player extends SimplePlayer
 
 	@Override
 	protected void render(Graphics g) 
-	{	
-		healthBar.render(g);
+	{			
 	}
 
 	@Override
@@ -48,9 +58,25 @@ public class Player extends SimplePlayer
 		
 		this.timeLabel.updateText(this.inScene.getDaysAndTime());
 		
-		healthBar.setValue(this.health);
+		healthBar.setValue(Math.round(this.health));
+		
+		handleHunger();
+		
 		this.torch.updateScreenPosition(Game.WIDTH / 2 - this.torch.getWidth(), 
 				Game.HEIGHT / 2 - this.torch.getHeight());
+	}
+	
+	private void handleHunger()
+	{
+		float drain = this.hungerDrain; // also with conditions
+		
+		this.hunger -= drain;
+		hungerBar.setValue(Math.round(this.hunger));
+		
+		if (this.hunger < 1)
+		{
+			this.health -= 0.05f;
+		}
 	}
 
 	@Override

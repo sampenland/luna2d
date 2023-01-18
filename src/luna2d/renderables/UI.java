@@ -1,7 +1,6 @@
 package luna2d.renderables;
 
 import java.awt.Graphics;
-
 import luna2d.Scene;
 
 public abstract class UI 
@@ -12,6 +11,9 @@ public abstract class UI
 	protected int scale;
 	public boolean visible;
 	
+	public boolean inputEnabled;
+	protected boolean destroyNow;
+	
 	public UI(Scene inScene, int scale)
 	{
 		this.inScene = inScene;
@@ -19,6 +21,22 @@ public abstract class UI
 		this.scale = scale;
 		this.worldX = this.worldY = this.screenX = this.screenY = 0;
 		this.visible = true;
+		this.inputEnabled = false;
+	}
+	
+	public boolean isInputEnabled()
+	{
+		return this.inputEnabled;
+	}
+	
+	public void destroy()
+	{
+		this.destroyNow = true;
+	}
+	
+	public boolean getDestroyNow()
+	{
+		return this.destroyNow;
 	}
 	
 	public void updateWorldPosition(int x, int y)
@@ -37,6 +55,16 @@ public abstract class UI
 		return this.worldY;
 	}
 	
+	public int getScreenX()
+	{
+		return this.screenX;
+	}
+	
+	public int getScreenY()
+	{
+		return this.screenY;
+	}
+	
 	public void updateScreenPosition(int x, int y)
 	{
 		this.screenX = x;
@@ -44,6 +72,7 @@ public abstract class UI
 	}
 	
 	public abstract void render(Graphics g);
+	public abstract void clean();
 	
 	public void show()
 	{
@@ -61,4 +90,6 @@ public abstract class UI
 	}
 	
 	public abstract void update();
+	public abstract void keyPressed(int keycode);
+	public abstract void keyReleased(int keycode);
 }

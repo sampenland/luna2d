@@ -1,7 +1,6 @@
 package luna2d.lights;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 import luna2d.ResourceHandler;
 import luna2d.Scene;

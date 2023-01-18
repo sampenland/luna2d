@@ -9,11 +9,14 @@ import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
 import luna2d.renderables.UI;
 
-public class UIMenu extends UI
+public abstract class UIMenu extends UI
 {
 
 	private LinkedList<Sprite> sprites;
 	private LinkedList<TextDisplay> textDisplays;
+	
+	private LinkedList<UITextInput> textInputs;
+	protected UITextInput focusedTextInput;
 	
 	private Rectangle drawRect;
 	private Color bkgColor;
@@ -24,6 +27,8 @@ public class UIMenu extends UI
 		
 		this.sprites = new LinkedList<Sprite>();
 		this.textDisplays = new LinkedList<TextDisplay>();
+		this.textInputs = new LinkedList<UITextInput>();
+		
 		this.visible = false;
 		this.scale = scale;
 		
@@ -36,6 +41,14 @@ public class UIMenu extends UI
 		this.visible = false;
 	}
 	
+	protected abstract void launch();
+	protected abstract void close();
+	
+	protected void setFocusedTextInput(UITextInput input)
+	{
+		this.focusedTextInput = input;
+	}
+	
 	public int getWidth()
 	{
 		return this.drawRect.width;
@@ -44,6 +57,16 @@ public class UIMenu extends UI
 	public int getHeight()
 	{
 		return this.drawRect.height;
+	}
+	
+	protected void addUITextInput(UITextInput tInput)
+	{
+		this.textInputs.add(tInput);
+	}
+	
+	protected void removeUITextInput(UITextInput tInput)
+	{
+		this.textInputs.remove(tInput);
 	}
 	
 	protected void addSprite(Sprite sprite)
@@ -72,6 +95,7 @@ public class UIMenu extends UI
 	{
 		textDisplays.clear();
 		sprites.clear();
+		textInputs.clear();
 	}
 	
 	public void toggleVisible()
@@ -83,6 +107,7 @@ public class UIMenu extends UI
 		else
 		{
 			this.show();
+			this.launch();
 		}
 	}
 	
@@ -108,22 +133,57 @@ public class UIMenu extends UI
 		{
 			t.customRender(g);
 		}
+		
+		for (UITextInput t : textInputs)
+		{
+			t.render(g);
+		}
 	}
 
 	@Override
 	public void update() 
 	{
+		if (this.focusedTextInput != null)
+		{
+			this.focusedTextInput.visible = this.visible;
+		}
+		
 		if(!this.visible) return;
 		
-		for (Sprite s : sprites)
+		if (this.focusedTextInput != null)
 		{
-			s.update();
+			this.focusedTextInput.update();
 		}
+		else
+		{
+			for (Sprite s : sprites)
+			{
+				s.update();
+			}
+			
+			for (TextDisplay t : textDisplays)
+			{
+				t.update();
+			}	
+		}
+	}
+
+	@Override
+	public void clean() {
+		// TODO Auto-generated method stub
 		
-		for (TextDisplay t : textDisplays)
-		{
-			t.update();
-		}
+	}
+
+	@Override
+	public void keyPressed(int keycode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(int keycode) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

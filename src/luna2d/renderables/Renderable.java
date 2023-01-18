@@ -9,7 +9,7 @@ public abstract class Renderable
 {
 	private Scene inScene;
 	
-	public int worldX, worldY, screenX, screenY;
+	public int worldX, worldY, screenX, screenY, width, height;
 	protected int scale;
 	public boolean visible;
 	protected boolean customRender; // Means it will not be drawn from automatically but manually

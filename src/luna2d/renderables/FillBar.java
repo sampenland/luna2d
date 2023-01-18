@@ -26,6 +26,8 @@ public class FillBar extends UI
 	private int value;
 	private int max;
 	
+	protected boolean enableCameraScaling = false;
+	
 	public FillBar(int value, int x, int y, int w, int h, int outlineSize, int scale,
 			Color bkgColor, Color outlineColor, Color valueColor, Scene inScene) 
 	{
@@ -52,6 +54,16 @@ public class FillBar extends UI
 		
 	}
 	
+	public void setEnableCameraScaling(boolean val)
+	{
+		this.enableCameraScaling = val;
+	}
+	
+	public boolean getCameraScaling()
+	{
+		return this.enableCameraScaling;
+	}
+	
 	public void setFixedScreenPosition(boolean val)
 	{
 		this.fixedScreenPosition = val;
@@ -59,7 +71,12 @@ public class FillBar extends UI
 	
 	public int getWidth()
 	{
-		return this.bkgRect.width * Game.CAMERA_SCALE;
+		if (this.enableCameraScaling)
+		{
+			return this.bkgRect.width * Game.CAMERA_SCALE; 
+		}
+		
+		return this.bkgRect.width;
 	}
 	
 	protected void setMax(int max)
@@ -71,6 +88,11 @@ public class FillBar extends UI
 	public void render(Graphics g) 
 	{
 		int drawX, drawY;
+		int camScale = Game.CAMERA_SCALE;
+		if (!this.enableCameraScaling)
+		{
+			camScale = 1;
+		}
 		
 		if(this.fixedScreenPosition)
 		{
@@ -79,14 +101,14 @@ public class FillBar extends UI
 		}
 		else
 		{
-			drawX = Game.CAMERA_X * Game.CAMERA_SCALE;
-			drawY = Game.CAMERA_Y * Game.CAMERA_SCALE;
+			drawX = Game.CAMERA_X * camScale;
+			drawY = Game.CAMERA_Y * camScale;
 		}
 		
 		g.setColor(outlineColor);
 		g.fillRect(drawX + this.outlineRect.x, drawY + this.outlineRect.y, 
-				Math.round(this.outlineRect.width * this.scale * Game.CAMERA_SCALE), 
-				Math.round(this.outlineRect.height * this.scale * Game.CAMERA_SCALE));
+				Math.round(this.outlineRect.width * this.scale * camScale), 
+				Math.round(this.outlineRect.height * this.scale * camScale));
 		
 		g.setColor(bkgColor);
 		g.fillRect(drawX + this.bkgRect.x, drawY + this.bkgRect.y, 
@@ -94,8 +116,8 @@ public class FillBar extends UI
 		
 		g.setColor(valueColor);
 		g.fillRect(drawX + this.valueRect.x, drawY + this.valueRect.y, 
-				Math.round(this.valueRect.width * this.scale * Game.CAMERA_SCALE) + this.outlineSize, 
-				Math.round(this.outlineRect.height * this.scale * Game.CAMERA_SCALE) - this.outlineSize * 2);
+				Math.round(this.valueRect.width * this.scale * camScale) + this.outlineSize, 
+				Math.round(this.outlineRect.height * this.scale * camScale) - this.outlineSize * 2);
 		}
 
 	@Override
@@ -132,5 +154,23 @@ public class FillBar extends UI
 	public void setValue(int value)
 	{
 		this.value = value;
+	}
+
+	@Override
+	public void clean() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(int keycode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(int keycode) {
+		// TODO Auto-generated method stub
+		
 	}
 }

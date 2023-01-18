@@ -1,6 +1,7 @@
 package luna2d;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Maths 
@@ -37,5 +38,11 @@ public class Maths
 		p.y = Math.round(((y - 32) - startY) / cellSize);
 		
 		return p;
+	}
+	
+	public static boolean characterIsAlphaNumeric(int character, boolean allowBackspace)
+	{
+		if (allowBackspace && character == KeyEvent.VK_BACK_SPACE) return true;
+		return ((character >= (int)'0' & character <= (int)'9') || (character >= (int)'a' && character <= (int)'z') || (character >= (int)'A' && character <= (int)'Z'));
 	}
 }

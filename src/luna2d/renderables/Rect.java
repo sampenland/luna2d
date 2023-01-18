@@ -2,8 +2,6 @@ package luna2d.renderables;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-
 import luna2d.Game;
 import luna2d.Scene;
 
@@ -11,7 +9,6 @@ public class Rect extends Renderable
 {
 
 	private Color color;
-	private Rectangle rect;
 	private boolean filled = true;
 	
 	public Rect(Scene inScene, int x, int y, int w, int h, boolean filled, Color c, int scale) 
@@ -20,31 +17,41 @@ public class Rect extends Renderable
 		
 		this.color = c;
 		
-		this.rect = new Rectangle();
-		
-		this.rect.x = x;
-		this.rect.y = y;
-		this.rect.width = w;
-		this.rect.height = h;
+		this.screenX = x;
+		this.screenY = y;
+		this.width = w;
+		this.height = h;
 		this.filled = filled;
 	}
+	
+	public int getWidth()
+	{
+		return this.width;
+	}
 
+	public int getHeight()
+	{
+		return this.height;
+	}
+	
 	@Override
 	public void render(Graphics g) 
 	{
+		if (!this.visible) return;
+		
 		g.setColor(this.color);
 		
 		if (this.filled)
 		{
-			g.fillRect(Game.CAMERA_X + this.rect.x, Game.CAMERA_Y + this.rect.y, 
-					Math.round(this.rect.width * this.scale * Game.CAMERA_SCALE), 
-					Math.round(this.rect.height * this.scale * Game.CAMERA_SCALE));
+			g.fillRect(Game.CAMERA_X + this.screenX, Game.CAMERA_Y + this.screenY, 
+					Math.round(this.width * this.scale * Game.CAMERA_SCALE), 
+					Math.round(this.height * this.scale * Game.CAMERA_SCALE));
 		}
 		else
 		{
-			g.drawRect(Game.CAMERA_X + this.rect.x, Game.CAMERA_Y + this.rect.y, 
-					Math.round(this.rect.width * this.scale * Game.CAMERA_SCALE), 
-					Math.round(this.rect.height * this.scale * Game.CAMERA_SCALE));
+			g.drawRect(Game.CAMERA_X + this.screenX, Game.CAMERA_Y + this.screenY, 
+					Math.round(this.width * this.scale * Game.CAMERA_SCALE), 
+					Math.round(this.height * this.scale * Game.CAMERA_SCALE));
 		}
 		
 	}
@@ -58,14 +65,14 @@ public class Rect extends Renderable
 	@Override
 	public void updateScreenPosition(int x, int y) 
 	{
-		this.rect.x = x;
-		this.rect.y = y;
+		this.screenX = x;
+		this.screenY = y;
 	}
 	
 	public void updateSize(int w, int h)
 	{
-		this.rect.width = w;
-		this.rect.height = h;
+		this.width = w;
+		this.height = h;
 	}
 	
 	public void updateColor(Color c)

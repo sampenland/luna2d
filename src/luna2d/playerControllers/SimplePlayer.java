@@ -12,7 +12,7 @@ public class SimplePlayer extends GameObject
 {
 	private boolean zoomingEnabled = false;
 	protected int moveSpeed = 5;
-	protected int health = 100;
+	protected float health = 100;
 	
 	protected Sprite sprite;
 	

@@ -156,10 +156,27 @@ public class ObjectHandler
 	
 	public void updateAllUIs()
 	{
+		LinkedList<UI> removes = new LinkedList<UI>();
+		
 		for(int i = 0; i < uis.size(); i++)
 		{
 			UI temp = uis.get(i);
+			if (temp.getDestroyNow())
+			{
+				removes.add(temp);
+				continue;
+			}
+			
 			temp.gameUpdate();
+		}
+		
+		for(UI remove : removes)
+		{
+			if (remove != null)
+			{
+				remove.clean();
+				uis.remove(remove);
+			}
 		}
 	}
 	

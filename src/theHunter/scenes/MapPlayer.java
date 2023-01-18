@@ -4,12 +4,10 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import luna2d.DayNightCycle;
 import luna2d.DayNightCycleTime;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
-import luna2d.lights.GlowLight;
 import theHunter.DayNightCycleEngine;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;

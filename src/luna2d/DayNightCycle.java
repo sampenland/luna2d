@@ -2,7 +2,6 @@ package luna2d;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.Timer;
 
 import luna2d.timers.DayNightCycleTask;
@@ -20,8 +19,6 @@ public abstract class DayNightCycle
 	
 	private int nightHours;
 	private float alpha;
-	
-	private BufferedImage imgRef;
 	
 	public DayNightCycle(int msOfInGameMinute, int startOfDayHour, int startOfNightHour, Color dawnColor, Color dayColor, Color dustColor, Color nightColor)
 	{

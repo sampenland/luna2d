@@ -46,6 +46,11 @@ public class Game extends Canvas implements Runnable {
 		window = new Window(WIDTH, HEIGHT, this.title, this);
 	}
 	
+	public Window getWindow()
+	{
+		return this.window;
+	}
+	
 	public void updateScale(int scale)
 	{
 		CAMERA_SCALE = scale;
