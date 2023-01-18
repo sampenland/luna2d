@@ -3,7 +3,7 @@ package luna2d;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import luna2d.renderables.UI;
+import luna2d.ui.UI;
 
 public class InputHandler extends KeyAdapter 
 {	

@@ -173,8 +173,8 @@ public class Game extends Canvas implements Runnable {
 		
 		while (this.gameRunning)
 		{
-			mouseX = MouseInfo.getPointerInfo().getLocation().x - this.window.getFrame().getLocationOnScreen().x;
-			mouseY = MouseInfo.getPointerInfo().getLocation().y - this.window.getFrame().getLocationOnScreen().y;
+			mouseX = (MouseInfo.getPointerInfo().getLocation().x - this.window.getFrame().getLocationOnScreen().x) - 8;
+			mouseY = (MouseInfo.getPointerInfo().getLocation().y - this.window.getFrame().getLocationOnScreen().y) - 32;
 			
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
@@ -195,7 +195,7 @@ public class Game extends Canvas implements Runnable {
 				
 			if(System.currentTimeMillis() - timer > 1000)
 			{
-				Log.println("FPS: " + framesPerSecond);
+				//Log.println("FPS: " + framesPerSecond);
 				timer += 1000;
 				framesPerSecond = 0;
 			}

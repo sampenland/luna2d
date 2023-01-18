@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import luna2d.lights.Light;
 import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
-import luna2d.renderables.UI;
+import luna2d.ui.UI;
 
 public class ObjectHandler 
 {	
@@ -190,6 +190,15 @@ public class ObjectHandler
 				temp.onMouseClick(e);
 			}
 		}
+		
+		for(int i = 0; i < uis.size(); i++)
+		{
+			UI temp = uis.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMouseClick(e);
+			}
+		}
 	}
 	
 	public void onMousePressed(MouseEvent e)
@@ -202,6 +211,15 @@ public class ObjectHandler
 				temp.onMousePressed(e);
 			}
 		}
+		
+		for(int i = 0; i < uis.size(); i++)
+		{
+			UI temp = uis.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMousePressed(e);
+			}
+		}
 	}
 	
 	public void onMouseReleased(MouseEvent e)
@@ -209,6 +227,15 @@ public class ObjectHandler
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMouseReleased(e);
+			}
+		}
+		
+		for(int i = 0; i < uis.size(); i++)
+		{
+			UI temp = uis.get(i);
 			if (temp.inputEnabled)
 			{				
 				temp.onMouseReleased(e);

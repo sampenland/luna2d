@@ -1,6 +1,8 @@
-package luna2d.renderables;
+package luna2d.ui;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+
 import luna2d.Scene;
 
 public abstract class UI 
@@ -92,4 +94,7 @@ public abstract class UI
 	public abstract void update();
 	public abstract void keyPressed(int keycode);
 	public abstract void keyReleased(int keycode);
+	public abstract void onMouseClick(MouseEvent e);
+	public abstract void onMousePressed(MouseEvent e);
+	public abstract void onMouseReleased(MouseEvent e);
 }

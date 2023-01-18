@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
-import luna2d.renderables.UI;
 
 public abstract class UIMenu extends UI
 {

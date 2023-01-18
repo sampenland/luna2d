@@ -3,9 +3,11 @@ package luna2d.renderables;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 
 import luna2d.Game;
 import luna2d.Scene;
+import luna2d.ui.UI;
 
 public class FillBar extends UI
 {
@@ -170,6 +172,24 @@ public class FillBar extends UI
 
 	@Override
 	public void keyReleased(int keycode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseClick(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -2,23 +2,31 @@ package luna2d.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
+import luna2d.Game;
+import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Rect;
-import luna2d.renderables.UI;
 
 public class UITextInput extends UI 
 {	
 	private Rect drawRect;
 	private Color bkgColor;
 	private Color textColor;
+	private Color highlightColor;
 	
 	private String currentText;
 	private int max;
 	private int paddingX;
 	private int paddingY;
+	
+	private boolean focused;
+	public boolean mouseClicked;
 	
 	public UITextInput(Scene inScene, String placeHolderText, int x, int y, int w, int h, int max) 
 	{
@@ -28,6 +36,10 @@ public class UITextInput extends UI
 	    
 	    this.bkgColor = Color.white;
 	    this.textColor = Color.black;
+	    this.highlightColor = Color.yellow;
+	    
+	    this.focused = false;
+	    this.mouseClicked = false;
 	    
 	    this.drawRect = new Rect(inScene, x, y, w, h, true, Color.white, 1);
 	    this.currentText = placeHolderText;
@@ -37,15 +49,21 @@ public class UITextInput extends UI
 	    this.inputEnabled = true;
 	}
 	
+	public void setFocus(boolean val)
+	{
+		this.focused = val;
+	}
+	
 	public String getText()
 	{
 		return this.currentText;
 	}
 	
-	public void setColor(Color bkg, Color text)
+	public void setColor(Color bkg, Color text, Color highlightColor)
 	{
 		this.bkgColor = bkg;
 		this.textColor = text;
+		this.highlightColor = highlightColor;
 	}
 
 	@Override
@@ -53,7 +71,15 @@ public class UITextInput extends UI
 	{
 		if(!this.visible) return;
 		
-		g.setColor(bkgColor);
+		if (this.focused)
+		{
+			g.setColor(highlightColor);
+		}
+		else
+		{
+			g.setColor(bkgColor);
+		}
+		
 		g.fillRect(drawRect.screenX, drawRect.screenY, drawRect.getWidth(), drawRect.getHeight());
 		g.setColor(textColor);
 		g.drawString(this.currentText, drawRect.screenX + this.paddingX, drawRect.screenY + this.paddingY);
@@ -77,6 +103,8 @@ public class UITextInput extends UI
 	@Override
 	public void keyReleased(int keycode) 
 	{	
+		if (!this.focused) return;
+		
 		if (keycode == -1 || !Maths.characterIsAlphaNumeric(keycode, true)) return;
 
 		if (this.currentText.length() >= this.max && keycode != KeyEvent.VK_BACK_SPACE) return;
@@ -92,6 +120,25 @@ public class UITextInput extends UI
 		}
 		
 		this.currentText += (char)keycode;
+	}
+
+	@Override
+	public void onMouseClick(MouseEvent e) 
+	{
+		Rectangle r = new Rectangle(this.drawRect.screenX, this.drawRect.screenY, this.drawRect.width, this.drawRect.height);
+		this.mouseClicked = r.contains(new Point(Game.mouseX, Game.mouseY));
+	}
+
+	@Override
+	public void onMousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
