@@ -78,6 +78,11 @@ public class Game extends Canvas implements Runnable {
 		return sceneManager;
 	}
 	
+	public MouseHandler getMouseHandler()
+	{
+		return this.mouseHandler;
+	}
+	
 	public ObjectHandler getObjectHandler()
 	{
 		if (this.sceneManager != null)
@@ -109,6 +114,8 @@ public class Game extends Canvas implements Runnable {
 			this.mouseHandler = new MouseHandler(this);
 			this.addMouseListener(mouseHandler);
 		}
+		
+		if (this.inputHandler == null || this.mouseHandler == null) return;
 		
 		if (!ResourceHandler.initialized)
 		{

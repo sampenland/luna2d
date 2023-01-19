@@ -17,12 +17,14 @@ public abstract class Scene
 	public String name;
 
 	protected ObjectHandler objHandler;
+	protected MouseHandler objMouseHandler;
 	protected HashMap<Integer, Boolean> keys;
 	private boolean inputEnabled = false;
 	private boolean mouseEnabled = false;
 	
 	private Game game;	
 	private DayNightCycle dayNightCycle = null;
+	private Object player;
 	
 	public Scene(String name)
 	{
@@ -30,6 +32,16 @@ public abstract class Scene
 		this.keys = new HashMap<Integer, Boolean>();
 		this.objHandler = new ObjectHandler();
 		this.dayNightCycle = null;
+	}
+	
+	public void setPlayer(Object player)
+	{
+		this.player = player;
+	}
+	
+	public Object getPlayer()
+	{
+		return this.player;
 	}
 	
 	public void setDayNightCycle(DayNightCycle cycle, DayNightCycleTime time)
@@ -91,6 +103,12 @@ public abstract class Scene
 	void setGame(Game g)
 	{
 		this.game = g;
+		this.objMouseHandler = g.getMouseHandler();
+	}
+	
+	public MouseHandler getMouseHandler()
+	{
+		return this.objMouseHandler;
 	}
 	
 	public Game getGame()
@@ -205,6 +223,11 @@ public abstract class Scene
 		if(!this.inputEnabled) return false;
 		if (this.keys.get(keycode) == null) return false;
 		return this.keys.get(keycode);
+	}
+	
+	public boolean isMouseClicked()
+	{
+		return this.objMouseHandler.mouseClicked;
 	}
 	
 	protected abstract void onMouseClick(MouseEvent e);

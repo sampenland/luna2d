@@ -8,14 +8,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import luna2d.Game;
-import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
-import luna2d.renderables.Rect;
 
 public class UITextInput extends UI 
 {	
-	private Rect drawRect;
+	private Rectangle drawRect;
 	private Color bkgColor;
 	private Color textColor;
 	private Color highlightColor;
@@ -41,12 +39,25 @@ public class UITextInput extends UI
 	    this.focused = false;
 	    this.mouseClicked = false;
 	    
-	    this.drawRect = new Rect(inScene, x, y, w, h, true, Color.white, 1);
+	    this.drawRect = new Rectangle( x, y, w, h);
 	    this.currentText = placeHolderText;
 	    this.paddingX = 6;
 	    this.paddingY = h / 2 + 6;
 	    
 	    this.inputEnabled = true;
+	    this.visible = false;
+	}
+	
+	public void hide()
+	{
+		this.inputEnabled = false;
+		this.visible = false;
+	}
+	
+	public void show()
+	{
+		this.inputEnabled = true;
+		this.visible = true;
 	}
 	
 	public void setFocus(boolean val)
@@ -80,9 +91,9 @@ public class UITextInput extends UI
 			g.setColor(bkgColor);
 		}
 		
-		g.fillRect(drawRect.screenX, drawRect.screenY, drawRect.getWidth(), drawRect.getHeight());
+		g.fillRect(this.drawRect.x, this.drawRect.y, this.drawRect.width, this.drawRect.height);
 		g.setColor(textColor);
-		g.drawString(this.currentText, drawRect.screenX + this.paddingX, drawRect.screenY + this.paddingY);
+		g.drawString(this.currentText, this.drawRect.x + this.paddingX, this.drawRect.y + this.paddingY);
 	}
 	
 	@Override
@@ -125,8 +136,7 @@ public class UITextInput extends UI
 	@Override
 	public void onMouseClick(MouseEvent e) 
 	{
-		Rectangle r = new Rectangle(this.drawRect.screenX, this.drawRect.screenY, this.drawRect.width, this.drawRect.height);
-		this.mouseClicked = r.contains(new Point(Game.mouseX, Game.mouseY));
+		this.mouseClicked = this.drawRect.contains(new Point(Game.mouseX, Game.mouseY));
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import luna2d.Game;
-import luna2d.Log;
 import luna2d.Scene;
 
 public class UIButton extends UI 

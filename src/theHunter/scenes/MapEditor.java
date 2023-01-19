@@ -17,7 +17,12 @@ import luna2d.renderables.TextDisplay;
 import luna2d.timers.SceneTask;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
+import theHunter.Player;
 import theHunter.TheHunter;
+import theHunter.objects.BerryBush;
+import theHunter.objects.Tree;
+import theHunter.objects.WaterSource;
+import theHunter.objects.Wolf;
 import theHunter.ui.MapEditorMenu;
 
 public class MapEditor extends Scene
@@ -54,6 +59,85 @@ public class MapEditor extends Scene
 		mouseStatus = MOUSE_STATUS.IDLE;
 		this.currentSelection = ObjectTypes.Player;
 		this.lastSelection = ObjectTypes.Empty;
+	}
+	
+	public void injectMapData(int[][] data, boolean isMap)
+	{
+		if (isMap)
+		{
+			for(int r = 0; r < TheHunter.ROWS; r++)
+			{
+				for(int c = 0; c < TheHunter.COLUMNS; c++)
+				{		
+					
+					ObjectTypes objectType = ObjectTypes.values()[data[r][c]];
+					
+					switch(objectType)
+					{
+					case Empty:
+						break;
+						
+					case Bush:
+						this.mapDataSprites[r][c] = new Sprite(this, "BerryBush", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, 16, 2, 0);
+						break;
+						
+					case GndDirt:
+						break;
+						
+					case GndGrass:
+						break;
+						
+					case GndRock:
+						break;
+						
+					case GndWater:
+						break;
+						
+					case Player:
+						this.mapDataSprites[r][c] = new Sprite(this, "Player", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, 16, 4, 0);
+						this.currentSelectionSprite = this.mapDataSprites[r][c];
+						this.currentSelection = ObjectTypes.Player;
+						break;
+						
+					case Tree:
+						this.mapDataSprites[r][c] = new Sprite(this, "Tree", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+						break;
+						
+					case Water:
+						this.mapDataSprites[r][c] = new Sprite(this, "Water", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+						break;
+						
+					case Wolf:
+						this.mapDataSprites[r][c] = new Sprite(this, "Wolf", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+						break;
+						
+					default:
+						break;
+					}
+					
+					mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+					mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
+				}
+			}
+		}
+		else
+		{
+			this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
+			
+			for(int r = 0; r < TheHunter.ROWS; r++)
+			{
+				for(int c = 0; c < TheHunter.COLUMNS; c++)
+				{
+					mapDataGrounds[r][c] = data[r][c];
+				}
+			}
+		}
+		
+		this.mouseStatus = MOUSE_STATUS.IDLE;
+		if (this.detailedMenu.visible) 
+		{
+			this.detailedMenu.hide();
+		}
 	}
 
 	@Override

@@ -40,6 +40,11 @@ public abstract class UIMenu extends UI
 		this.visible = false;
 	}
 	
+	public Scene getScene()
+	{
+		return this.inScene;
+	}
+	
 	protected abstract void launch();
 	protected abstract void close();
 	

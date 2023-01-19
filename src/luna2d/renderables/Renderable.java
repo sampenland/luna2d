@@ -27,6 +27,11 @@ public abstract class Renderable
 		this.destroyNow = false;
 	}
 	
+	public Scene getScene()
+	{
+		return this.inScene;
+	}
+	
 	public void setInMenu(UIMenu menu)
 	{
 		this.inMenu = menu;

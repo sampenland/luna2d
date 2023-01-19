@@ -1,6 +1,7 @@
 package luna2d.renderables;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
@@ -28,6 +29,8 @@ public class Sprite extends Renderable
 	private SpriteTask nextFrameTask;
 	private Timer nextFrameTimer;
 	
+	public boolean mouseClicked;
+	
 	private int objectType = -1;
 	
 	public Sprite(Scene inScene, String name, int x, int y, int scale) 
@@ -39,6 +42,8 @@ public class Sprite extends Renderable
 		this.frames = 1;
 		this.nextFrameTask = null;
 		this.nextFrameTimer = null;
+		
+		this.mouseClicked = false;
 		
 		this.scale = scale;
 		this.drawRect = new Rectangle();
@@ -74,6 +79,8 @@ public class Sprite extends Renderable
 		this.nextFrameTask = null;
 		this.nextFrameTimer = null;
 		
+		this.mouseClicked = false;
+		
 		this.scale = scale;
 		this.drawRect = new Rectangle();
 		
@@ -105,6 +112,8 @@ public class Sprite extends Renderable
 		this.currentFrame = 0;
 		this.frameWidth = frameWidth;
 		
+		this.mouseClicked = false;
+		
 		this.scale = scale;
 		this.drawRect = new Rectangle();
 		
@@ -125,6 +134,23 @@ public class Sprite extends Renderable
 		this.worldX = x;
 		this.worldY = y;
 		
+		if (msBetweenFrames > 0)
+		{			
+			this.startAnimation(msBetweenFrames);
+		}
+		
+	}
+	
+	public void setFrame(int frame)
+	{
+		if (frame < this.frames)
+		{
+			this.currentFrame = frame;
+		}
+	}
+	
+	public void startAnimation(int msBetweenFrames)
+	{
 		this.nextFrameTask = new SpriteTask(this)
 		{
 			@Override
@@ -137,7 +163,6 @@ public class Sprite extends Renderable
 		
 		this.nextFrameTimer = new Timer("Animator");
 		this.nextFrameTimer.scheduleAtFixedRate(nextFrameTask, msBetweenFrames, msBetweenFrames);
-		
 	}
 	
 	public void setObjectType(int t)
@@ -279,6 +304,15 @@ public class Sprite extends Renderable
 		{
 			this.drawRect.x = this.screenX;
 			this.drawRect.y = this.screenY;
+		}
+		
+		if (this.getScene() != null && this.getScene().getMouseHandler() != null)
+		{
+			if (this.getScene().getMouseHandler().mouseClicked)
+			{
+				Rectangle r = new Rectangle(this.screenX, this.screenY, this.drawRect.width, this.drawRect.height);
+				this.mouseClicked = r.contains(new Point(Game.mouseX, Game.mouseY));
+			}	
 		}
 	}
 	

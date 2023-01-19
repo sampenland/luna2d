@@ -25,6 +25,8 @@ public class TheHunter extends Game
 	public static final int WORLD_WIDTH = CELL_SIZE * COLUMNS;
 	public static final int WORLD_HEIGHT = CELL_SIZE * ROWS;
 	
+	public static final int RESOURCE_ACTION_DISTANCE = 10;
+	
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 640;
 		

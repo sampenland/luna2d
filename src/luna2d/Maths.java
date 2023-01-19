@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.ThreadLocalRandom;
 
+import luna2d.playerControllers.SimplePlayer;
+
 public class Maths 
 {
 
@@ -24,6 +26,22 @@ public class Maths
 	public static int random(int min, int max)
 	{
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
+	}
+	
+	public static int distanceBetweenTwoPoints(Point p1, Point p2)
+	{
+		return (int) Point.distance(p1.x, p1.y, p2.x, p2.y);
+	}
+	
+	public static int distanceBetweenPlayerAndPoint(Object playerObj, Point p)
+	{
+		if (playerObj instanceof SimplePlayer)
+		{
+			SimplePlayer player = (SimplePlayer)playerObj;
+			return (int)Point.distance(player.screenX, player.screenY, p.x, p.y);
+		}
+		
+		return 0;
 	}
 	
 	public static Point convertToGrid(int x, int y, int cellSize, int startX, int startY)

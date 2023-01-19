@@ -44,6 +44,13 @@ public class Player extends SimplePlayer
 		
 		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white);
 		
+		this.inScene.setPlayer(this);
+		
+	}
+	
+	public void pickup(Object obj, int amount)
+	{
+		
 	}
 
 	@Override

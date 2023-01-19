@@ -39,8 +39,8 @@ public class MapPlayer extends Scene
 	
 	public void loadAndStartMap(String name)
 	{
-		mapData = TheHunter.loadMapOrGrounds("map1", true);
-		mapDataGrounds = TheHunter.loadMapOrGrounds("map1", false);
+		mapData = TheHunter.loadMapOrGrounds(name, true);
+		mapDataGrounds = TheHunter.loadMapOrGrounds(name, false);
 		
 		new MapGrounds(this, 0, 0, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
 		

@@ -41,7 +41,7 @@ public class MainMenu extends Scene
 		if (this.isKeyPressed(KeyEvent.VK_P))
 		{
 			MapPlayer mapPlayer = (MapPlayer)this.openScene("MapPlayer");
-			mapPlayer.loadAndStartMap("map1");
+			mapPlayer.loadAndStartMap("m_MAP00");
 		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_E))
