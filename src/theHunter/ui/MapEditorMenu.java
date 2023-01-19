@@ -20,7 +20,7 @@ public class MapEditorMenu extends UIMenu
 	private boolean loading;
 	
 	private UITextInput mapNameInput, mapNameLoadInput;
-	private UIButton saveButton, loadButton;
+	private UIButton saveButton, loadButton, closeButton;
 	
 	public MapEditorMenu(Scene inScene, int x, int y, int width, int height, Color bkgColor, int scale) 
 	{
@@ -45,10 +45,9 @@ public class MapEditorMenu extends UIMenu
 	}
 	
 	@Override
-	protected void launch() 
+	public void launch() 
 	{
 		mapNameInput = new UITextInput(inScene, "MAP00", this.screenX + 100, this.screenY + 25, 100, 20, 8);
-		mapNameInput.visible = false;
 		this.focusedTextInput = mapNameInput;
 		
 		saveButton = new UIButton(inScene, "Save Map", this.screenX + 210, this.screenY + 25, 65, 20);
@@ -56,10 +55,10 @@ public class MapEditorMenu extends UIMenu
 		// ----
 		
 		mapNameLoadInput = new UITextInput(inScene, "MAP00", this.screenX + 100, this.screenY + 50, 100, 20, 8);
-		mapNameLoadInput.visible = false;
 		this.focusedTextInput = mapNameLoadInput;
 		
 		loadButton = new UIButton(inScene, "Load Map", this.screenX + 210, this.screenY + 50, 65, 20);
+		closeButton = new UIButton(inScene, "Close", this.screenX + 240, this.screenY + this.getHeight() - 30, 45, 20);
 		
 		this.show();
 	}
@@ -77,6 +76,11 @@ public class MapEditorMenu extends UIMenu
 		if (this.loadButton != null)
 		{			
 			this.loadButton.visible = true;
+		}
+		
+		if (this.closeButton != null)
+		{		
+			this.closeButton.visible = true;
 		}
 		
 		if (this.mapNameInput != null)
@@ -103,6 +107,11 @@ public class MapEditorMenu extends UIMenu
 		if (this.loadButton != null)
 		{		
 			this.loadButton.visible = false;
+		}
+		
+		if (this.closeButton != null)
+		{		
+			this.closeButton.visible = false;
 		}
 		
 		if (this.mapNameInput != null)
@@ -137,7 +146,13 @@ public class MapEditorMenu extends UIMenu
 	
 	private void checkMouseClicks()
 	{
-		if (this.saveButton.mouseClicked && this.saving == false)
+		if (this.closeButton.mouseClicked)
+		{
+			MapEditor me = (MapEditor)this.inScene;
+			me.closeMenu();
+			return;
+		}
+		else if (this.saveButton.mouseClicked && this.saving == false)
 		{
 			this.saving = true;
 			
@@ -230,8 +245,9 @@ public class MapEditorMenu extends UIMenu
 	}
 
 	@Override
-	protected void close() 
+	public void close() 
 	{
+		this.hide();
 	}
 
 	@Override

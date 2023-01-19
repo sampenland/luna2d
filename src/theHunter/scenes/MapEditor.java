@@ -17,12 +17,7 @@ import luna2d.renderables.TextDisplay;
 import luna2d.timers.SceneTask;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
-import theHunter.Player;
 import theHunter.TheHunter;
-import theHunter.objects.BerryBush;
-import theHunter.objects.Tree;
-import theHunter.objects.WaterSource;
-import theHunter.objects.Wolf;
 import theHunter.ui.MapEditorMenu;
 
 public class MapEditor extends Scene
@@ -133,11 +128,17 @@ public class MapEditor extends Scene
 			}
 		}
 		
+		this.closeMenu();
+	}
+	
+	public void closeMenu()
+	{
 		this.mouseStatus = MOUSE_STATUS.IDLE;
-		if (this.detailedMenu.visible) 
-		{
-			this.detailedMenu.hide();
-		}
+		
+		this.currentSelectionSprite.updateImageRef("Player", true, false);
+		this.currentSelectionSprite.setFixedScreenPosition(true);
+		
+		this.detailedMenu.close();
 	}
 
 	@Override
@@ -326,8 +327,19 @@ public class MapEditor extends Scene
 		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_M)) 
-		{
+		{			
 			this.detailedMenu.toggleVisible();
+		}
+	}
+	
+	private void setMapSpritesVisibility(boolean v)
+	{
+		for (int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for (int c = 0; c < TheHunter.COLUMNS; c++)
+			{
+				this.mapDataSprites[r][c].visible = v;
+			}
 		}
 	}
 	
@@ -341,16 +353,19 @@ public class MapEditor extends Scene
 				case IDLE:
 					this.mouseStatus = MOUSE_STATUS.SELECTING;
 					this.statusLabel.updateText("Selecting");
+					this.setMapSpritesVisibility(false);
 					break;
 					
 				case SELECTING:
 					this.mouseStatus = MOUSE_STATUS.PLACING;
 					this.statusLabel.updateText("Placing");
+					this.setMapSpritesVisibility(true);
 					break;
 					
 				case PLACING:
 					this.mouseStatus = MOUSE_STATUS.IDLE;
 					this.statusLabel.updateText("Idle");
+					this.setMapSpritesVisibility(true);
 					break;
 					
 			}
@@ -379,6 +394,8 @@ public class MapEditor extends Scene
 		int y = Game.mouseY;
 		
 		Point gPos = Maths.convertToGrid(x, y, 16, 0, TheHunter.GRIDY_OFFSET);
+
+		if (gPos.x == -1 || gPos.y == -1) return;
 		
 		switch(this.mouseStatus)
 		{
@@ -388,14 +405,19 @@ public class MapEditor extends Scene
 				
 			case SELECTING:
 				
-				if (this.selectionSprites[gPos.y][gPos.x] != null)
-				{		
-					int objType = this.selectionSprites[gPos.y][gPos.x].getObjectType();
-					this.currentSelection = ObjectTypes.values()[objType];
-					String img = ObjectTypes.values()[this.selectionSprites[gPos.y][gPos.x].getObjectType()].imgName;
-					this.currentSelectionSprite.updateImageRef(img, false, true);
-					this.currentSelectionSprite.setObjectType(objType);
-				}
+				if (this.selectionSprites.length > gPos.y && this.selectionSprites[gPos.y].length > gPos.x)
+				{
+				
+					if (this.selectionSprites[gPos.y][gPos.x] != null)
+					{		
+						int objType = this.selectionSprites[gPos.y][gPos.x].getObjectType();
+						this.currentSelection = ObjectTypes.values()[objType];
+						String img = ObjectTypes.values()[this.selectionSprites[gPos.y][gPos.x].getObjectType()].imgName;
+						this.currentSelectionSprite.updateImageRef(img, false, true);
+						this.currentSelectionSprite.setObjectType(objType);
+					}
+					
+				}	
 				
 				break;
 				

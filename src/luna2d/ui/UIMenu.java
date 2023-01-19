@@ -45,8 +45,8 @@ public abstract class UIMenu extends UI
 		return this.inScene;
 	}
 	
-	protected abstract void launch();
-	protected abstract void close();
+	public abstract void launch();
+	public abstract void close();
 	
 	protected void setFocusedTextInput(UITextInput input)
 	{
@@ -110,7 +110,6 @@ public abstract class UIMenu extends UI
 		}
 		else
 		{
-			this.show();
 			this.launch();
 		}
 	}

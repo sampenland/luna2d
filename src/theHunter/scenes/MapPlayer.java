@@ -39,6 +39,8 @@ public class MapPlayer extends Scene
 	
 	public void loadAndStartMap(String name)
 	{
+		Log.println("Loading Map: " + name);
+		
 		mapData = TheHunter.loadMapOrGrounds(name, true);
 		mapDataGrounds = TheHunter.loadMapOrGrounds(name, false);
 		

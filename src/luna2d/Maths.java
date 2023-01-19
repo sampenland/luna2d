@@ -52,8 +52,8 @@ public class Maths
 		if (startY < 0) startY = 0;
 		
 		// x - 8 and y - 32 fixes the window padding issue
-		p.x = Math.round(((x - 8) - startX) / cellSize);
-		p.y = Math.round(((y - 32) - startY) / cellSize);
+		p.x = Math.round((x - startX) / cellSize);
+		p.y = Math.round((y - startY) / cellSize);
 		
 		return p;
 	}

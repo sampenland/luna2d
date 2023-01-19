@@ -29,24 +29,24 @@ public class MouseHandler implements MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		this.objHandler.onMouseClick(e);
-		this.sceneManager.onMouseClick(e);
+		if (this.objHandler != null) this.objHandler.onMouseClick(e);
+		if (this.sceneManager != null) this.sceneManager.onMouseClick(e);
 		this.mouseClicked = true;
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-		this.objHandler.onMousePressed(e);
-		this.sceneManager.onMousePressed(e);
+		if (this.objHandler != null) this.objHandler.onMousePressed(e);
+		if (this.sceneManager != null) this.sceneManager.onMousePressed(e);
 		this.mouseClicked = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
-		this.objHandler.onMouseReleased(e);
-		this.sceneManager.onMouseReleased(e);
+		if (this.objHandler != null) this.objHandler.onMouseReleased(e);
+		if (this.sceneManager != null) this.sceneManager.onMouseReleased(e);
 		this.mouseClicked = false;
 	}
 
