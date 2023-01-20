@@ -10,7 +10,7 @@ public class MouseHandler implements MouseListener
 	private ObjectHandler objHandler;
 	private SceneManager sceneManager;
 	
-	public boolean mouseClicked;
+	//public boolean mouseClicked;
 	public boolean failedToInitialized;
 	
 	public MouseHandler(Game g)
@@ -26,7 +26,6 @@ public class MouseHandler implements MouseListener
 		this.failedToInitialized = false;
 		this.objHandler = this.game.getObjectHandler();
 		this.sceneManager = this.game.getSceneManager();
-		this.mouseClicked = false;
 	}
 	
 	@Override
@@ -34,7 +33,7 @@ public class MouseHandler implements MouseListener
 	{
 		if (this.objHandler != null) this.objHandler.onMouseClick(e);
 		if (this.sceneManager != null) this.sceneManager.onMouseClick(e);
-		this.mouseClicked = true;
+		//this.mouseClicked = true;
 	}
 
 	@Override
@@ -42,7 +41,6 @@ public class MouseHandler implements MouseListener
 	{
 		if (this.objHandler != null) this.objHandler.onMousePressed(e);
 		if (this.sceneManager != null) this.sceneManager.onMousePressed(e);
-		this.mouseClicked = true;
 	}
 
 	@Override
@@ -50,7 +48,6 @@ public class MouseHandler implements MouseListener
 	{
 		if (this.objHandler != null) this.objHandler.onMouseReleased(e);
 		if (this.sceneManager != null) this.sceneManager.onMouseReleased(e);
-		this.mouseClicked = false;
 	}
 
 	@Override

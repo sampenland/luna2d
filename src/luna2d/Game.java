@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable {
 	private boolean gameRunning = false;
 	
 	public static int WIDTH, HEIGHT, FPS;
-	public static int mouseX, mouseY;
+	public static int mouseX, mouseY, mouseWorldX, mouseWorldY;
 	private String title;
 	private Color bkgColor;
 	
@@ -200,6 +200,8 @@ public class Game extends Canvas implements Runnable {
 		{
 			mouseX = (MouseInfo.getPointerInfo().getLocation().x - this.window.getFrame().getLocationOnScreen().x) - 8;
 			mouseY = (MouseInfo.getPointerInfo().getLocation().y - this.window.getFrame().getLocationOnScreen().y) - 32;
+			
+			// Get worldMouseX and worldMouseY
 			
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;

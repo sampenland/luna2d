@@ -1,6 +1,7 @@
 package luna2d.renderables;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 
 import luna2d.Scene;
 import luna2d.ui.UIMenu;
@@ -17,6 +18,7 @@ public abstract class Renderable
 	public UIMenu inMenu;
 	
 	public boolean enableCulling;
+	public boolean inputEnabled;
 	
 	public Renderable(Scene inScene, int x, int y, int scale)
 	{
@@ -31,6 +33,7 @@ public abstract class Renderable
 		this.customRender = false;
 		this.destroyNow = false;
 		this.enableCulling = true;
+		this.inputEnabled = false;
 	}
 	
 	public Scene getScene()
@@ -106,4 +109,7 @@ public abstract class Renderable
 	}
 	
 	public abstract void update();
+	public abstract void onMouseClick(MouseEvent e);
+	public abstract void onMousePressed(MouseEvent e);
+	public abstract void onMouseReleased(MouseEvent e);
 }

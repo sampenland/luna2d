@@ -1,7 +1,9 @@
 package luna2d.renderables;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
 
@@ -303,7 +305,7 @@ public class Sprite extends Renderable
 		{
 			this.drawRect.x = this.screenX;
 			this.drawRect.y = this.screenY;
-		}
+		}		
 	}
 	
 	public int getWidth()
@@ -314,6 +316,27 @@ public class Sprite extends Renderable
 	public int getHeight()
 	{
 		return this.drawRect.height * Game.CAMERA_SCALE;
+	}
+
+	@Override
+	public void onMouseClick(MouseEvent e) 
+	{
+		Rectangle r = new Rectangle(this.worldX, this.worldY, this.width, this.height);
+		Log.println(this.worldX, this.worldY, Game.mouseWorldX, Game.mouseWorldY);
+		this.mouseClicked = r.contains(new Point(Game.mouseWorldX, Game.mouseWorldY));
+		Log.println(this.imageName +" " + this.mouseClicked);
+	}
+
+	@Override
+	public void onMousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

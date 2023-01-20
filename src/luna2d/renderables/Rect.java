@@ -2,6 +2,8 @@ package luna2d.renderables;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+
 import luna2d.Game;
 import luna2d.Scene;
 
@@ -78,6 +80,24 @@ public class Rect extends Renderable
 	public void updateColor(Color c)
 	{
 		this.color = c;
+	}
+
+	@Override
+	public void onMouseClick(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

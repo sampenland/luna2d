@@ -201,6 +201,15 @@ public class ObjectHandler
 			}
 		}
 		
+		for(int i = 0; i < renderables.size(); i++)
+		{
+			Renderable temp = renderables.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMouseClick(e);
+			}
+		}
+		
 		for(int i = 0; i < uis.size(); i++)
 		{
 			UI temp = uis.get(i);
@@ -222,6 +231,15 @@ public class ObjectHandler
 			}
 		}
 		
+		for(int i = 0; i < renderables.size(); i++)
+		{
+			Renderable temp = renderables.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMousePressed(e);
+			}
+		}
+		
 		for(int i = 0; i < uis.size(); i++)
 		{
 			UI temp = uis.get(i);
@@ -237,6 +255,15 @@ public class ObjectHandler
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
+			if (temp.inputEnabled)
+			{				
+				temp.onMouseReleased(e);
+			}
+		}
+		
+		for(int i = 0; i < renderables.size(); i++)
+		{
+			Renderable temp = renderables.get(i);
 			if (temp.inputEnabled)
 			{				
 				temp.onMouseReleased(e);

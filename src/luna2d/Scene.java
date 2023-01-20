@@ -225,11 +225,6 @@ public abstract class Scene
 		return this.keys.get(keycode);
 	}
 	
-	public boolean isMouseClicked()
-	{
-		return this.objMouseHandler.mouseClicked;
-	}
-	
 	protected abstract void onMouseClick(MouseEvent e);
 	protected abstract void onMousePressed(MouseEvent e);
 	protected abstract void onMouseReleased(MouseEvent e);
