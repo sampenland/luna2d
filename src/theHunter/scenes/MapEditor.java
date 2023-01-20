@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Timer;
 
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
@@ -56,85 +57,6 @@ public class MapEditor extends Scene
 		this.lastSelection = ObjectTypes.Empty;
 	}
 	
-	public void injectMapData(int[][] data, int[][] grounds)
-	{
-		this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
-		
-		for(int r = 0; r < TheHunter.ROWS; r++)
-		{
-			for(int c = 0; c < TheHunter.COLUMNS; c++)
-			{
-				mapDataGrounds[r][c] = grounds[r][c];
-			}
-		}
-		
-		for(int r = 0; r < TheHunter.ROWS; r++)
-		{
-			for(int c = 0; c < TheHunter.COLUMNS; c++)
-			{				
-				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
-				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
-			}
-		}
-		
-		for(int r = 0; r < TheHunter.ROWS; r++)
-		{
-			for(int c = 0; c < TheHunter.COLUMNS; c++)
-			{		
-				this.mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
-				
-				ObjectTypes objectType = ObjectTypes.values()[data[r][c]];
-				
-				switch(objectType)
-				{
-				case Empty:
-					break;
-					
-				case Bush:
-					this.mapDataSprites[r][c].updateImageRef("BerryBush", true, false);
-					break;
-					
-				case GndDirt:
-					break;
-					
-				case GndGrass:
-					break;
-					
-				case GndRock:
-					break;
-					
-				case GndWater:
-					break;
-					
-				case Player:
-					this.playerRow = r;
-					this.playerCol = c;
-					this.mapDataSprites[r][c].updateImageRef("Player", true, false);
-					break;
-					
-				case Tree:
-					this.mapDataSprites[r][c].updateImageRef("Tree", true, false);
-					break;
-					
-				case Water:
-					this.mapDataSprites[r][c].updateImageRef("Water", true, false);
-					break;
-					
-				case Wolf:
-					this.mapDataSprites[r][c].updateImageRef("Wolf", true, false);
-					break;
-					
-				default:
-					break;
-				}
-				
-				mapDataSprites[r][c].setObjectType(objectType.intValue);
-			}
-		}
-		
-		this.closeMenu();
-	}
-	
 	public void closeMenu()
 	{
 		this.mouseStatus = MOUSE_STATUS.IDLE;
@@ -149,6 +71,12 @@ public class MapEditor extends Scene
 	public void start() 
 	{		
 		this.setMouseEnabled(true);
+		
+		this.mouseStatus = MOUSE_STATUS.IDLE;
+		
+		this.playerRow = 0;
+		this.playerCol = 0;
+		
 		this.mapDataSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
 		this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
 		this.selectionSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
@@ -198,6 +126,70 @@ public class MapEditor extends Scene
 		mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Player.intValue);
 		
 		this.detailedMenu = new MapEditorMenu(this, Game.WIDTH / 2 - 150, Game.HEIGHT / 2 - 100, 300, 200, new Color(0, 0, 0, 0.45f), 1);
+	}
+	
+	public void injectMapData(int[][] data, int[][] grounds)
+	{
+		mapDataSprites[this.playerRow][this.playerCol].updateImageRef("", false, true);
+		mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Empty.intValue);
+		
+		for(int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for(int c = 0; c < TheHunter.COLUMNS; c++)
+			{		
+				this.mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+				
+				ObjectTypes objectType = ObjectTypes.values()[data[r][c]];
+				
+				switch(objectType)
+				{
+				case Empty:
+					this.mapDataSprites[r][c].updateImageRef("", true, true);
+					break;
+					
+				case Bush:
+					this.mapDataSprites[r][c].updateImageRef("BerryBush", true, true);
+					break;
+					
+				case GndDirt:
+					break;
+					
+				case GndGrass:
+					break;
+					
+				case GndRock:
+					break;
+					
+				case GndWater:
+					break;
+					
+				case Player:
+					this.playerRow = r;
+					this.playerCol = c;
+					this.mapDataSprites[r][c].updateImageRef("Player", true, 16, 16);
+					break;
+					
+				case Tree:
+					this.mapDataSprites[r][c].updateImageRef("Tree", true, true);
+					break;
+					
+				case Water:
+					this.mapDataSprites[r][c].updateImageRef("Water", true, true);
+					break;
+					
+				case Wolf:
+					this.mapDataSprites[r][c].updateImageRef("Wolf", true, true);
+					break;
+					
+				default:
+					break;
+				}
+				
+				mapDataSprites[r][c].setObjectType(objectType.intValue);
+			}
+		}
+		
+		this.closeMenu();
 	}
 
 	@Override
@@ -296,7 +288,7 @@ public class MapEditor extends Scene
 		switch(this.currentSelection)
 		{
 		case Empty:
-			return "n/a";
+			return "";
 		case Bush:
 			return "Bush";
 		case Player:
@@ -417,7 +409,20 @@ public class MapEditor extends Scene
 						int objType = this.selectionSprites[gPos.y][gPos.x].getObjectType();
 						this.currentSelection = ObjectTypes.values()[objType];
 						String img = ObjectTypes.values()[this.selectionSprites[gPos.y][gPos.x].getObjectType()].imgName;
-						this.currentSelectionSprite.updateImageRef(img, false, true);
+						
+						if (objType == ObjectTypes.Player.intValue)
+						{
+							this.currentSelectionSprite.updateImageRef(img, false, 16, 16);
+						}
+						else if (objType == ObjectTypes.Bush.intValue)
+						{
+							this.currentSelectionSprite.updateImageRef(img, false, 16, 16);
+						}
+						else
+						{
+							this.currentSelectionSprite.updateImageRef(img, false, true);	
+						}
+						
 						this.currentSelectionSprite.setObjectType(objType);
 					}
 					
