@@ -19,19 +19,20 @@ public class BerryBush extends Sprite
 	
 	public BerryBush(Scene inScene, int x, int y, int scale)
 	{
-		super(inScene, "BerryBush", x, y, scale, 16, 2, 0);
+		super(inScene, "BerryBush", x, y, scale, 16, 1000);
 		this.hasBerries = true;
-		
-		this.regrowBerriesTask = new SpriteTask(this)
-		{
-			@Override
-			public void run()
-			{
-				((BerryBush)this.sprite).hasBerries = true;
-				((BerryBush)this.sprite).setFrame(0);
-			}
-		};
-		this.regrowBerriesTimer = new Timer("RegrowBerries");
+		this.setFrame(0);
+//		
+//		this.regrowBerriesTask = new SpriteTask(this)
+//		{
+//			@Override
+//			public void run()
+//			{
+//				((BerryBush)this.sprite).hasBerries = true;
+//				((BerryBush)this.sprite).setFrame(0);
+//			}
+//		};
+//		this.regrowBerriesTimer = new Timer("RegrowBerries");
 	}
 	
 	public void pickBerries()
