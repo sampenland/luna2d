@@ -1,7 +1,6 @@
 package luna2d.renderables;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
@@ -304,15 +303,6 @@ public class Sprite extends Renderable
 		{
 			this.drawRect.x = this.screenX;
 			this.drawRect.y = this.screenY;
-		}
-		
-		if (this.getScene() != null && this.getScene().getMouseHandler() != null)
-		{
-			if (this.getScene().getMouseHandler().mouseClicked)
-			{
-				Rectangle r = new Rectangle(this.screenX, this.screenY, this.drawRect.width, this.drawRect.height);
-				this.mouseClicked = r.contains(new Point(Game.mouseX, Game.mouseY));
-			}	
 		}
 	}
 	

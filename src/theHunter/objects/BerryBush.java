@@ -44,7 +44,7 @@ public class BerryBush extends Sprite
 		this.setFrame(1);
 	}
 	
-	private void checkKeys()
+	private void mouseClicks()
 	{
 		if (this.mouseClicked)
 		{
@@ -61,7 +61,7 @@ public class BerryBush extends Sprite
 	public void update()
 	{
 		super.update();	
-		checkKeys();
+		mouseClicks();
 	}
 	
 }

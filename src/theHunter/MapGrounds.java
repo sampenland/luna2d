@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import luna2d.ColorHandler;
 import luna2d.Game;
-import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Grid;
 
