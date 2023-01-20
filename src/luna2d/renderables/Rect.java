@@ -13,7 +13,7 @@ public class Rect extends Renderable
 	
 	public Rect(Scene inScene, int x, int y, int w, int h, boolean filled, Color c, int scale) 
 	{
-		super(inScene, scale);
+		super(inScene, x, y, scale);
 		
 		this.color = c;
 		

@@ -9,17 +9,17 @@ public class TextDisplay extends Renderable
 
 	private String text;
 	private Color textColor;
-	private int x, y;
 	
 	public TextDisplay(Scene inScene, String text, int x, int y, Color c) 
 	{
-		super(inScene, 1);
+		super(inScene, x, y, 1);
 		
 		this.text = text;
 		this.textColor = c;
-		this.x = x;
-		this.y = y;
+		this.screenX = x;
+		this.screenY = y;
 		this.visible = true;
+		this.enableCulling = false;
 	}
 	
 	public void updateText(String text)
@@ -39,7 +39,7 @@ public class TextDisplay extends Renderable
 		if (this.customRender) return;
 		
 		g.setColor(this.textColor);
-		g.drawString(this.text, this.x, this.y);
+		g.drawString(this.text, this.screenX, this.screenY);
 	}
 	
 	@Override
@@ -51,8 +51,8 @@ public class TextDisplay extends Renderable
 	@Override
 	public void updateScreenPosition(int x, int y) 
 	{
-		this.x = x;
-		this.y = y;
+		this.screenX = x;
+		this.screenY = y;
 	}
 
 }

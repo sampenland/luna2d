@@ -2,7 +2,6 @@ package luna2d;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
@@ -17,9 +16,7 @@ public class ObjectHandler
 	private static LinkedList<Renderable> renderables;
 	private static LinkedList<UI> uis;
 	private static LinkedList<Light> lights;
-	
-	private Rectangle screenBounds = new Rectangle(-16, -16, Game.WIDTH, Game.HEIGHT);
-	
+		
 	public ObjectHandler()
 	{
 		objects = new LinkedList<GameObject>();
@@ -93,19 +90,27 @@ public class ObjectHandler
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
-			if (!screenBounds.contains(new Point(temp.screenX, temp.screenY))) continue;
 			temp.render(g);
 		}
 	}
 	
 	public void renderAllRenderables(Graphics g)
 	{
+		int count = 0;
 		for(int i = 0; i < renderables.size(); i++)
 		{
 			Renderable temp = renderables.get(i);
-			if (!screenBounds.contains(new Point(temp.screenX, temp.screenY))) continue;
+			
+			// Culling			
+			if (temp.enableCulling && !Game.getScreenBounds().contains(new Point(temp.screenX, temp.screenY)))
+			{
+				continue;
+			}
+			
+			count++;
 			temp.render(g);
 		}
+		Log.println("Renderables: " + count + "    FPS: " + Game.FPS);
 	}
 	
 	public void renderAllUIs(Graphics g)

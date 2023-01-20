@@ -2,37 +2,23 @@ package theHunter;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-
+import java.awt.Point;
 import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Scene;
 import luna2d.renderables.Grid;
 
 public class MapGrounds extends Grid
-{	
-	private Rectangle screenBounds;
-	private int playerX, playerY;
+{
 	
 	public MapGrounds(Scene inScene, int x, int y, Color gridColor, int scale, int[][] fillTypes) 
 	{
 		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, gridColor, scale, fillTypes);
-		this.playerX = this.playerY = 0;
-		screenBounds = new Rectangle(0, 0, Game.WIDTH, Game.HEIGHT);
 	}
 	
 	public void updateFillTypes(int[][] fillTypes)
 	{
 		this.fillTypes = fillTypes;
-	}
-	
-	public void updatePlayerPosition(int x, int y)
-	{
-		this.playerX = x;
-		this.playerY = y;
-		
-		this.screenBounds.x = this.playerX - Game.WIDTH / 2;
-		this.screenBounds.y = this.playerY - Game.HEIGHT / 2;
 	}
 	
 	@Override
@@ -49,7 +35,10 @@ public class MapGrounds extends Grid
 				int drawY = Game.CAMERA_Y + this.y + cy;
 				
 				// Culling
-//				if ()
+				if (this.enableCulling && !Game.getScreenBounds().contains(new Point(drawX + (cellSize), drawY + (cellSize))))
+				{
+					continue;
+				}
 					
 				if (this.fillTypes != null)
 				{
@@ -102,15 +91,11 @@ public class MapGrounds extends Grid
 						Math.round(cellSize * this.scale));
 			}
 		}
-		
-		g.setColor(new Color(1, 1, 1, 0.5f));
-		g.fillRect(this.screenBounds.x, this.screenBounds.y, this.screenBounds.width, this.screenBounds.height);
 	}
 
 	@Override
 	public void update() 
 	{
-		
 	}
 
 	@Override

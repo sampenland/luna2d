@@ -15,7 +15,7 @@ public class Grid extends Renderable
 	
 	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int[][] fillTypes) 
 	{
-		super(inScene, scale);
+		super(inScene, x, y, scale);
 		
 		this.x = x;
 		this.y = y;

@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -11,6 +12,8 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = -2680723036795663013L;
 	
 	public static final int PLAYER_ID = -99;
+	
+	private static Rectangle screenBounds;
 	
 	public static int CAMERA_X = 0;
 	public static int CAMERA_Y = 0;
@@ -26,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 	private Thread mainGameThread;
 	private boolean gameRunning = false;
 	
-	public static int WIDTH, HEIGHT;
+	public static int WIDTH, HEIGHT, FPS;
 	public static int mouseX, mouseY;
 	private String title;
 	private Color bkgColor;
@@ -44,6 +47,21 @@ public class Game extends Canvas implements Runnable {
 		
 		sceneManager = new SceneManager(this);		
 		window = new Window(WIDTH, HEIGHT, this.title, this);
+		
+		screenBounds = new Rectangle(0, 0, WIDTH - 200, HEIGHT - 200);
+	}
+	
+	public void updatePlayerPosition(int x, int y, int padding)
+	{
+		screenBounds.x = x;
+		screenBounds.y = y;
+		screenBounds.width = Game.WIDTH - padding;
+		screenBounds.height = Game.HEIGHT - padding;
+	}
+	
+	public static Rectangle getScreenBounds()
+	{
+		return screenBounds;
 	}
 	
 	public Window getWindow()
@@ -166,7 +184,7 @@ public class Game extends Canvas implements Runnable {
 	{
 		System.exit(0);
 	}
-
+	
 	@Override
 	public void run() 
 	{
@@ -202,7 +220,7 @@ public class Game extends Canvas implements Runnable {
 				
 			if(System.currentTimeMillis() - timer > 1000)
 			{
-				Log.println("FPS: " + framesPerSecond);
+				FPS = framesPerSecond;
 				timer += 1000;
 				framesPerSecond = 0;
 			}

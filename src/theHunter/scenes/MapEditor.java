@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Timer;
 
 import luna2d.Game;
-import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
@@ -82,6 +81,7 @@ public class MapEditor extends Scene
 		this.selectionSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
 		
 		MapGrounds grounds = new MapGrounds(this, 0, TheHunter.GRIDY_OFFSET, new Color(1.0f, 1.0f, 0.0f, 0.1f), 1, null);
+		grounds.enableCulling = false;
 		
 		int count = 0;
 		for(int r = 0; r < TheHunter.ROWS; r++)
@@ -117,13 +117,13 @@ public class MapEditor extends Scene
 		
 		this.setInputEnabled(false);
 		
-		this.statusLabel = new TextDisplay(this, "Idle", Game.WIDTH / 2 - 64, Game.HEIGHT - 64, Color.WHITE);
-		
 		this.currentSelectionSprite = new Sprite(this, "Player", 0, 0, 1, 16, 16);
 		this.currentSelectionSprite.setFixedScreenPosition(true);
 		
 		mapDataSprites[this.playerRow][this.playerCol].updateImageRef("Player", true, 16, 16);
 		mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Player.intValue);
+		
+		this.statusLabel = new TextDisplay(this, "Idle", Game.WIDTH / 2 - 64, Game.HEIGHT - 64, Color.WHITE);
 		
 		this.detailedMenu = new MapEditorMenu(this, Game.WIDTH / 2 - 150, Game.HEIGHT / 2 - 100, 300, 200, new Color(0, 0, 0, 0.45f), 1);
 	}

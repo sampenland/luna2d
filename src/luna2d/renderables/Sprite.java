@@ -35,7 +35,7 @@ public class Sprite extends Renderable
 	
 	public Sprite(Scene inScene, String name, int x, int y, int scale) 
 	{
-		super(inScene, scale);
+		super(inScene, x, y, scale);
 		
 		this.isAnimated = false;
 		this.currentFrame = 0;
@@ -71,7 +71,7 @@ public class Sprite extends Renderable
 	
 	public Sprite(Scene inScene, String name, int x, int y, int scale, int w, int h) 
 	{
-		super(inScene, scale);
+		super(inScene, x, y, scale);
 		
 		this.isAnimated = false;
 		this.currentFrame = 0;
@@ -105,7 +105,7 @@ public class Sprite extends Renderable
 	
 	public Sprite(Scene inScene, String name, int x, int y, int scale, int frameWidth, int frames, int msBetweenFrames)
 	{
-		super(inScene, scale);
+		super(inScene, x, y, scale);
 		
 		this.isAnimated = true;
 		this.frames = frames - 1;

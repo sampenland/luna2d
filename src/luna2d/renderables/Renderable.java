@@ -16,15 +16,21 @@ public abstract class Renderable
 	private boolean destroyNow;
 	public UIMenu inMenu;
 	
-	public Renderable(Scene inScene, int scale)
+	public boolean enableCulling;
+	
+	public Renderable(Scene inScene, int x, int y, int scale)
 	{
 		this.inScene = inScene;
 		this.inScene.getObjectHandler().addRenderable(this);
 		this.scale = scale;
-		this.worldX = this.worldY = this.screenX = this.screenY = 0;
+		
+		this.worldX = x;
+		this.worldX = y;
+		
 		this.visible = true;
 		this.customRender = false;
 		this.destroyNow = false;
+		this.enableCulling = true;
 	}
 	
 	public Scene getScene()
