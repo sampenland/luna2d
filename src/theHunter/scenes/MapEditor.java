@@ -56,75 +56,79 @@ public class MapEditor extends Scene
 		this.lastSelection = ObjectTypes.Empty;
 	}
 	
-	public void injectMapData(int[][] data, boolean isMap)
+	public void injectMapData(int[][] data, int[][] grounds)
 	{
-		if (isMap)
+		this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
+		
+		for(int r = 0; r < TheHunter.ROWS; r++)
 		{
-			for(int r = 0; r < TheHunter.ROWS; r++)
+			for(int c = 0; c < TheHunter.COLUMNS; c++)
 			{
-				for(int c = 0; c < TheHunter.COLUMNS; c++)
-				{		
-					
-					ObjectTypes objectType = ObjectTypes.values()[data[r][c]];
-					
-					switch(objectType)
-					{
-					case Empty:
-						break;
-						
-					case Bush:
-						this.mapDataSprites[r][c] = new Sprite(this, "BerryBush", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, 16, 2, 0);
-						break;
-						
-					case GndDirt:
-						break;
-						
-					case GndGrass:
-						break;
-						
-					case GndRock:
-						break;
-						
-					case GndWater:
-						break;
-						
-					case Player:
-						this.mapDataSprites[r][c] = new Sprite(this, "Player", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, 16, 4, 0);
-						this.currentSelectionSprite = this.mapDataSprites[r][c];
-						this.currentSelection = ObjectTypes.Player;
-						break;
-						
-					case Tree:
-						this.mapDataSprites[r][c] = new Sprite(this, "Tree", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
-						break;
-						
-					case Water:
-						this.mapDataSprites[r][c] = new Sprite(this, "Water", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
-						break;
-						
-					case Wolf:
-						this.mapDataSprites[r][c] = new Sprite(this, "Wolf", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
-						break;
-						
-					default:
-						break;
-					}
-					
-					mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
-					mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
-				}
+				mapDataGrounds[r][c] = grounds[r][c];
 			}
 		}
-		else
+		
+		for(int r = 0; r < TheHunter.ROWS; r++)
 		{
-			this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
-			
-			for(int r = 0; r < TheHunter.ROWS; r++)
-			{
-				for(int c = 0; c < TheHunter.COLUMNS; c++)
+			for(int c = 0; c < TheHunter.COLUMNS; c++)
+			{				
+				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
+			}
+		}
+		
+		for(int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for(int c = 0; c < TheHunter.COLUMNS; c++)
+			{		
+				this.mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+				
+				ObjectTypes objectType = ObjectTypes.values()[data[r][c]];
+				
+				switch(objectType)
 				{
-					mapDataGrounds[r][c] = data[r][c];
+				case Empty:
+					break;
+					
+				case Bush:
+					this.mapDataSprites[r][c].updateImageRef("BerryBush", true, false);
+					break;
+					
+				case GndDirt:
+					break;
+					
+				case GndGrass:
+					break;
+					
+				case GndRock:
+					break;
+					
+				case GndWater:
+					break;
+					
+				case Player:
+					this.playerRow = r;
+					this.playerCol = c;
+					this.mapDataSprites[r][c].updateImageRef("Player", true, false);
+					break;
+					
+				case Tree:
+					this.mapDataSprites[r][c].updateImageRef("Tree", true, false);
+					break;
+					
+				case Water:
+					this.mapDataSprites[r][c].updateImageRef("Water", true, false);
+					break;
+					
+				case Wolf:
+					this.mapDataSprites[r][c].updateImageRef("Wolf", true, false);
+					break;
+					
+				default:
+					break;
 				}
+				
+				mapDataSprites[r][c].setObjectType(objectType.intValue);
 			}
 		}
 		

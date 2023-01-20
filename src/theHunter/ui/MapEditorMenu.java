@@ -188,8 +188,7 @@ public class MapEditorMenu extends UIMenu
 			int[][] map = TheHunter.loadMapOrGrounds(("m_" + this.mapNameLoadInput.getText()), true);
 			int[][] mapGrounds = TheHunter.loadMapOrGrounds(("m_" + this.mapNameLoadInput.getText()), false);
 			
-			me.injectMapData(map, true);
-			me.injectMapData(mapGrounds, false);
+			me.injectMapData(map, mapGrounds);
 			
 			FadingTextDisplay loadStatusDisplay = new FadingTextDisplay(inScene, "Loading...", this.screenX + 10, this.screenY + this.getHeight() - 15, Color.GREEN, 2000);
 			loadStatusDisplay.setInMenu(this);

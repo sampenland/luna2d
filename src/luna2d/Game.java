@@ -109,7 +109,7 @@ public class Game extends Canvas implements Runnable {
 			this.addKeyListener(inputHandler);			
 		}
 		
-		if (this.mouseHandler == null)
+		if (this.mouseHandler == null || this.mouseHandler.failedToInitialized)
 		{
 			this.mouseHandler = new MouseHandler(this);
 			this.addMouseListener(mouseHandler);
