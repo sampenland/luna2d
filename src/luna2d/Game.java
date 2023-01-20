@@ -51,12 +51,12 @@ public class Game extends Canvas implements Runnable {
 		screenBounds = new Rectangle(0, 0, WIDTH - 200, HEIGHT - 200);
 	}
 	
-	public void updatePlayerPosition(int x, int y, int padding)
+	public static void updatePlayerPosition(int x, int y, int padding)
 	{
-		screenBounds.x = x;
-		screenBounds.y = y;
-		screenBounds.width = Game.WIDTH - padding;
-		screenBounds.height = Game.HEIGHT - padding;
+		screenBounds.x = x - padding / 2;
+		screenBounds.y = y - padding / 2;
+		screenBounds.width = Game.WIDTH + padding;
+		screenBounds.height = Game.HEIGHT + padding;
 	}
 	
 	public static Rectangle getScreenBounds()

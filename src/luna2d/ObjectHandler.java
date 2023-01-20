@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import luna2d.lights.Light;
 import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
+import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
 
 public class ObjectHandler 
@@ -96,21 +97,25 @@ public class ObjectHandler
 	
 	public void renderAllRenderables(Graphics g)
 	{
-		int count = 0;
 		for(int i = 0; i < renderables.size(); i++)
 		{
 			Renderable temp = renderables.get(i);
 			
 			// Culling			
-			if (temp.enableCulling && !Game.getScreenBounds().contains(new Point(temp.screenX, temp.screenY)))
+			if (temp.enableCulling)
 			{
-				continue;
+				if (temp instanceof Sprite)
+				{
+					temp = (Sprite)temp;
+					if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+					{
+						continue;
+					}
+				}
 			}
-			
-			count++;
+
 			temp.render(g);
 		}
-		Log.println("Renderables: " + count + "    FPS: " + Game.FPS);
 	}
 	
 	public void renderAllUIs(Graphics g)

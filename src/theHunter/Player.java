@@ -27,6 +27,8 @@ public class Player extends SimplePlayer
 	{
 		super(inScene, imageName, x, y, scale, cellSize, frames, msBetweenFrames);
 		
+		this.sprite.enableCulling = false;
+		
 		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
 		healthBar.setEnableCameraScaling(false);
@@ -62,6 +64,7 @@ public class Player extends SimplePlayer
 	protected void update() 
 	{
 		super.update();
+		Game.updatePlayerPosition(this.worldX, this.worldY, 200);
 		
 		this.timeLabel.updateText(this.inScene.getDaysAndTime());
 		

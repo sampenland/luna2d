@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import luna2d.ColorHandler;
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Grid;
 
@@ -34,8 +35,8 @@ public class MapGrounds extends Grid
 				int drawX = Game.CAMERA_X + this.x + cx;
 				int drawY = Game.CAMERA_Y + this.y + cy;
 				
-				// Culling
-				if (this.enableCulling && !Game.getScreenBounds().contains(new Point(drawX + (cellSize), drawY + (cellSize))))
+				// Culling				
+				if (this.enableCulling && !Game.getScreenBounds().contains(new Point(drawX - Game.CAMERA_X + (cellSize), drawY - Game.CAMERA_Y + (cellSize))))
 				{
 					continue;
 				}

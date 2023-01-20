@@ -13,7 +13,7 @@ public class Tree extends Sprite
 	@Override
 	public void update()
 	{
-		super.update();		
+		super.update();
 	}
 	
 }

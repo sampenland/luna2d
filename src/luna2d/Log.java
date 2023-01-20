@@ -43,4 +43,9 @@ public class Log
 		System.out.println(text + " " + text2 + " " + text3);
 	}
 	
+	public static void println(int text,  int text2, int text3, int text4)
+	{
+		System.out.println(text + " " + text2 + " " + text3 + " " + text4);
+	}
+	
 }
