@@ -15,6 +15,7 @@ public abstract class UI
 	
 	public boolean inputEnabled;
 	protected boolean destroyNow;
+	public boolean mouseClicked;
 	
 	public UI(Scene inScene, int scale)
 	{
@@ -24,6 +25,7 @@ public abstract class UI
 		this.worldX = this.worldY = this.screenX = this.screenY = 0;
 		this.visible = true;
 		this.inputEnabled = false;
+		this.mouseClicked = false;
 	}
 	
 	public boolean isInputEnabled()

@@ -30,8 +30,6 @@ public class Sprite extends Renderable
 	private SpriteTask nextFrameTask;
 	private Timer nextFrameTimer;
 	
-	public boolean mouseClicked;
-	
 	private int objectType = -1;
 	
 	public Sprite(Scene inScene, String name, int x, int y, int scale) 
@@ -65,6 +63,8 @@ public class Sprite extends Renderable
 
 		this.worldX = x;
 		this.worldY = y;
+		
+		this.setSize(this.drawRect.width, this.drawRect.height);
 		
 		this.frameWidth = this.drawRect.width;
 		
@@ -100,6 +100,7 @@ public class Sprite extends Renderable
 		this.drawRect.width = w;
 		this.drawRect.height = h;
 		
+		this.setSize(this.drawRect.width, this.drawRect.height);
 		this.frameWidth = this.drawRect.width;
 		
 	}
@@ -135,18 +136,26 @@ public class Sprite extends Renderable
 		this.worldX = x;
 		this.worldY = y;
 		
+		this.setSize(this.drawRect.width, this.drawRect.height);
+		
 		if (msBetweenFrames > 0)
 		{			
 			this.startAnimation(msBetweenFrames);
 		}
+		else
+		{
+			this.drawRect.width = this.frameWidth;
+			this.isAnimated = false;
+		}
 		
 	}
 	
-	public void setFrame(int frame)
+	public void setFrame(int frame, boolean animated)
 	{
-		if (frame < this.frames)
+		if (frames >= 0 && frame <= this.frames)
 		{
 			this.currentFrame = frame;
+			this.isAnimated = animated;
 		}
 	}
 	
@@ -240,11 +249,10 @@ public class Sprite extends Renderable
 		if (this.customRender) return;
 		
 		int drawX, drawY, drawX2, drawY2;
+		int srcX = this.currentFrame * this.frameWidth;
 		
 		if (this.isAnimated)
-		{
-			int srcX = this.currentFrame * this.frameWidth;
-			
+		{			
 			if (this.fixedScreenPosition)
 			{
 				drawX = this.drawRect.x - (Game.CAMERA_SCALE * this.frameWidth / 2);
@@ -288,7 +296,7 @@ public class Sprite extends Renderable
 			g.drawImage(imgRef, 
 					drawX, drawY, 
 					drawX2, drawY2,
-					0, 0, this.drawRect.width, this.drawRect.height, 
+					srcX, 0, srcX + this.frameWidth, this.drawRect.height, 
 					null);
 		}		
 	}
@@ -305,7 +313,7 @@ public class Sprite extends Renderable
 		{
 			this.drawRect.x = this.screenX;
 			this.drawRect.y = this.screenY;
-		}		
+		}	
 	}
 	
 	public int getWidth()
@@ -321,10 +329,8 @@ public class Sprite extends Renderable
 	@Override
 	public void onMouseClick(MouseEvent e) 
 	{
-		Rectangle r = new Rectangle(this.worldX, this.worldY, this.width, this.height);
-		Log.println(this.worldX, this.worldY, Game.mouseWorldX, Game.mouseWorldY);
+		Rectangle r = new Rectangle(this.worldX, this.worldY, this.getWidth(), this.getHeight());
 		this.mouseClicked = r.contains(new Point(Game.mouseWorldX, Game.mouseWorldY));
-		Log.println(this.imageName +" " + this.mouseClicked);
 	}
 
 	@Override
@@ -334,9 +340,8 @@ public class Sprite extends Renderable
 	}
 
 	@Override
-	public void onMouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseReleased(MouseEvent e) 
+	{
 	}
 	
 }

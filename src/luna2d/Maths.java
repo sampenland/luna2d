@@ -38,7 +38,8 @@ public class Maths
 		if (playerObj instanceof SimplePlayer)
 		{
 			SimplePlayer player = (SimplePlayer)playerObj;
-			return (int)Point.distance(player.screenX, player.screenY, p.x, p.y);
+			int d = (int)Point.distance(player.worldX, player.worldY, p.x, p.y);
+			return d;
 		}
 		
 		return 0;

@@ -142,7 +142,7 @@ public class ObjectHandler
 		
 		for(int i = 0; i < renderables.size(); i++)
 		{
-			Renderable temp = renderables.get(i);
+			Renderable temp = renderables.get(i);			
 			if (temp.getDestroyNow()) 
 			{
 				removes.add(temp);
@@ -170,7 +170,7 @@ public class ObjectHandler
 		
 		for(int i = 0; i < uis.size(); i++)
 		{
-			UI temp = uis.get(i);
+			UI temp = uis.get(i);			
 			if (temp.getDestroyNow())
 			{
 				removes.add(temp);

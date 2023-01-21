@@ -21,19 +21,9 @@ public class Rect extends Renderable
 		
 		this.screenX = x;
 		this.screenY = y;
-		this.width = w;
-		this.height = h;
+		this.setWidth(w);
+		this.setHeight(h);
 		this.filled = filled;
-	}
-	
-	public int getWidth()
-	{
-		return this.width;
-	}
-
-	public int getHeight()
-	{
-		return this.height;
 	}
 	
 	@Override
@@ -46,14 +36,14 @@ public class Rect extends Renderable
 		if (this.filled)
 		{
 			g.fillRect(Game.CAMERA_X + this.screenX, Game.CAMERA_Y + this.screenY, 
-					Math.round(this.width * this.scale * Game.CAMERA_SCALE), 
-					Math.round(this.height * this.scale * Game.CAMERA_SCALE));
+					Math.round(this.getWidth() * this.scale * Game.CAMERA_SCALE), 
+					Math.round(this.getHeight() * this.scale * Game.CAMERA_SCALE));
 		}
 		else
 		{
 			g.drawRect(Game.CAMERA_X + this.screenX, Game.CAMERA_Y + this.screenY, 
-					Math.round(this.width * this.scale * Game.CAMERA_SCALE), 
-					Math.round(this.height * this.scale * Game.CAMERA_SCALE));
+					Math.round(this.getWidth() * this.scale * Game.CAMERA_SCALE), 
+					Math.round(this.getHeight() * this.scale * Game.CAMERA_SCALE));
 		}
 		
 	}
@@ -73,8 +63,8 @@ public class Rect extends Renderable
 	
 	public void updateSize(int w, int h)
 	{
-		this.width = w;
-		this.height = h;
+		this.setWidth(w);
+		this.setHeight(h);
 	}
 	
 	public void updateColor(Color c)

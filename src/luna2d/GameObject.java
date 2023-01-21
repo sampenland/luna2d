@@ -13,6 +13,7 @@ public abstract class GameObject
 	protected HashMap<Integer, Boolean> keys;
 
 	public Scene inScene;
+	public boolean mouseClicked;
 	
 	public GameObject(int x, int y, int objectType, boolean inputEnabled, Scene inScene)
 	{
@@ -23,6 +24,7 @@ public abstract class GameObject
 		this.worldY = y;
 		this.objectType = objectType;
 		this.inputEnabled = inputEnabled;
+		this.mouseClicked = false;
 		
 		this.inScene.getObjectHandler().addObject(this);
 	}

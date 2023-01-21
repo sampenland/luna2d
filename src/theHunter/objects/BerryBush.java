@@ -2,7 +2,6 @@ package theHunter.objects;
 
 import java.awt.Point;
 import java.util.Timer;
-
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
@@ -12,6 +11,7 @@ import theHunter.TheHunter;
 
 public class BerryBush extends Sprite
 {
+	private final int BERRY_REGROW_TIME = 1000;//10000;
 	private boolean hasBerries;
 	
 	private SpriteTask regrowBerriesTask;
@@ -19,30 +19,37 @@ public class BerryBush extends Sprite
 	
 	public BerryBush(Scene inScene, int x, int y, int scale)
 	{
-		super(inScene, "BerryBush", x, y, scale, 16, 1000);
+		super(inScene, "BerryBush", x, y, scale, 16, 2, 0);
 		this.inputEnabled = true;
 		this.hasBerries = true;
-		this.setFrame(0);
-//		
-//		this.regrowBerriesTask = new SpriteTask(this)
-//		{
-//			@Override
-//			public void run()
-//			{
-//				((BerryBush)this.sprite).hasBerries = true;
-//				((BerryBush)this.sprite).setFrame(0);
-//			}
-//		};
-//		this.regrowBerriesTimer = new Timer("RegrowBerries");
 	}
 	
-	public void pickBerries()
+	public void growBerries()
 	{
-		if (!this.hasBerries) return;
+		if (this.hasBerries) return;
+		
+		this.regrowBerriesTask = new SpriteTask(this)
+		{
+			@Override
+			public void run()
+			{
+				((BerryBush)this.sprite).hasBerries = true;
+				((BerryBush)this.sprite).setFrame(0, false);
+			}
+		};
+		this.regrowBerriesTimer = new Timer("RegrowBerries");
+		this.regrowBerriesTimer.schedule(regrowBerriesTask, BERRY_REGROW_TIME);
+	}
+	
+	public boolean pickBerries()
+	{
+		if (!this.hasBerries) return false;
 		
 		this.hasBerries = false;
-		this.regrowBerriesTimer.schedule(regrowBerriesTask, 10000);
-		this.setFrame(1);
+		this.growBerries();
+		this.setFrame(1, false);
+		
+		return true;
 	}
 	
 	private void mouseClicks()
@@ -50,7 +57,7 @@ public class BerryBush extends Sprite
 		if (this.mouseClicked)
 		{
 			Player player = (Player)this.getScene().getPlayer();
-			if (Maths.distanceBetweenPlayerAndPoint(this.getScene().getPlayer(), new Point(this.screenX, this.screenY)) < TheHunter.RESOURCE_ACTION_DISTANCE)
+			if (Maths.distanceBetweenPlayerAndPoint(this.getScene().getPlayer(), new Point(this.worldX, this.worldY)) < TheHunter.RESOURCE_ACTION_DISTANCE)
 			{
 				player.pickup(this, 5);
 				this.pickBerries();

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import luna2d.lights.Light;
 import luna2d.renderables.Renderable;
+import luna2d.ui.UI;
 
 public abstract class Scene
 {
@@ -202,6 +203,21 @@ public abstract class Scene
 		this.objHandler.updateAllRenderables();
 		this.objHandler.updateAllUIs();		
 		this.update();
+		
+		for (GameObject temp : this.objHandler.getObjects())
+		{
+			temp.mouseClicked = false;
+		}
+		
+		for (Renderable temp : this.objHandler.getRenderables())
+		{
+			temp.mouseClicked = false;
+		}
+		
+		for (UI temp : this.objHandler.getUIs())
+		{
+			temp.mouseClicked = false;
+		}
 	}
 	
 	public abstract void update();

@@ -10,7 +10,8 @@ public abstract class Renderable
 {
 	private Scene inScene;
 	
-	public int worldX, worldY, screenX, screenY, width, height;
+	public int worldX, worldY, screenX, screenY; 
+	private int width, height;
 	protected int scale;
 	public boolean visible;
 	protected boolean customRender; // Means it will not be drawn from automatically but manually
@@ -19,6 +20,7 @@ public abstract class Renderable
 	
 	public boolean enableCulling;
 	public boolean inputEnabled;
+	public boolean mouseClicked;
 	
 	public Renderable(Scene inScene, int x, int y, int scale)
 	{
@@ -34,6 +36,33 @@ public abstract class Renderable
 		this.destroyNow = false;
 		this.enableCulling = true;
 		this.inputEnabled = false;
+		this.mouseClicked = false;
+	}
+	
+	public void setSize(int w, int h)
+	{
+		this.width = w;
+		this.height = h;
+	}
+	
+	public void setWidth(int w)
+	{
+		this.width = w;
+	}
+	
+	public int getWidth()
+	{
+		return this.width;
+	}
+
+	public int getHeight()
+	{
+		return this.height;
+	}
+	
+	public void setHeight(int h)
+	{
+		this.height = h;
 	}
 	
 	public Scene getScene()
