@@ -38,7 +38,7 @@ public class Backpack extends UIMenu
 		title = new TextDisplay(inScene, "Backpack", this.x + 5, this.y + 15, Color.white);
 		this.addTextDisplay(title);
 		
-		backpackItems = new BackpackItems(inScene, this.x + 5, this.y + 25, BACKPACK_ROWS, BACKPACK_COLUMNS, 
+		backpackItems = new BackpackItems(this, inScene, this.x + 5, this.y + 25, BACKPACK_ROWS, BACKPACK_COLUMNS, 
 				32, new Color(0.f, 0.f, 0.f, 0.5f), new Color(1.f, 1.f, 1.f, 0.25f), 1, null);
 		backpackItems.enableCulling = false;
 		this.addRenderable(backpackItems);

@@ -21,6 +21,7 @@ public abstract class Renderable
 	public boolean enableCulling;
 	public boolean inputEnabled;
 	public boolean mouseClicked;
+	public MouseEvent mouseClickEvent;
 	
 	public Renderable(Scene inScene, int x, int y, int scale)
 	{

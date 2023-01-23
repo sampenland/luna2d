@@ -2,17 +2,23 @@ package theHunter;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import luna2d.Game;
+import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.lights.GlowLight;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
 import luna2d.renderables.TextDisplay;
+import theHunter.inventoryItems.InvBerries;
+import theHunter.ui.Backpack;
 
 public class Player extends SimplePlayer
 {
+	private Backpack backpack;
+	
 	private float hunger;
 	private float hungerDrain = 0.08f;
 	
@@ -46,24 +52,108 @@ public class Player extends SimplePlayer
 		
 		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white);
 		
+		backpack = new Backpack(inScene);		
+		backpack.show();
+		
 		this.inScene.setPlayer(this);
 		
 	}
 	
-	public void pickup(Object obj, int amount)
+	public void useItem(ObjectTypes type)
 	{
+		switch(type)
+		{
+		case Bush:
+			break;
+		case Empty:
+			break;
+		case GndDirt:
+			break;
+		case GndGrass:
+			break;
+		case GndRock:
+			break;
+		case GndWater:
+			break;
+		case InvBerries:
+			this.eat(InvBerries.BERRY_HUNGER_SUBTRACTION);
+			break;
+		case Player:
+			break;
+		case Tree:
+			break;
+		case Water:
+			break;
+		case Wolf:
+			break;
+		default:
+			break;
 		
+		}
+	}
+	
+	public void eat(int hunger)
+	{
+		this.hunger += hunger;
+		this.hunger = Maths.clamp(this.hunger, 100, 0);
+	}
+	
+	public void pickup(ObjectTypes type, int amount)
+	{
+		InventoryItem item = null;
+		
+		switch(type)
+		{
+		case Bush:
+			break;
+		case Empty:
+			break;
+		case GndDirt:
+			break;
+		case GndGrass:
+			break;
+		case GndRock:
+			break;
+		case GndWater:
+			break;
+		case InvBerries:
+			item = new InvBerries(this.inScene, amount);
+			break;
+		case Player:
+			break;
+		case Tree:
+			break;
+		case Water:
+			break;
+		case Wolf:
+			break;
+		default:
+			break;
+		}
+		
+		if (item == null) return;
+		
+		backpack.addToBackpack(item);
 	}
 
 	@Override
 	protected void render(Graphics g) 
 	{			
 	}
+	
+	private void checkKeys()
+	{
+		if (this.isKeyPressed(KeyEvent.VK_TAB))
+		{
+			this.backpack.toggleVisible();
+		}
+	}
 
 	@Override
 	protected void update() 
 	{
 		super.update();
+		checkKeys();
 		Game.updatePlayerPosition(this.worldX, this.worldY, 200);
 		
 		this.timeLabel.updateText(this.inScene.getDaysAndTime());

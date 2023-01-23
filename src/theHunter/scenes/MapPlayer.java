@@ -9,7 +9,6 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import theHunter.DayNightCycleEngine;
-import theHunter.InventoryItem;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
 import theHunter.Player;
@@ -18,11 +17,9 @@ import theHunter.objects.BerryBush;
 import theHunter.objects.Tree;
 import theHunter.objects.WaterSource;
 import theHunter.objects.Wolf;
-import theHunter.ui.Backpack;
 
 public class MapPlayer extends Scene
 {
-	private Backpack backpack;
 	private final int MAP_SCALE = 5;
 	private static int[][] mapData;
 	private static int[][] mapDataGrounds;
@@ -110,9 +107,6 @@ public class MapPlayer extends Scene
 		// Startup day and night
 		this.setDayNightCycle(new DayNightCycleEngine(50, 8, 20, Color.orange, Color.white, Color.orange, Color.black), new DayNightCycleTime(8, 0, 0));
 		
-		backpack = new Backpack(this);
-		backpack.addToBackpack(new InventoryItem(ObjectTypes.InvBerries.intValue, 10));		
-		backpack.show();
 	}
 
 	@Override
@@ -132,11 +126,6 @@ public class MapPlayer extends Scene
 		if (this.isKeyPressed(KeyEvent.VK_ESCAPE)) 
 		{
 			this.openScene("MainMenu");
-		}
-		
-		if (this.isKeyPressed(KeyEvent.VK_TAB))
-		{
-			this.backpack.toggleVisible();
 		}
 	}
 	

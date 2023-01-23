@@ -6,6 +6,7 @@ import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 import luna2d.timers.SpriteTask;
+import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
 
@@ -59,7 +60,7 @@ public class BerryBush extends Sprite
 			Player player = (Player)this.getScene().getPlayer();
 			if (Maths.distanceBetweenPlayerAndPoint(this.getScene().getPlayer(), new Point(this.worldX, this.worldY)) < TheHunter.RESOURCE_ACTION_DISTANCE)
 			{
-				player.pickup(this, 5);
+				player.pickup(ObjectTypes.InvBerries, 5);
 				this.pickBerries();
 			}
 		}
