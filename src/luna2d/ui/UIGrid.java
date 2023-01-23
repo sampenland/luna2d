@@ -1,13 +1,12 @@
-package luna2d.renderables;
+package luna2d.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-
-import luna2d.Game;
 import luna2d.Scene;
+import luna2d.renderables.Renderable;
 
-public class Grid extends Renderable
+public class UIGrid extends Renderable
 {
 
 	protected int x, y, rows, columns, cellSize;
@@ -15,7 +14,7 @@ public class Grid extends Renderable
 	
 	protected int[][] fillTypes;
 	
-	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int[][] fillTypes) 
+	public UIGrid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int[][] fillTypes) 
 	{
 		super(inScene, x, y, scale);
 		
@@ -33,6 +32,7 @@ public class Grid extends Renderable
 	public void render(Graphics g) 
 	{
 		if (!this.visible) return;
+		if (this.customRender) return;
 		
 		for(int row = 0; row < rows; row++)
 		{
@@ -43,9 +43,9 @@ public class Grid extends Renderable
 								
 				g.setColor(gridColor);
 				
-				g.drawRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
-						Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
-						Math.round(cellSize * this.scale * Game.CAMERA_SCALE));
+				g.drawRect(this.x + cx, this.y + cy, 
+						Math.round(cellSize * this.scale), 
+						Math.round(cellSize * this.scale));
 			}
 		}
 	}

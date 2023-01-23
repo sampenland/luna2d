@@ -116,6 +116,8 @@ public abstract class Renderable
 	
 	public void customRender(Graphics g)
 	{
+		if (!this.visible) return;
+		
 		boolean cRender = this.customRender;
 		this.customRender = false;
 		this.render(g);

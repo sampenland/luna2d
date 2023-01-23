@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 import luna2d.Scene;
+import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
 
@@ -13,6 +14,7 @@ public abstract class UIMenu extends UI
 
 	private LinkedList<Sprite> sprites;
 	private LinkedList<TextDisplay> textDisplays;
+	private LinkedList<Renderable> renderables;
 	
 	private LinkedList<UITextInput> textInputs;
 	protected UITextInput focusedTextInput;
@@ -27,6 +29,7 @@ public abstract class UIMenu extends UI
 		this.sprites = new LinkedList<Sprite>();
 		this.textDisplays = new LinkedList<TextDisplay>();
 		this.textInputs = new LinkedList<UITextInput>();
+		this.renderables = new LinkedList<Renderable>();
 		
 		this.visible = false;
 		this.scale = scale;
@@ -95,11 +98,23 @@ public abstract class UIMenu extends UI
 		textDisplays.remove(textDisplay);
 	}
 	
+	protected void addRenderable(Renderable r)
+	{
+		r.setCustomRender(true);
+		renderables.add(r);
+	}
+	
+	public void removeRenderable(Renderable r)
+	{
+		renderables.remove(r);
+	}
+	
 	public void clearAllRenderables()
 	{
 		textDisplays.clear();
 		sprites.clear();
 		textInputs.clear();
+		renderables.clear();
 	}
 	
 	public void toggleVisible()
@@ -141,6 +156,11 @@ public abstract class UIMenu extends UI
 		{
 			t.render(g);
 		}
+		
+		for (Renderable r : renderables)
+		{
+			r.customRender(g);
+		}
 	}
 
 	@Override
@@ -167,7 +187,12 @@ public abstract class UIMenu extends UI
 			for (TextDisplay t : textDisplays)
 			{
 				t.update();
-			}	
+			}
+			
+			for (Renderable r : renderables)
+			{
+				r.update();
+			}
 		}
 	}
 
