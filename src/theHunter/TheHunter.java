@@ -62,6 +62,7 @@ public class TheHunter extends Game
 		ResourceHandler.addImage("Tree", "tree.png");
 		ResourceHandler.addImage("Water", "water.png");
 		ResourceHandler.addImage("Wolf", "wolf.png");
+		ResourceHandler.addImage("INV_Berries", "inventory/inv-berries.png");
 	}
 	
 	public static int[][] loadMapOrGrounds(String name, boolean isMap)

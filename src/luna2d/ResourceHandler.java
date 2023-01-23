@@ -39,7 +39,7 @@ public class ResourceHandler
 		} 
 		catch (IOException e) 
 		{
-			Log.println("Load err: " + e.toString());
+			Log.println("Load err: " + e.toString() + "  " + name);
 			return null;
 		}
 		

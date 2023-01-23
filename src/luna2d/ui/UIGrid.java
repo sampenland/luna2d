@@ -10,11 +10,11 @@ public class UIGrid extends Renderable
 {
 
 	protected int x, y, rows, columns, cellSize;
-	protected Color gridColor;
+	protected Color gridColor, bkgColor;
 	
 	protected int[][] fillTypes;
 	
-	public UIGrid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int[][] fillTypes) 
+	public UIGrid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, Color bkgColor, int scale, int[][] fillTypes) 
 	{
 		super(inScene, x, y, scale);
 		
@@ -24,7 +24,13 @@ public class UIGrid extends Renderable
 		this.columns = columns;
 		this.cellSize = cellSize;
 		this.gridColor = gridColor;
+		this.bkgColor = bkgColor;
 		this.scale = scale;
+		this.fillTypes = fillTypes;
+	}
+	
+	public void updateFillTypes(int[][] fillTypes)
+	{
 		this.fillTypes = fillTypes;
 	}
 	
@@ -41,6 +47,12 @@ public class UIGrid extends Renderable
 				int cx = col * cellSize * this.scale;
 				int cy = row * cellSize * this.scale;
 								
+				g.setColor(bkgColor);
+				
+				g.fillRect(this.x + cx, this.y + cy, 
+						Math.round(cellSize * this.scale), 
+						Math.round(cellSize * this.scale));
+				
 				g.setColor(gridColor);
 				
 				g.drawRect(this.x + cx, this.y + cy, 

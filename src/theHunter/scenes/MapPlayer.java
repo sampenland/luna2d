@@ -9,6 +9,7 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import theHunter.DayNightCycleEngine;
+import theHunter.InventoryItem;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
 import theHunter.Player;
@@ -110,6 +111,7 @@ public class MapPlayer extends Scene
 		this.setDayNightCycle(new DayNightCycleEngine(50, 8, 20, Color.orange, Color.white, Color.orange, Color.black), new DayNightCycleTime(8, 0, 0));
 		
 		backpack = new Backpack(this);
+		backpack.addToBackpack(new InventoryItem(ObjectTypes.InvBerries.intValue, 10));		
 		backpack.show();
 	}
 

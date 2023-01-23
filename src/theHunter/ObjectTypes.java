@@ -11,7 +11,8 @@ public enum ObjectTypes
 	GndGrass(6, ""),
 	GndDirt(7, ""),
 	GndRock(8, ""),
-	GndWater(9, "");
+	GndWater(9, ""),
+	InvBerries(10, "INV_Berries");
 	
 	public final int intValue;
 	public final String imgName;
