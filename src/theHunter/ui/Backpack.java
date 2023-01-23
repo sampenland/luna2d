@@ -54,23 +54,9 @@ public class Backpack extends UIMenu
 		return true;
 	}
 	
-	public boolean removeFromBackpack(int typeOfItem)
+	public boolean removeFromBackpack(InventoryItem item)
 	{
-		int foundIndex = -1;
-		int cnt = 0;
-		for (InventoryItem i : items)
-		{
-			if (typeOfItem == i.TYPE)
-			{
-				foundIndex = cnt;
-				break;
-			}
-			cnt++;
-		}
-		
-		if (foundIndex == -1) return false;
-		
-		items.remove(foundIndex);
+		items.removeFirstOccurrence(item);
 		compact();
 		return true;
 	}

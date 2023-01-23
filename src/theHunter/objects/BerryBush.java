@@ -55,7 +55,7 @@ public class BerryBush extends Sprite
 	
 	private void mouseClicks()
 	{
-		if (this.mouseClicked)
+		if (this.mouseClicked && this.hasBerries)
 		{
 			Player player = (Player)this.getScene().getPlayer();
 			if (Maths.distanceBetweenPlayerAndPoint(this.getScene().getPlayer(), new Point(this.worldX, this.worldY)) < TheHunter.RESOURCE_ACTION_DISTANCE)
