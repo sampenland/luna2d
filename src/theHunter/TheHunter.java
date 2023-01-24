@@ -44,9 +44,10 @@ public class TheHunter extends Game
 		MapEditor mapEditor = new MapEditor("MapEditor");
 		g.sceneManager.addScene(mapEditor);
 		
-		g.beginSceneEngine("MainMenu");
 		loadImages();
 		createColors();
+		
+		g.beginSceneEngine("MainMenu");
 		
 	}	
 	
@@ -63,6 +64,7 @@ public class TheHunter extends Game
 		ResourceHandler.addImage("Water", "water.png");
 		ResourceHandler.addImage("Wolf", "wolf.png");
 		ResourceHandler.addImage("INV_Berries", "inventory/inv-berries.png");
+		ResourceHandler.addImage("GrowingBerryBush", "growing-berry-bush_16x16_5-frames.png");
 	}
 	
 	public static int[][] loadMapOrGrounds(String name, boolean isMap)

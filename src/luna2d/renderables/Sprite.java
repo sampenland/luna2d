@@ -133,8 +133,8 @@ public class Sprite extends Renderable
 			this.drawRect.height = imgRef.getHeight();
 		}
 
-		this.worldX = x;
-		this.worldY = y;
+		this.worldX = this.drawRect.x = x;
+		this.worldY = this.drawRect.y = y;
 		
 		this.setSize(this.drawRect.width, this.drawRect.height);
 		
@@ -157,6 +157,11 @@ public class Sprite extends Renderable
 			this.currentFrame = frame;
 			this.isAnimated = animated;
 		}
+	}
+	
+	public int getFrameCount()
+	{
+		return this.frames;
 	}
 	
 	public void startAnimation(int msBetweenFrames)

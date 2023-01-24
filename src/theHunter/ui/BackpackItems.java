@@ -46,11 +46,11 @@ public class BackpackItems extends UIGrid
 	
 	private void checkMouseClicks()
 	{
-		if (this.mouseClicked && this.mouseClickEvent != null && this.mouseClickEvent.getButton() == 3) 
+		if (this.mouseClicked && this.mouseClickEvent != null && (this.mouseClickEvent.getButton() == 3 || this.mouseClickEvent.getButton() == 1)) 
 		{
 			if (items[this.clickedRow][this.clickedColumn] != null)
 			{				
-				items[this.clickedRow][this.clickedColumn].use();
+				items[this.clickedRow][this.clickedColumn].use(this.mouseClickEvent.getButton());
 				if (this.backpack != null)
 				{
 					this.backpack.removeFromBackpack(items[this.clickedRow][this.clickedColumn]);

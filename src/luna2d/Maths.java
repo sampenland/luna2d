@@ -53,8 +53,8 @@ public class Maths
 		if (startY < 0) startY = 0;
 		
 		// x - 8 and y - 32 fixes the window padding issue
-		p.x = Math.round((x - startX) / cellSize);
-		p.y = Math.round((y - startY) / cellSize);
+		p.x = Math.round((x - startX) / cellSize) * Game.CAMERA_SCALE;
+		p.y = Math.round((y - startY) / cellSize) * Game.CAMERA_SCALE;
 		
 		return p;
 	}

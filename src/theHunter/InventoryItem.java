@@ -20,7 +20,7 @@ public abstract class InventoryItem
 		return this.inScene;
 	}
 	
-	public abstract void use();
+	public abstract void use(int flag);
 	public abstract void repair();
 	public abstract void craft();	
 	
