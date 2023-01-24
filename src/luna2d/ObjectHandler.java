@@ -130,10 +130,23 @@ public class ObjectHandler
 	
 	public void updateAllObjects()
 	{
+		LinkedList<GameObject> removes = new LinkedList<GameObject>();
+
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
+			if (temp.getDestroyNow()) 
+			{
+				removes.add(temp);
+				continue;
+			}
+			
 			temp.gameUpdate();
+		}
+		
+		for(GameObject remove : removes)
+		{
+			objects.remove(remove);
 		}
 	}
 	

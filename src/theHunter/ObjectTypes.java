@@ -14,7 +14,8 @@ public enum ObjectTypes
 	GndWater(9, "", false),
 	InvBerries(10, "INV_Berries", false),
 	Rock(11, "Rock", true),
-	InvRock(12, "INV_Rock", false);
+	InvRock(12, "INV_Rock", false),
+	ThrownRock(13, "Rock", false);
 	
 	public final int intValue;
 	public final String imgName;

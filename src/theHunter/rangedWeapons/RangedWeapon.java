@@ -1,0 +1,57 @@
+package theHunter.rangedWeapons;
+
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+
+import luna2d.GameObject;
+import luna2d.Log;
+import luna2d.Scene;
+import luna2d.renderables.Sprite;
+import theHunter.ObjectTypes;
+
+public class RangedWeapon extends GameObject
+{
+
+	private Sprite sprite;
+		
+	public RangedWeapon(Scene inScene, String imgName, int x, int y, int scale, float velX, float velY, float friction)
+	{
+		super(x, y, ObjectTypes.ThrownRock.intValue, false, inScene);
+		this.sprite = new Sprite(inScene, imgName, x, y, scale);
+		this.setVelocity(velX, velY, friction);
+	}
+
+	@Override
+	protected void render(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void update() 
+	{
+		if (this.sprite != null)
+		{			
+			this.sprite.updateWorldPosition(this.worldX, this.worldY);		
+		}
+	}
+
+	@Override
+	protected void onMouseClick(MouseEvent e) 
+	{
+		this.mouseClicked = this.sprite.mouseClicked;
+	}
+
+	@Override
+	protected void onMousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onMouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

@@ -3,6 +3,7 @@ package theHunter.inventoryItems;
 import luna2d.Scene;
 import theHunter.InventoryItem;
 import theHunter.ObjectTypes;
+import theHunter.Player;
 
 public class InvRock extends InventoryItem
 {
@@ -15,8 +16,8 @@ public class InvRock extends InventoryItem
 	@Override
 	public void use(int flag) 
 	{
-		// Flag == 1 for left click, 3 for right click
-		//Player player = (Player)this.getScene().getPlayer();
+		Player player = (Player)this.getScene().getPlayer();
+		player.readyHoldItem(ObjectTypes.InvRock);
 		
 	}
 

@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.lights.GlowLight;
@@ -16,12 +17,13 @@ import luna2d.renderables.TextDisplay;
 import theHunter.inventoryItems.InvBerries;
 import theHunter.inventoryItems.InvRock;
 import theHunter.objects.GrowingBerryBush;
+import theHunter.rangedWeapons.ThrownRock;
 import theHunter.ui.Backpack;
 
 public class Player extends SimplePlayer
 {
 	private Backpack backpack;
-	private ObjectTypes plantingType;
+	private ObjectTypes holdingType;
 	
 	private float hunger;
 	private float hungerDrain = 0.02f;
@@ -38,7 +40,7 @@ public class Player extends SimplePlayer
 		super(inScene, imageName, x, y, scale, cellSize, frames, msBetweenFrames);
 		
 		this.sprite.enableCulling = false;
-		this.plantingType = ObjectTypes.Empty;
+		this.holdingType = ObjectTypes.Empty;
 		
 		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
@@ -107,9 +109,9 @@ public class Player extends SimplePlayer
 		}
 	}
 	
-	public void readyPlantItem(ObjectTypes type)
+	public void readyHoldItem(ObjectTypes type)
 	{
-		this.plantingType = type;
+		this.holdingType = type;
 	}
 	
 	public void eat(int hunger)
@@ -148,7 +150,7 @@ public class Player extends SimplePlayer
 		case Wolf:
 			break;
 		case InvRock:
-			item = new InvRock(this.inScene, 2);
+			item = new InvRock(this.inScene, amount);
 			break;
 		case Rock:
 			break;
@@ -207,18 +209,27 @@ public class Player extends SimplePlayer
 	@Override
 	protected void onMouseClick(MouseEvent e) 
 	{
-		if (this.plantingType == ObjectTypes.Empty) return;
+		if (this.holdingType == ObjectTypes.Empty) return;
 		
 		Point gPos = Maths.convertToGrid(Game.mouseWorldX, Game.mouseWorldY, TheHunter.CELL_SIZE * Game.CAMERA_SCALE, 0, 0);
 
 		int x = gPos.x * TheHunter.CELL_SIZE;
 		int y = gPos.y * TheHunter.CELL_SIZE;
 		
-		if (this.plantingType == ObjectTypes.InvBerries && e.getButton() == 1)
+		if (this.holdingType == ObjectTypes.InvBerries && e.getButton() == 1)
 		{
 			new GrowingBerryBush(this.inScene, x, y, 1);
-			this.plantingType = ObjectTypes.Empty;
 		}
+		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
+		{
+			Point playerPos = new Point(this.worldX, this.worldY);
+			Point dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y));
+			Log.println(dir);
+			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, 0, 0 , 0.25f);
+		}
+		
+		this.holdingType = ObjectTypes.Empty;
+		
 	}
 
 	@Override

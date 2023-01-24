@@ -159,6 +159,11 @@ public class Sprite extends Renderable
 		}
 	}
 	
+	public Point getWorldPosition()
+	{
+		return new Point(this.worldX, this.worldY);
+	}
+	
 	public int getCurrentFrame()
 	{
 		return this.currentFrame;

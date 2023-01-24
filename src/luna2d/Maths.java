@@ -23,6 +23,11 @@ public class Maths
 		return val;
 	}
 	
+	public static Point directionBetweenTwoPoints(Point start, Point end)
+	{
+		return new Point((end.x - start.x), (end.y - start.y));
+	}
+	
 	public static int random(int min, int max)
 	{
 		return ThreadLocalRandom.current().nextInt(min, max + 1);

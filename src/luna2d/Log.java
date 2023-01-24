@@ -1,5 +1,7 @@
 package luna2d;
 
+import java.awt.Point;
+
 public class Log 
 {
 
@@ -13,12 +15,27 @@ public class Log
 		System.out.println(text);
 	}
 	
+	public static void println(Point text)
+	{
+		System.out.println(text.x + ", " + text.y);
+	}
+	
 	public static void println(boolean text)
 	{
 		System.out.println(text);
 	}
 	
+	public static void println(float text)
+	{
+		System.out.println(text);
+	}
+	
 	public static void println(boolean text, boolean text2)
+	{
+		System.out.println(text + " " + text2);
+	}
+	
+	public static void println(float text, float text2)
 	{
 		System.out.println(text + " " + text2);
 	}

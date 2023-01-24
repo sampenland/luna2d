@@ -9,8 +9,11 @@ import luna2d.renderables.Renderable;
 public abstract class GameObject 
 {	
 	public boolean inputEnabled = false;
-	protected int worldX, worldY, screenX, screenY, objectType;
+	protected int worldX, worldY, screenX, screenY, objectType; 
+	protected float velocityX, velocityY;
+	private float friction;
 	protected HashMap<Integer, Boolean> keys;
+	private boolean destroyNow;
 
 	public Scene inScene;
 	public boolean mouseClicked;
@@ -29,12 +32,34 @@ public abstract class GameObject
 		this.inScene.getObjectHandler().addObject(this);
 	}
 	
-	public int getWorldX()
+	public void destroy()
+	{
+		this.destroyNow = true;
+	}
+	
+	public boolean getDestroyNow()
+	{
+		return this.destroyNow;
+	}
+	
+	public Scene getScene()
+	{
+		return this.inScene;
+	}
+	
+	public void setVelocity(float x, float y, float friction)
+	{
+		this.velocityX = x;
+		this.velocityY = y;
+		this.friction = friction;
+	}
+	
+	protected int getWorldX()
 	{
 		return this.worldX;
 	}
 	
-	public int getWorldY()
+	protected int getWorldY()
 	{
 		return this.worldY;
 	}
@@ -62,6 +87,27 @@ public abstract class GameObject
 	
 	public void gameUpdate()
 	{
+		this.worldX += this.velocityX;
+		this.worldY += this.velocityY;
+		
+		if (this.velocityX > 0)
+		{
+			this.velocityX -= this.friction;
+		}
+		else
+		{
+			this.velocityX += this.friction;
+		}
+		
+		if (this.velocityY > 0)
+		{
+			this.velocityY -= this.friction;	
+		}
+		else
+		{
+			this.velocityY += this.friction;
+		}
+		
 		this.update();
 	}
 	

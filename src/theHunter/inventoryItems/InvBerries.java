@@ -24,7 +24,7 @@ public class InvBerries extends InventoryItem
 		}
 		else
 		{
-			player.readyPlantItem(ObjectTypes.InvBerries);
+			player.readyHoldItem(ObjectTypes.InvBerries);
 		}
 	}
 
