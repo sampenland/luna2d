@@ -6,9 +6,11 @@ import java.util.LinkedList;
 
 import luna2d.Game;
 import luna2d.Scene;
+import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.TextDisplay;
 import luna2d.ui.UIMenu;
 import theHunter.InventoryItem;
+import theHunter.ObjectTypes;
 
 public class Backpack extends UIMenu
 {
@@ -45,9 +47,47 @@ public class Backpack extends UIMenu
 		
 	}
 	
+	public void showLog(String text, Color color)
+	{
+		FadingTextDisplay logDisplay = new FadingTextDisplay(inScene, text, 20, Game.HEIGHT - 55, color, 2000);
+		logDisplay.setInMenu(this);
+		this.addTextDisplay(logDisplay);
+	}
+	
 	public boolean addToBackpack(InventoryItem item)
 	{
 		if (items.size() >= TOTAL_ITEMS) return false;
+		
+		ObjectTypes t = ObjectTypes.values()[item.TYPE];
+		switch(t)
+		{
+		case Bush:
+			break;
+		case Empty:
+			break;
+		case GndDirt:
+			break;
+		case GndGrass:
+			break;
+		case GndRock:
+			break;
+		case GndWater:
+			break;
+		case InvBerries:
+			this.showLog("Added " + item.AMOUNT + " berries", Color.green);
+			break;
+		case Player:
+			break;
+		case Tree:
+			break;
+		case Water:
+			break;
+		case Wolf:
+			break;
+		default:
+			break;
+		
+		}
 		
 		items.push(item);
 		compact();
@@ -56,7 +96,39 @@ public class Backpack extends UIMenu
 	
 	public boolean removeFromBackpack(InventoryItem item)
 	{
-		items.removeFirstOccurrence(item);
+		if (items.removeFirstOccurrence(item))
+		{
+			ObjectTypes t = ObjectTypes.values()[item.TYPE];
+			switch(t)
+			{
+			case Bush:
+				break;
+			case Empty:
+				break;
+			case GndDirt:
+				break;
+			case GndGrass:
+				break;
+			case GndRock:
+				break;
+			case GndWater:
+				break;
+			case InvBerries:
+				this.showLog("Removed " + item.AMOUNT + " berries", Color.red);
+				break;
+			case Player:
+				break;
+			case Tree:
+				break;
+			case Water:
+				break;
+			case Wolf:
+				break;
+			default:
+				break;
+			
+			}
+		}
 		compact();
 		return true;
 	}

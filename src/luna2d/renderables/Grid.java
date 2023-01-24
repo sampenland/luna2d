@@ -12,6 +12,7 @@ public class Grid extends Renderable
 
 	protected int x, y, rows, columns, cellSize;
 	protected Color gridColor;
+	public boolean hideGrid;
 	
 	protected int[][] fillTypes;
 	
@@ -27,6 +28,7 @@ public class Grid extends Renderable
 		this.gridColor = gridColor;
 		this.scale = scale;
 		this.fillTypes = fillTypes;
+		this.hideGrid = false;
 	}
 	
 	@Override
@@ -40,12 +42,15 @@ public class Grid extends Renderable
 			{
 				int cx = col * cellSize * this.scale;
 				int cy = row * cellSize * this.scale;
-								
-				g.setColor(gridColor);
-				
-				g.drawRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
-						Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
-						Math.round(cellSize * this.scale * Game.CAMERA_SCALE));
+							
+				if (!this.hideGrid)
+				{
+					g.setColor(gridColor);
+					
+					g.drawRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
+							Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
+							Math.round(cellSize * this.scale * Game.CAMERA_SCALE));	
+				}
 			}
 		}
 	}

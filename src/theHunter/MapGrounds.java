@@ -14,6 +14,7 @@ public class MapGrounds extends Grid
 	public MapGrounds(Scene inScene, int x, int y, Color gridColor, int scale, int[][] fillTypes) 
 	{
 		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, gridColor, scale, fillTypes);
+		this.hideGrid = true;
 	}
 	
 	public void updateFillTypes(int[][] fillTypes)
@@ -84,11 +85,14 @@ public class MapGrounds extends Grid
 							Math.round(cellSize * this.scale));	
 				}
 				
-				g.setColor(gridColor);
-				
-				g.drawRect(drawX, drawY, 
-						Math.round(cellSize * this.scale), 
-						Math.round(cellSize * this.scale));
+				if (!this.hideGrid)
+				{
+					g.setColor(gridColor);
+					
+					g.drawRect(drawX, drawY, 
+							Math.round(cellSize * this.scale), 
+							Math.round(cellSize * this.scale));					
+				}
 			}
 		}
 	}

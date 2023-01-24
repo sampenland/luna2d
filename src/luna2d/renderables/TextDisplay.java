@@ -29,6 +29,12 @@ public class TextDisplay extends Renderable
 		this.text = text;
 	}
 	
+	public void updateText(String text, Color newColor)
+	{
+		this.textColor = newColor;
+		this.text = text;
+	}
+	
 	public void updateColor(Color c)
 	{
 		this.textColor = c;

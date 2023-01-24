@@ -20,7 +20,7 @@ public class Player extends SimplePlayer
 	private Backpack backpack;
 	
 	private float hunger;
-	private float hungerDrain = 0.08f;
+	private float hungerDrain = 0.02f;
 	
 	private FillBar healthBar;
 	private FillBar hungerBar;

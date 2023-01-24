@@ -15,6 +15,7 @@ public class UIGrid extends Renderable
 
 	protected int x, y, rows, columns, cellSize;
 	protected Color gridColor, bkgColor;
+	public boolean hideGrid;
 	
 	protected int[][] fillTypes;
 	public int clickedRow;
@@ -33,6 +34,7 @@ public class UIGrid extends Renderable
 		this.bkgColor = bkgColor;
 		this.scale = scale;
 		this.fillTypes = fillTypes;
+		this.hideGrid = false;
 		
 		this.mouseClicked = false;
 		this.clickedRow = -1;
@@ -63,11 +65,14 @@ public class UIGrid extends Renderable
 						Math.round(cellSize * this.scale), 
 						Math.round(cellSize * this.scale));
 				
-				g.setColor(gridColor);
-				
-				g.drawRect(this.x + cx, this.y + cy, 
-						Math.round(cellSize * this.scale), 
-						Math.round(cellSize * this.scale));
+				if (!this.hideGrid)
+				{
+					g.setColor(gridColor);
+					
+					g.drawRect(this.x + cx, this.y + cy, 
+							Math.round(cellSize * this.scale), 
+							Math.round(cellSize * this.scale));					
+				}
 			}
 		}
 	}
