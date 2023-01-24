@@ -181,7 +181,7 @@ public class Player extends SimplePlayer
 	{
 		super.update();
 		checkKeys();
-		Game.updatePlayerPosition(this.worldX, this.worldY, 200);
+		Game.updatePlayerPosition(this.getInternalX(), this.getInternalY(), 200);
 		
 		this.timeLabel.updateText(this.inScene.getDaysAndTime());
 		
@@ -222,10 +222,11 @@ public class Player extends SimplePlayer
 		}
 		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
 		{
-			Point playerPos = new Point(this.worldX, this.worldY);
-			Point dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y));
-			Log.println(dir);
-			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, 0, 0 , 0.25f);
+			Point playerPos = new Point(this.getWorldX(), this.getWorldY());
+			Point dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
+			dir.x *= 10;
+			dir.y *= 10;
+			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir.x, dir.y, 0.25f);
 		}
 		
 		this.holdingType = ObjectTypes.Empty;

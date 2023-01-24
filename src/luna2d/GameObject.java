@@ -9,7 +9,8 @@ import luna2d.renderables.Renderable;
 public abstract class GameObject 
 {	
 	public boolean inputEnabled = false;
-	protected int worldX, worldY, screenX, screenY, objectType; 
+	private int worldX, worldY;
+	protected int screenX, screenY, objectType; 
 	protected float velocityX, velocityY;
 	private float friction;
 	protected HashMap<Integer, Boolean> keys;
@@ -32,6 +33,22 @@ public abstract class GameObject
 		this.inScene.getObjectHandler().addObject(this);
 	}
 	
+	public int getWorldX()
+	{
+		return this.worldX;
+	}
+	
+	public int getWorldY()
+	{
+		return this.worldY;
+	}
+	
+	public void updateWorldPosition(int x, int y)
+	{
+		this.worldX = x;
+		this.worldY = y;
+	}
+	
 	public void destroy()
 	{
 		this.destroyNow = true;
@@ -52,22 +69,6 @@ public abstract class GameObject
 		this.velocityX = x;
 		this.velocityY = y;
 		this.friction = friction;
-	}
-	
-	protected int getWorldX()
-	{
-		return this.worldX;
-	}
-	
-	protected int getWorldY()
-	{
-		return this.worldY;
-	}
-	
-	public void updateWorldPosition(int x, int y)
-	{
-		this.worldX = x;
-		this.worldY = y;
 	}
 	
 	protected Game getGame()

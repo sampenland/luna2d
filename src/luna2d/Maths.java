@@ -23,8 +23,15 @@ public class Maths
 		return val;
 	}
 	
-	public static Point directionBetweenTwoPoints(Point start, Point end)
+	public static Point directionBetweenTwoPoints(Point start, Point end, boolean normalized)
 	{
+		if(normalized)
+		{
+			Point p = new Point((end.x - start.x), (end.y - start.y));
+			double mag = Math.sqrt(p.x^2 + p.y^2);
+			return new Point((int)Math.round(p.x / mag), (int)Math.round(p.y / mag));
+			
+		}
 		return new Point((end.x - start.x), (end.y - start.y));
 	}
 	
@@ -43,7 +50,7 @@ public class Maths
 		if (playerObj instanceof SimplePlayer)
 		{
 			SimplePlayer player = (SimplePlayer)playerObj;
-			int d = (int)Point.distance(player.worldX, player.worldY, p.x, p.y);
+			int d = (int)Point.distance(player.getWorldX(), player.getWorldY(), p.x, p.y);
 			return d;
 		}
 		

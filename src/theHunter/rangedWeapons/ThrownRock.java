@@ -14,7 +14,7 @@ public class ThrownRock extends RangedWeapon
 	
 	private void stop()
 	{
-		this.getScene().addSprite(new Rock(this.getScene(), this.worldX, this.worldY, 1));
+		this.getScene().addSprite(new Rock(this.getScene(), this.getWorldX(), this.getWorldY(), 1));
 		this.destroy();
 	}
 	

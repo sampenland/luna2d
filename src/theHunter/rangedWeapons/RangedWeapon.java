@@ -32,7 +32,7 @@ public class RangedWeapon extends GameObject
 	{
 		if (this.sprite != null)
 		{			
-			this.sprite.updateWorldPosition(this.worldX, this.worldY);		
+			this.sprite.updateWorldPosition(this.getWorldX(), this.getWorldY());		
 		}
 	}
 
