@@ -2,23 +2,27 @@ package theHunter;
 
 public enum ObjectTypes 
 {	
-	Empty(0, "NONE"),
-	Player(1, "Player"),
-	Tree(2, "Tree"),
-	Bush(3, "BerryBush"),
-	Water(4, "Water"),
-	Wolf(5, "Wolf"),
-	GndGrass(6, ""),
-	GndDirt(7, ""),
-	GndRock(8, ""),
-	GndWater(9, ""),
-	InvBerries(10, "INV_Berries");
+	Empty(0, "NONE", false),
+	Player(1, "Player", true),
+	Tree(2, "Tree", true),
+	Bush(3, "BerryBush", true),
+	Water(4, "Water", true),
+	Wolf(5, "Wolf", true),
+	GndGrass(6, "", false),
+	GndDirt(7, "", false),
+	GndRock(8, "", false),
+	GndWater(9, "", false),
+	InvBerries(10, "INV_Berries", false),
+	Rock(11, "Rock", true),
+	InvRock(12, "INV_Rock", false);
 	
 	public final int intValue;
 	public final String imgName;
-	private ObjectTypes(int v, String imgName)
+	public final boolean showInMapEditor;
+	private ObjectTypes(int v, String imgName, boolean showInMapEditor)
 	{
 		this.intValue = v;
 		this.imgName = imgName;
+		this.showInMapEditor = showInMapEditor;
 	}
 }

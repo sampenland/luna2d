@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import luna2d.Game;
-import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.lights.GlowLight;
@@ -15,6 +14,7 @@ import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
 import luna2d.renderables.TextDisplay;
 import theHunter.inventoryItems.InvBerries;
+import theHunter.inventoryItems.InvRock;
 import theHunter.objects.GrowingBerryBush;
 import theHunter.ui.Backpack;
 
@@ -62,6 +62,16 @@ public class Player extends SimplePlayer
 		
 		this.inScene.setPlayer(this);
 		
+	}
+	
+	public boolean addToBackpack(InventoryItem item)
+	{
+		return this.backpack.addToBackpack(item);
+	}
+	
+	public boolean backpackFull()
+	{
+		return this.backpack.isFull();
 	}
 	
 	public void useItem(ObjectTypes type)
@@ -136,6 +146,11 @@ public class Player extends SimplePlayer
 		case Water:
 			break;
 		case Wolf:
+			break;
+		case InvRock:
+			item = new InvRock(this.inScene, 2);
+			break;
+		case Rock:
 			break;
 		default:
 			break;

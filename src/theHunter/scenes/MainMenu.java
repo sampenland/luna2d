@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.TextDisplay;
-import theHunter.objects.GrowingBerryBush;
 
 public class MainMenu extends Scene
 {		

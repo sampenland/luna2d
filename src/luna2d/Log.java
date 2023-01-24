@@ -13,6 +13,27 @@ public class Log
 		System.out.println(text);
 	}
 	
+	public static void println(boolean text)
+	{
+		System.out.println(text);
+	}
+	
+	public static void println(boolean text, boolean text2)
+	{
+		System.out.println(text + " " + text2);
+	}
+	
+	public static void println(boolean text, boolean text2, boolean text3)
+	{
+		System.out.println(text + " " + text2 + " " + text3);
+	}
+	
+	
+	public static void println(boolean text, boolean text2, boolean text3, boolean text4)
+	{
+		System.out.println(text + " " + text2 + " " + text3 + " " + text4);
+	}
+	
 	public static void println(String text, String text2)
 	{
 		System.out.println(text + " " + text2);

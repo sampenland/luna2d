@@ -201,7 +201,6 @@ public class Game extends Canvas implements Runnable {
 			mouseX = (MouseInfo.getPointerInfo().getLocation().x - this.window.getFrame().getLocationOnScreen().x) - 8;
 			mouseY = (MouseInfo.getPointerInfo().getLocation().y - this.window.getFrame().getLocationOnScreen().y) - 32;
 			
-			// Get worldMouseX and worldMouseY
 			mouseWorldX = -Game.CAMERA_X + mouseX;
 			mouseWorldY = -Game.CAMERA_Y + mouseY;
 			

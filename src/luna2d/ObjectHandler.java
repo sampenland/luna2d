@@ -10,6 +10,7 @@ import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
+import theHunter.objects.Rock;
 
 public class ObjectHandler 
 {	
@@ -159,6 +160,13 @@ public class ObjectHandler
 				if (remove instanceof FadingTextDisplay)
 				{
 					remove.inMenu.removeTextDisplay((FadingTextDisplay)remove);
+				}
+			}
+			else
+			{
+				if (remove instanceof Rock)
+				{
+					renderables.remove(remove);
 				}
 			}
 		}

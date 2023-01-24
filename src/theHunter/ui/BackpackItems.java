@@ -23,6 +23,25 @@ public class BackpackItems extends UIGrid
 		this.inputEnabled = true;
 	}
 	
+	public int totalItems()
+	{
+		int cnt = 0;
+		for (int r = 0; r < Backpack.BACKPACK_ROWS; r++)
+		{
+			for (int c = 0; c < Backpack.BACKPACK_COLUMNS; c++)
+			{
+				if (items[r][c] == null)
+				{
+					return cnt;
+				}
+				
+				cnt++;
+			}
+		}
+		
+		return cnt;
+	}
+	
 	public void updateItems(LinkedList<InventoryItem> inItems)
 	{
 		items = new InventoryItem[Backpack.BACKPACK_ROWS][Backpack.BACKPACK_COLUMNS];

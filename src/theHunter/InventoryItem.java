@@ -4,6 +4,7 @@ import luna2d.Scene;
 
 public abstract class InventoryItem 
 {
+	public static int PICKUP_MULTIPLIER = 1;
 	public int TYPE;
 	public int AMOUNT;
 	private Scene inScene;
