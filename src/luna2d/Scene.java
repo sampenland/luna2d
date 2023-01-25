@@ -52,6 +52,11 @@ public abstract class Scene
 		this.dayNightCycle.setTime(time);
 	}
 	
+	public DayNightCycle getDayNightEngine()
+	{
+		return this.dayNightCycle;
+	}
+	
 	public String getTime()
 	{
 		if (this.dayNightCycle != null)
@@ -179,14 +184,24 @@ public abstract class Scene
 		this.objHandler.renderAllObjects(g);
 		this.objHandler.renderAllRenderables(g);		
 		
-		if (this.dayNightCycle != null && !this.dayNightCycle.isDayTime())
+		if ((this.dayNightCycle != null && !this.dayNightCycle.isDayTime()) || WeatherSystem.isRaining)
 		{
 			// Render lights with over-top Day/Night cycle background
 			LinkedList<Light> lights = this.objHandler.getLights();
 			
 			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			Graphics graphics = img.getGraphics();
-			graphics.setColor(this.dayNightCycle.getCurrentColor());
+			
+			if (WeatherSystem.isRaining)
+			{
+				graphics.setColor(WeatherSystem.cloudColor);				
+			}
+			else
+			{
+				graphics.setColor(this.dayNightCycle.getCurrentColor());
+			}
+			
+			
 			graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 			graphics.dispose();
 			

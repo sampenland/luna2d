@@ -19,6 +19,7 @@ public abstract class DayNightCycle
 	
 	private int nightHours;
 	private float alpha;
+	private int msOfInGameMinute;
 	
 	public DayNightCycle(int msOfInGameMinute, int startOfDayHour, int startOfNightHour, Color dawnColor, Color dayColor, Color dustColor, Color nightColor)
 	{
@@ -28,6 +29,7 @@ public abstract class DayNightCycle
 			return; 
 		}
 		
+		this.msOfInGameMinute = msOfInGameMinute;
 		this.nightHours = this.startOfNightHour - this.startOfDayHour;
 		
 		this.startOfDayHour = startOfDayHour;
@@ -51,6 +53,21 @@ public abstract class DayNightCycle
 		
 		this.cycleTimer = new Timer("DayNightTimer");
 		this.cycleTimer.scheduleAtFixedRate(cycleTask, msOfInGameMinute, msOfInGameMinute);
+	}
+	
+	public int getMilliSecondsOfInGameMinute()
+	{
+		return this.msOfInGameMinute;
+	}
+	
+	public long getTimeInMinutes()
+	{
+		return (this.inGameHours * 60) + (this.inGameDays * 60 * 24) + this.inGameMinutes;
+	}
+	
+	public long getTimeSinceMinute(long markerMinute)
+	{
+		return getTimeInMinutes() - markerMinute;
 	}
 	
 	public boolean isDayTime()

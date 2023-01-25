@@ -26,6 +26,7 @@ public class Game extends Canvas implements Runnable {
 	public SceneManager sceneManager;
 	private InputHandler inputHandler;
 	private MouseHandler mouseHandler;
+	private static WeatherSystem weatherSystem;
 	
 	private Thread mainGameThread;
 	private boolean gameRunning = false;
@@ -115,6 +116,11 @@ public class Game extends Canvas implements Runnable {
 		return null;
 	}
 	
+	public static WeatherSystem getWeatherSystem()
+	{
+		return weatherSystem;
+	}
+	
 	private void tick()
 	{
 		CAMERA_X = -CAMERA_X_OFFSET;
@@ -139,6 +145,11 @@ public class Game extends Canvas implements Runnable {
 		if (!ResourceHandler.initialized)
 		{
 			ResourceHandler.init();
+		}
+		
+		if (weatherSystem == null)
+		{
+			weatherSystem = new WeatherSystem();
 		}
 		
 		this.sceneManager.update();

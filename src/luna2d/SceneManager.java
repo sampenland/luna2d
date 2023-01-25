@@ -101,6 +101,11 @@ public class SceneManager
 		if (this.currentScene == null) return;
 		
 		this.currentScene.render(g);
+		
+		if (Game.getWeatherSystem() != null)
+		{
+			Game.getWeatherSystem().render(g);
+		}
 	}
 	
 	public void update()
@@ -109,6 +114,12 @@ public class SceneManager
 		if (this.currentScene == null) return;
 		
 		this.currentScene.backgroundUpdate();
+		
+		if (Game.getWeatherSystem() != null)
+		{
+			Game.getWeatherSystem().update();
+		}
+		
 	}
 	
 	protected void onMouseClick(MouseEvent e)

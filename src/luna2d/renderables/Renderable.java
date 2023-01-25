@@ -13,6 +13,7 @@ public abstract class Renderable
 	public int worldX, worldY, screenX, screenY; 
 	private int width, height;
 	protected int scale;
+	protected boolean canScale;
 	public boolean visible;
 	protected boolean customRender; // Means it will not be drawn from automatically but manually
 	private boolean destroyNow;
@@ -26,7 +27,13 @@ public abstract class Renderable
 	public Renderable(Scene inScene, int x, int y, int scale)
 	{
 		this.inScene = inScene;
-		this.inScene.getObjectHandler().addRenderable(this);
+		this.canScale = true;
+		
+		if (this.inScene != null)
+		{
+			this.inScene.getObjectHandler().addRenderable(this);			
+		}
+		
 		this.scale = scale;
 		
 		this.worldX = x;
@@ -84,6 +91,16 @@ public abstract class Renderable
 	public boolean getDestroyNow()
 	{
 		return this.destroyNow;
+	}
+	
+	public void enableScaling()
+	{
+		this.canScale = true;
+	}
+	
+	public void disableScaling()
+	{
+		this.canScale = false;
 	}
 	
 	public void setCustomRender(boolean val)

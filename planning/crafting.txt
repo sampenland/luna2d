@@ -1,0 +1,23 @@
+	
+	CRAFTING GUIDE
+	---------------
+	Crafting involves using the correct tool, selecting a material and adding up to 4 resources (with amounts).
+	Example: Tool "Knife", Material "Wood", Resource1 "2 Wood", Resource2-4 "Empty"
+	
+	
+	Crafting Menu
+	|---------------------------
+	|    TOOL	 |  Material   | 
+	|--------------------------|
+	|						   |
+	| Resource 1 | Resource 2  |
+	| Resource 3 | Resource 4  | 
+	|--------------------------|
+	
+
+	TOOL				MATERIAL				RESOURCES				MAKES
+	----------------------------------------------------------------------------------------------------------
+	none				rock					2 rock					rock knife for carving tools
+	rock knife			wood					2 wood					wooden bowl to carry water in
+	
+	

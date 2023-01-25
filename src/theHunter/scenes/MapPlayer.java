@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import luna2d.DayNightCycleTime;
 import luna2d.Game;
 import luna2d.Log;
+import luna2d.ResourceHandler;
 import luna2d.Scene;
 import theHunter.DayNightCycleEngine;
 import theHunter.MapGrounds;
@@ -34,7 +35,7 @@ public class MapPlayer extends Scene
 	@Override
 	public void start() 
 	{
-		Log.println("Started Map Player");
+		Log.println("Started Map Player"); 
 	}
 	
 	public void loadAndStartMap(String name)
@@ -112,6 +113,12 @@ public class MapPlayer extends Scene
 		
 		// Startup day and night
 		this.setDayNightCycle(new DayNightCycleEngine(50, 8, 20, Color.orange, Color.white, Color.orange, Color.black), new DayNightCycleTime(8, 0, 0));
+		
+		ResourceHandler.addRain("Rain", "RainComing", 800, 10, 50, 
+				4 * 60, 3 * 24 * 60, // 4 hrs - 3 days between rain
+				60, 2 * 24 * 60, // 1 hours - 2 days of rain
+				this.getDayNightEngine().getMilliSecondsOfInGameMinute() / 2
+				);
 		
 	}
 

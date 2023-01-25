@@ -1,8 +1,8 @@
 package theHunter.objects;
 
 import java.util.Timer;
-
 import luna2d.Scene;
+import luna2d.WeatherSystem;
 import luna2d.renderables.Sprite;
 import luna2d.timers.SpriteTask;
 
@@ -28,7 +28,7 @@ public class GrowingBerryBush extends Sprite
 			{
 				GrowingBerryBush bush = (GrowingBerryBush)this.sprite;
 				
-				if (!bush.hasWater) // TODO: If raining then grow as well
+				if (!bush.hasWater && !WeatherSystem.isRaining)
 				{
 					return;
 				}

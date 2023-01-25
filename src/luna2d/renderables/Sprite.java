@@ -150,6 +150,21 @@ public class Sprite extends Renderable
 		
 	}
 	
+	public void stopAnimation()
+	{
+		this.isAnimated = true;
+	}
+	
+	public void playAnimation(boolean restart)
+	{
+		if (restart)
+		{
+			this.currentFrame = 0;
+		}
+		
+		this.isAnimated = true;
+	}
+	
 	public void setFrame(int frame, boolean animated)
 	{
 		if (frames >= 0 && frame <= this.frames)
@@ -263,6 +278,12 @@ public class Sprite extends Renderable
 		if (this.imgRef == null) return;
 		if (this.customRender) return;
 		
+		int oldScale = Game.CAMERA_SCALE;
+		if (!this.canScale)
+		{
+			Game.CAMERA_SCALE = 1;
+		}
+		
 		int drawX, drawY, drawX2, drawY2;
 		int srcX = this.currentFrame * this.frameWidth;
 		
@@ -313,7 +334,12 @@ public class Sprite extends Renderable
 					drawX2, drawY2,
 					srcX, 0, srcX + this.frameWidth, this.drawRect.height, 
 					null);
-		}		
+		}
+		
+		if (!this.canScale)
+		{
+			Game.CAMERA_SCALE = oldScale;
+		}
 	}
 	
 	public void setFixedScreenPosition(boolean val)

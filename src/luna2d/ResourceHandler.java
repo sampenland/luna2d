@@ -21,6 +21,13 @@ public class ResourceHandler
 		initialized = true;
 	}
 	
+	public static void addRain(String imgName, String comingRainImgName, int frameWidth, int frames, int msBetweenFrames, 
+			int minMinutesBetweenRain, int maxMinutesBetweenRain, int minMinutesOfRain, int maxMinutesOfRain, int msOfInGameMinue)
+	{
+		Game.getWeatherSystem().setupRain(imgName, comingRainImgName, frameWidth, frames, msBetweenFrames, minMinutesBetweenRain, maxMinutesBetweenRain,
+				minMinutesOfRain, maxMinutesOfRain, msOfInGameMinue);
+	}
+	
 	public static BufferedImage addImage(String name, String path)
 	{
 		if (name == "")
