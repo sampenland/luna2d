@@ -47,6 +47,11 @@ public class Backpack extends UIMenu
 		
 	}
 	
+	public boolean isFull()
+	{
+		return this.backpackItems.totalItems() == TOTAL_ITEMS;
+	}
+	
 	public void showLog(String text, Color color)
 	{
 		FadingTextDisplay logDisplay = new FadingTextDisplay(inScene, text, 20, Game.HEIGHT - 55, color, 2000);
@@ -83,6 +88,11 @@ public class Backpack extends UIMenu
 		case Water:
 			break;
 		case Wolf:
+			break;
+		case InvRock:
+			this.showLog("Added " + item.AMOUNT + " rocks", Color.green);
+			break;
+		case Rock:
 			break;
 		default:
 			break;
@@ -123,6 +133,11 @@ public class Backpack extends UIMenu
 			case Water:
 				break;
 			case Wolf:
+				break;
+			case InvRock:
+				this.showLog("Removed " + item.AMOUNT + " rocks", Color.red);
+				break;
+			case Rock:
 				break;
 			default:
 				break;

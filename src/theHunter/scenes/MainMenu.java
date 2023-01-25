@@ -21,7 +21,8 @@ public class MainMenu extends Scene
 		new TextDisplay(this, "Main Menu", 200, 150, Color.GREEN);
 		new TextDisplay(this, "(E) Map Editor", 200, 300, Color.GREEN);
 		new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN);
-		new TextDisplay(this, "(Q) Quit", 200, 400, Color.GREEN);		
+		new TextDisplay(this, "(Q) Quit", 200, 400, Color.GREEN);
+		
 	}
 	
 	public void update()

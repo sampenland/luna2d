@@ -14,7 +14,7 @@ public class MapGrounds extends Grid
 	public MapGrounds(Scene inScene, int x, int y, Color gridColor, int scale, int[][] fillTypes) 
 	{
 		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, gridColor, scale, fillTypes);
-		this.hideGrid = true;
+		//this.hideGrid = true;
 	}
 	
 	public void updateFillTypes(int[][] fillTypes)

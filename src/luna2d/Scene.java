@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import luna2d.lights.Light;
 import luna2d.renderables.Renderable;
+import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
 
 public abstract class Scene
@@ -115,6 +116,11 @@ public abstract class Scene
 	public Game getGame()
 	{
 		return this.game;
+	}
+	
+	public void addSprite(Sprite sprite)
+	{
+		this.objHandler.addRenderable(sprite);
 	}
 	
 	public ObjectHandler getObjectHandler() { return this.objHandler; }

@@ -4,6 +4,7 @@ import luna2d.Scene;
 
 public abstract class InventoryItem 
 {
+	public static int PICKUP_MULTIPLIER = 1;
 	public int TYPE;
 	public int AMOUNT;
 	private Scene inScene;
@@ -20,7 +21,7 @@ public abstract class InventoryItem
 		return this.inScene;
 	}
 	
-	public abstract void use();
+	public abstract void use(int flag);
 	public abstract void repair();
 	public abstract void craft();	
 	

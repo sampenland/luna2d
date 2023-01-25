@@ -15,10 +15,17 @@ public class InvBerries extends InventoryItem
 	}
 
 	@Override
-	public void use() 
+	public void use(int flag) 
 	{
 		Player player = (Player)this.getScene().getPlayer();
-		player.useItem(ObjectTypes.InvBerries);
+		if (flag == 3)
+		{
+			player.useItem(ObjectTypes.InvBerries);			
+		}
+		else
+		{
+			player.readyHoldItem(ObjectTypes.InvBerries);
+		}
 	}
 
 	@Override

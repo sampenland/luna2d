@@ -14,6 +14,7 @@ import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
 import theHunter.objects.BerryBush;
+import theHunter.objects.Rock;
 import theHunter.objects.Tree;
 import theHunter.objects.WaterSource;
 import theHunter.objects.Wolf;
@@ -94,7 +95,12 @@ public class MapPlayer extends Scene
 				case Wolf:
 					new Wolf(this, x, y, 1);
 					break;
-					
+				case InvBerries:
+					break;
+				case InvRock:
+					break;
+				case Rock:
+					new Rock(this, x, y, 1);
 				default:
 					break;
 				}

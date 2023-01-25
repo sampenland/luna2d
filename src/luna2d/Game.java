@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 
@@ -201,7 +202,6 @@ public class Game extends Canvas implements Runnable {
 			mouseX = (MouseInfo.getPointerInfo().getLocation().x - this.window.getFrame().getLocationOnScreen().x) - 8;
 			mouseY = (MouseInfo.getPointerInfo().getLocation().y - this.window.getFrame().getLocationOnScreen().y) - 32;
 			
-			// Get worldMouseX and worldMouseY
 			mouseWorldX = -Game.CAMERA_X + mouseX;
 			mouseWorldY = -Game.CAMERA_Y + mouseY;
 			

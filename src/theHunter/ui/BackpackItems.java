@@ -23,6 +23,25 @@ public class BackpackItems extends UIGrid
 		this.inputEnabled = true;
 	}
 	
+	public int totalItems()
+	{
+		int cnt = 0;
+		for (int r = 0; r < Backpack.BACKPACK_ROWS; r++)
+		{
+			for (int c = 0; c < Backpack.BACKPACK_COLUMNS; c++)
+			{
+				if (items[r][c] == null)
+				{
+					return cnt;
+				}
+				
+				cnt++;
+			}
+		}
+		
+		return cnt;
+	}
+	
 	public void updateItems(LinkedList<InventoryItem> inItems)
 	{
 		items = new InventoryItem[Backpack.BACKPACK_ROWS][Backpack.BACKPACK_COLUMNS];
@@ -46,11 +65,11 @@ public class BackpackItems extends UIGrid
 	
 	private void checkMouseClicks()
 	{
-		if (this.mouseClicked && this.mouseClickEvent != null && this.mouseClickEvent.getButton() == 3) 
+		if (this.mouseClicked && this.mouseClickEvent != null && (this.mouseClickEvent.getButton() == 3 || this.mouseClickEvent.getButton() == 1)) 
 		{
 			if (items[this.clickedRow][this.clickedColumn] != null)
 			{				
-				items[this.clickedRow][this.clickedColumn].use();
+				items[this.clickedRow][this.clickedColumn].use(this.mouseClickEvent.getButton());
 				if (this.backpack != null)
 				{
 					this.backpack.removeFromBackpack(items[this.clickedRow][this.clickedColumn]);

@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import luna2d.Game;
 import luna2d.GameObject;
+import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 
@@ -13,6 +14,8 @@ public class SimplePlayer extends GameObject
 	private boolean zoomingEnabled = false;
 	protected int moveSpeed = 5;
 	protected float health = 100;
+	protected int realWorldX, realWorldY;
+	private int worldX, worldY;
 	
 	protected Sprite sprite;
 	
@@ -26,6 +29,32 @@ public class SimplePlayer extends GameObject
 		sprite = new Sprite(inScene, imageName, 0, 0, scale, cellSize, frames, msBetweenFrames);
 		sprite.setFixedScreenPosition(true);
 		sprite.updateScreenPosition(Game.WIDTH / 2 - sprite.getWidth(), Game.HEIGHT / 2 - sprite.getHeight());
+	}
+	
+	public int getInternalX()
+	{
+		return this.worldX;
+	}
+	
+	public int getInternalY()
+	{
+		return this.worldY;
+	}
+	
+	public int getWorldX()
+	{
+		return this.realWorldX;
+	}
+	
+	public int getWorldY()
+	{
+		return this.realWorldY;
+	}
+	
+	public void updateWorldPosition(int x, int y)
+	{
+		this.worldX = x;
+		this.worldY = y;
 	}
 	
 	public int getGridX()
@@ -66,6 +95,8 @@ public class SimplePlayer extends GameObject
 	@Override
 	protected void update()
 	{
+		this.realWorldX = this.worldX + Game.WIDTH/2 - this.getWidth()/2; 
+		this.realWorldY = this.worldY + Game.HEIGHT/2 - this.getHeight()/2;
 		this.playerUpdate();
 	}
 	

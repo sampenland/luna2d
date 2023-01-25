@@ -61,8 +61,8 @@ public class Sprite extends Renderable
 			this.drawRect.height = imgRef.getHeight();
 		}
 
-		this.worldX = x;
-		this.worldY = y;
+		this.worldX = this.drawRect.x = x;
+		this.worldY = this.drawRect.y = y;
 		
 		this.setSize(this.drawRect.width, this.drawRect.height);
 		
@@ -94,8 +94,8 @@ public class Sprite extends Renderable
 			this.visible = false;
 		}
 
-		this.worldX = x;
-		this.worldY = y;
+		this.worldX = this.drawRect.x = x;
+		this.worldY = this.drawRect.y = y;
 		
 		this.drawRect.width = w;
 		this.drawRect.height = h;
@@ -133,8 +133,8 @@ public class Sprite extends Renderable
 			this.drawRect.height = imgRef.getHeight();
 		}
 
-		this.worldX = x;
-		this.worldY = y;
+		this.worldX = this.drawRect.x = x;
+		this.worldY = this.drawRect.y = y;
 		
 		this.setSize(this.drawRect.width, this.drawRect.height);
 		
@@ -157,6 +157,21 @@ public class Sprite extends Renderable
 			this.currentFrame = frame;
 			this.isAnimated = animated;
 		}
+	}
+	
+	public Point getWorldPosition()
+	{
+		return new Point(this.worldX, this.worldY);
+	}
+	
+	public int getCurrentFrame()
+	{
+		return this.currentFrame;
+	}
+	
+	public int getFrameCount()
+	{
+		return this.frames;
 	}
 	
 	public void startAnimation(int msBetweenFrames)
@@ -331,6 +346,7 @@ public class Sprite extends Renderable
 	{
 		Rectangle r = new Rectangle(this.worldX, this.worldY, this.getWidth(), this.getHeight());
 		this.mouseClicked = r.contains(new Point(Game.mouseWorldX, Game.mouseWorldY));
+		this.mouseClickEvent = e;
 	}
 
 	@Override
@@ -342,6 +358,8 @@ public class Sprite extends Renderable
 	@Override
 	public void onMouseReleased(MouseEvent e) 
 	{
+		this.mouseClicked = false;
+		this.mouseClickEvent = null;
 	}
 	
 }

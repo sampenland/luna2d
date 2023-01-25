@@ -2,10 +2,12 @@ package theHunter;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.lights.GlowLight;
@@ -13,11 +15,15 @@ import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
 import luna2d.renderables.TextDisplay;
 import theHunter.inventoryItems.InvBerries;
+import theHunter.inventoryItems.InvRock;
+import theHunter.objects.GrowingBerryBush;
+import theHunter.rangedWeapons.ThrownRock;
 import theHunter.ui.Backpack;
 
 public class Player extends SimplePlayer
 {
 	private Backpack backpack;
+	private ObjectTypes holdingType;
 	
 	private float hunger;
 	private float hungerDrain = 0.02f;
@@ -34,6 +40,7 @@ public class Player extends SimplePlayer
 		super(inScene, imageName, x, y, scale, cellSize, frames, msBetweenFrames);
 		
 		this.sprite.enableCulling = false;
+		this.holdingType = ObjectTypes.Empty;
 		
 		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
@@ -57,6 +64,16 @@ public class Player extends SimplePlayer
 		
 		this.inScene.setPlayer(this);
 		
+	}
+	
+	public boolean addToBackpack(InventoryItem item)
+	{
+		return this.backpack.addToBackpack(item);
+	}
+	
+	public boolean backpackFull()
+	{
+		return this.backpack.isFull();
 	}
 	
 	public void useItem(ObjectTypes type)
@@ -90,6 +107,11 @@ public class Player extends SimplePlayer
 			break;
 		
 		}
+	}
+	
+	public void readyHoldItem(ObjectTypes type)
+	{
+		this.holdingType = type;
 	}
 	
 	public void eat(int hunger)
@@ -127,6 +149,11 @@ public class Player extends SimplePlayer
 			break;
 		case Wolf:
 			break;
+		case InvRock:
+			item = new InvRock(this.inScene, amount);
+			break;
+		case Rock:
+			break;
 		default:
 			break;
 		}
@@ -154,7 +181,7 @@ public class Player extends SimplePlayer
 	{
 		super.update();
 		checkKeys();
-		Game.updatePlayerPosition(this.worldX, this.worldY, 200);
+		Game.updatePlayerPosition(this.getInternalX(), this.getInternalY(), 200);
 		
 		this.timeLabel.updateText(this.inScene.getDaysAndTime());
 		
@@ -182,6 +209,28 @@ public class Player extends SimplePlayer
 	@Override
 	protected void onMouseClick(MouseEvent e) 
 	{
+		if (this.holdingType == ObjectTypes.Empty) return;
+		
+		Point gPos = Maths.convertToGrid(Game.mouseWorldX, Game.mouseWorldY, TheHunter.CELL_SIZE * Game.CAMERA_SCALE, 0, 0);
+
+		int x = gPos.x * TheHunter.CELL_SIZE;
+		int y = gPos.y * TheHunter.CELL_SIZE;
+		
+		if (this.holdingType == ObjectTypes.InvBerries && e.getButton() == 1)
+		{
+			new GrowingBerryBush(this.inScene, x, y, 1);
+		}
+		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
+		{
+			Point playerPos = new Point(this.getWorldX(), this.getWorldY());
+			Point dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
+			dir.x *= 10;
+			dir.y *= 10;
+			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir.x, dir.y, 0.25f);
+		}
+		
+		this.holdingType = ObjectTypes.Empty;
+		
 	}
 
 	@Override

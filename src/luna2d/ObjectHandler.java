@@ -10,6 +10,7 @@ import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
+import theHunter.objects.Rock;
 
 public class ObjectHandler 
 {	
@@ -129,10 +130,23 @@ public class ObjectHandler
 	
 	public void updateAllObjects()
 	{
+		LinkedList<GameObject> removes = new LinkedList<GameObject>();
+
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
+			if (temp.getDestroyNow()) 
+			{
+				removes.add(temp);
+				continue;
+			}
+			
 			temp.gameUpdate();
+		}
+		
+		for(GameObject remove : removes)
+		{
+			objects.remove(remove);
 		}
 	}
 	
@@ -159,6 +173,13 @@ public class ObjectHandler
 				if (remove instanceof FadingTextDisplay)
 				{
 					remove.inMenu.removeTextDisplay((FadingTextDisplay)remove);
+				}
+			}
+			else
+			{
+				if (remove instanceof Rock)
+				{
+					renderables.remove(remove);
 				}
 			}
 		}

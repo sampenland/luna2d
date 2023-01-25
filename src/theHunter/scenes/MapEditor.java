@@ -84,6 +84,8 @@ public class MapEditor extends Scene
 		grounds.enableCulling = false;
 		
 		int count = 0;
+		int countRow = 0;
+		int countColumn = 0;
 		for(int r = 0; r < TheHunter.ROWS; r++)
 		{
 			for(int c = 0; c < TheHunter.COLUMNS; c++)
@@ -94,22 +96,36 @@ public class MapEditor extends Scene
 				
 				if (count < ObjectTypes.values().length)
 				{
-					String imgName = ObjectTypes.values()[count].imgName;
-					int objType = ObjectTypes.values()[count].intValue;
-					
-					if (imgName == "Player")
+					if (ObjectTypes.values()[count].showInMapEditor)
 					{
-						this.selectionSprites[r][c] = new Sprite(this, imgName, c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, 16, 16);
-					}
-					else
-					{
-						this.selectionSprites[r][c] = new Sprite(this, imgName, c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);	
+						String imgName = ObjectTypes.values()[count].imgName;
+						int objType = ObjectTypes.values()[count].intValue;
+						
+						if (imgName == "Player")
+						{
+							this.selectionSprites[countRow][countColumn] = new Sprite(this, imgName, countColumn * 16, TheHunter.GRIDY_OFFSET + countRow * 16, 1, 16, 16);
+						}
+						else
+						{
+							this.selectionSprites[countRow][countColumn] = new Sprite(this, imgName, countColumn * 16, TheHunter.GRIDY_OFFSET + countRow * 16, 1);	
+						}
+						
+						this.selectionSprites[countRow][countColumn].setObjectType(objType);
+						this.selectionSprites[countRow][countColumn].visible = false;
+						
+						countColumn++;
+						
+						if (countColumn >= TheHunter.COLUMNS)
+						{
+							countColumn = 0;
+							countRow++;
+						}
+						
 					}
 					
-					this.selectionSprites[r][c].setObjectType(objType);
-					this.selectionSprites[r][c].visible = false;
+					count++;
+					
 				}
-				count++;
 			}
 		}
 		
