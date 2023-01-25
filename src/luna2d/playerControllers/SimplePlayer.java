@@ -26,7 +26,7 @@ public class SimplePlayer extends GameObject
 		this.worldX = x;
 		this.worldY = y;
 		
-		sprite = new Sprite(inScene, imageName, 0, 0, scale, cellSize, frames, msBetweenFrames);
+		sprite = new Sprite(inScene, imageName, 0, 0, scale, Game.TOP_DRAW_LAYER -1, cellSize, frames, msBetweenFrames);
 		sprite.setFixedScreenPosition(true);
 		sprite.updateScreenPosition(Game.WIDTH / 2 - sprite.getWidth(), Game.HEIGHT / 2 - sprite.getHeight());
 	}

@@ -13,9 +13,9 @@ public class Rect extends Renderable
 	private Color color;
 	private boolean filled = true;
 	
-	public Rect(Scene inScene, int x, int y, int w, int h, boolean filled, Color c, int scale) 
+	public Rect(Scene inScene, int x, int y, int w, int h, boolean filled, Color c, int scale, int depth) 
 	{
-		super(inScene, x, y, scale);
+		super(inScene, x, y, scale, depth);
 		
 		this.color = c;
 		

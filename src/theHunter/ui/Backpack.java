@@ -37,7 +37,7 @@ public class Backpack extends UIMenu
 		this.x = Game.WIDTH/2 - (WIDTH/2) - 225;
 		this.y = Game.HEIGHT/2 - (HEIGHT/2);
 		
-		title = new TextDisplay(inScene, "Backpack", this.x + 5, this.y + 15, Color.white);
+		title = new TextDisplay(inScene, "Backpack", this.x + 5, this.y + 15, Color.white, Game.TOP_DRAW_LAYER);
 		this.addTextDisplay(title);
 		
 		backpackItems = new BackpackItems(this, inScene, this.x + 5, this.y + 25, BACKPACK_ROWS, BACKPACK_COLUMNS, 
@@ -54,7 +54,7 @@ public class Backpack extends UIMenu
 	
 	public void showLog(String text, Color color)
 	{
-		FadingTextDisplay logDisplay = new FadingTextDisplay(inScene, text, 20, Game.HEIGHT - 55, color, 2000);
+		FadingTextDisplay logDisplay = new FadingTextDisplay(inScene, text, 20, Game.HEIGHT - 55, color, 2000, Game.TOP_DRAW_LAYER);
 		logDisplay.setInMenu(this);
 		this.addTextDisplay(logDisplay);
 	}

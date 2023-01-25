@@ -5,9 +5,9 @@ import luna2d.renderables.Sprite;
 
 public class Tree extends Sprite
 {
-	public Tree(Scene inScene, int x, int y, int scale)
+	public Tree(Scene inScene, int x, int y, int scale, int depth)
 	{
-		super(inScene, "Tree", x, y, scale);
+		super(inScene, "Tree", x, y, scale, depth);
 	}
 	
 	@Override

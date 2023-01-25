@@ -19,9 +19,9 @@ public class BerryBush extends Sprite
 	private SpriteTask regrowBerriesTask;
 	private Timer regrowBerriesTimer;
 	
-	public BerryBush(Scene inScene, int x, int y, int scale)
+	public BerryBush(Scene inScene, int x, int y, int scale, int depth)
 	{
-		super(inScene, "BerryBush", x, y, scale, 16, 2, 0);
+		super(inScene, "BerryBush", x, y, scale, depth, 16, 2, 0);
 		this.inputEnabled = true;
 		this.hasBerries = true;
 	}

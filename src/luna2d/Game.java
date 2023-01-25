@@ -13,6 +13,9 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = -2680723036795663013L;
 	
 	public static final int PLAYER_ID = -99;
+	public static final int DRAW_LAYERS = 50;
+	public static final int BOTTOM_DRAW_LAYER = 0;
+	public static final int TOP_DRAW_LAYER = DRAW_LAYERS - 1;
 	
 	private static Rectangle screenBounds;
 	

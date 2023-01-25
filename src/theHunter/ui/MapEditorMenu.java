@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 
+import luna2d.Game;
 import luna2d.Scene;
 import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.TextDisplay;
@@ -31,15 +32,15 @@ public class MapEditorMenu extends UIMenu
 		
 		this.visible = false;
 		
-		TextDisplay title = new TextDisplay(inScene, "Editor Menu", x + 10, y + 20, Color.white);
+		TextDisplay title = new TextDisplay(inScene, "Editor Menu", x + 10, y + 20, Color.white, Game.TOP_DRAW_LAYER);
 		title.setInMenu(this);
 		this.addTextDisplay(title);	
 		
-		TextDisplay lbMapName = new TextDisplay(inScene, "Save Map: ", x + 20, y + 40, Color.white);
+		TextDisplay lbMapName = new TextDisplay(inScene, "Save Map: ", x + 20, y + 40, Color.white, Game.TOP_DRAW_LAYER);
 		lbMapName.setInMenu(this);
 		this.addTextDisplay(lbMapName);	
 		
-		TextDisplay lbMapNameLoad = new TextDisplay(inScene, "Load Map: ", x + 20, y + 65, Color.white);
+		TextDisplay lbMapNameLoad = new TextDisplay(inScene, "Load Map: ", x + 20, y + 65, Color.white, Game.TOP_DRAW_LAYER);
 		lbMapNameLoad.setInMenu(this);
 		this.addTextDisplay(lbMapNameLoad);	
 	}
@@ -159,7 +160,7 @@ public class MapEditorMenu extends UIMenu
 			MapEditor me = (MapEditor)this.inScene;
 			me.saveMap("m_" + this.mapNameInput.getText());
 			
-			FadingTextDisplay saveStatusDisplay = new FadingTextDisplay(inScene, "Map Saved", this.screenX + 10, this.screenY + this.getHeight() - 15, Color.GREEN, 2000);
+			FadingTextDisplay saveStatusDisplay = new FadingTextDisplay(inScene, "Map Saved", this.screenX + 10, this.screenY + this.getHeight() - 15, Color.GREEN, 2000, Game.TOP_DRAW_LAYER);
 			saveStatusDisplay.setInMenu(this);
 			this.addTextDisplay(saveStatusDisplay);
 			
@@ -190,7 +191,7 @@ public class MapEditorMenu extends UIMenu
 			
 			me.injectMapData(map, mapGrounds);
 			
-			FadingTextDisplay loadStatusDisplay = new FadingTextDisplay(inScene, "Loading...", this.screenX + 10, this.screenY + this.getHeight() - 15, Color.GREEN, 2000);
+			FadingTextDisplay loadStatusDisplay = new FadingTextDisplay(inScene, "Loading...", this.screenX + 10, this.screenY + this.getHeight() - 15, Color.GREEN, 2000, Game.TOP_DRAW_LAYER);
 			loadStatusDisplay.setInMenu(this);
 			this.addTextDisplay(loadStatusDisplay);
 			
@@ -204,7 +205,7 @@ public class MapEditorMenu extends UIMenu
 					mapEditor.detailedMenu.focusedTextInput = null;
 					mapEditor.detailedMenu.loading = false;
 					
-					FadingTextDisplay loadStatusDisplay = new FadingTextDisplay(inScene, "Map Loaded", mapEditor.detailedMenu.screenX + 10, mapEditor.detailedMenu.screenY + mapEditor.detailedMenu.getHeight() - 15, Color.GREEN, 2000);
+					FadingTextDisplay loadStatusDisplay = new FadingTextDisplay(inScene, "Map Loaded", mapEditor.detailedMenu.screenX + 10, mapEditor.detailedMenu.screenY + mapEditor.detailedMenu.getHeight() - 15, Color.GREEN, 2000, Game.TOP_DRAW_LAYER);
 					loadStatusDisplay.setInMenu(mapEditor.detailedMenu);
 					mapEditor.detailedMenu.addTextDisplay(loadStatusDisplay);
 					

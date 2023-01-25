@@ -27,6 +27,10 @@ public class TheHunter extends Game
 	
 	public static final int RESOURCE_ACTION_DISTANCE = 50;
 	
+	// -------- LAYERS ----------------------
+	public static final int ENVIRONMENT_DRAW_LAYER = 2; 
+	//---------------------------------------
+	
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 640;
 		

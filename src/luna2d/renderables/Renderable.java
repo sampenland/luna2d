@@ -3,6 +3,7 @@ package luna2d.renderables;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
+import luna2d.Game;
 import luna2d.Scene;
 import luna2d.ui.UIMenu;
 
@@ -10,6 +11,7 @@ public abstract class Renderable
 {
 	private Scene inScene;
 	
+	private int depth;
 	public int worldX, worldY, screenX, screenY; 
 	private int width, height;
 	protected int scale;
@@ -24,8 +26,9 @@ public abstract class Renderable
 	public boolean mouseClicked;
 	public MouseEvent mouseClickEvent;
 	
-	public Renderable(Scene inScene, int x, int y, int scale)
+	public Renderable(Scene inScene, int x, int y, int scale, int depth)
 	{
+		this.depth = depth;
 		this.inScene = inScene;
 		this.canScale = true;
 		
@@ -45,6 +48,19 @@ public abstract class Renderable
 		this.enableCulling = true;
 		this.inputEnabled = false;
 		this.mouseClicked = false;
+	}
+	
+	public void setDepth(int depth)
+	{
+		if (depth < 0) depth = 0;
+		if (depth > Game.DRAW_LAYERS) depth = Game.DRAW_LAYERS;
+		
+		this.depth = depth;
+	}
+	
+	public int getDepth()
+	{
+		return this.depth;
 	}
 	
 	public void setSize(int w, int h)

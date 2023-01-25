@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
+
+import luna2d.Game;
 import luna2d.ResourceHandler;
 import luna2d.Scene;
 import luna2d.ui.UIGrid;
@@ -18,7 +20,7 @@ public class BackpackItems extends UIGrid
 	public BackpackItems(Backpack backpack, Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, Color bkgColor, int scale,
 			int[][] fillTypes) 
 	{
-		super(inScene, x, y, rows, columns, cellSize, gridColor, bkgColor, scale, null);
+		super(inScene, x, y, rows, columns, cellSize, gridColor, bkgColor, scale, Game.TOP_DRAW_LAYER, null);
 		this.backpack = backpack;
 		this.inputEnabled = true;
 	}

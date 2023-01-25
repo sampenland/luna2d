@@ -16,9 +16,9 @@ public class Grid extends Renderable
 	
 	protected int[][] fillTypes;
 	
-	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int[][] fillTypes) 
+	public Grid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, int scale, int depth, int[][] fillTypes) 
 	{
-		super(inScene, x, y, scale);
+		super(inScene, x, y, scale, depth);
 		
 		this.x = x;
 		this.y = y;

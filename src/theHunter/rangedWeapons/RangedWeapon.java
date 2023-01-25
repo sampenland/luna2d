@@ -14,10 +14,10 @@ public class RangedWeapon extends GameObject
 
 	private Sprite sprite;
 		
-	public RangedWeapon(Scene inScene, String imgName, int x, int y, int scale, float velX, float velY, float friction)
+	public RangedWeapon(Scene inScene, String imgName, int x, int y, int scale, int depth, float velX, float velY, float friction)
 	{
 		super(x, y, ObjectTypes.ThrownRock.intValue, false, inScene);
-		this.sprite = new Sprite(inScene, imgName, x, y, scale);
+		this.sprite = new Sprite(inScene, imgName, x, y, scale, depth);
 		this.setVelocity(velX, velY, friction);
 		this.getScene().getObjectHandler().addObject(this);
 	}

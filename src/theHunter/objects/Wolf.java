@@ -5,9 +5,9 @@ import luna2d.renderables.Sprite;
 
 public class Wolf extends Sprite
 {
-	public Wolf(Scene inScene, int x, int y, int scale)
+	public Wolf(Scene inScene, int x, int y, int scale, int depth)
 	{
-		super(inScene, "Wolf", x, y, scale);
+		super(inScene, "Wolf", x, y, scale, depth);
 	}
 	
 	@Override

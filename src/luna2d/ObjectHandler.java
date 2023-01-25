@@ -3,7 +3,9 @@ package luna2d;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import luna2d.lights.Light;
 import luna2d.renderables.FadingTextDisplay;
@@ -15,14 +17,20 @@ import theHunter.objects.Rock;
 public class ObjectHandler 
 {	
 	private static LinkedList<GameObject> objects;
-	private static LinkedList<Renderable> renderables;
+	private static List<LinkedList<Renderable>> renderables;
 	private static LinkedList<UI> uis;
 	private static LinkedList<Light> lights;
 		
 	public ObjectHandler()
 	{
 		objects = new LinkedList<GameObject>();
-		renderables = new LinkedList<Renderable>();
+		
+		renderables = new ArrayList<LinkedList<Renderable>>();
+		for (int i = 0; i < Game.DRAW_LAYERS; i++)
+		{
+			renderables.add(new LinkedList<Renderable>());
+		}
+		
 		uis = new LinkedList<UI>();
 		lights = new LinkedList<Light>();
 	}
@@ -37,7 +45,7 @@ public class ObjectHandler
 		return objects;
 	}
 	
-	public LinkedList<Renderable> getRenderables()
+	public List<LinkedList<Renderable>> getRenderables()
 	{
 		return renderables;
 	}
@@ -59,12 +67,12 @@ public class ObjectHandler
 	
 	public void addRenderable(Renderable r)
 	{
-		renderables.add(r);
+		renderables.get(r.getDepth()).add(r);
 	}
 	
 	public void removeRenderable(Renderable r)
 	{
-		renderables.remove(r);
+		renderables.get(r.getDepth()).remove(r);
 	}
 	
 	public void addLight(Light l)
@@ -96,26 +104,40 @@ public class ObjectHandler
 		}
 	}
 	
+	public void clearAllRenderables()
+	{
+		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
+		{
+			renderables.get(layer).clear();
+		}
+	}
+	
 	public void renderAllRenderables(Graphics g)
 	{
-		for(int i = 0; i < renderables.size(); i++)
+		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
 		{
-			Renderable temp = renderables.get(i);
-			
-			// Culling			
-			if (temp.enableCulling)
+			LinkedList<Renderable> renderLayer = renderables.get(layer);
+		
+			for(int i = 0; i < renderLayer.size(); i++)
 			{
-				if (temp instanceof Sprite)
+				Renderable temp = renderLayer.get(i);
+				
+				// Culling			
+				if (temp.enableCulling)
 				{
-					temp = (Sprite)temp;
-					if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+					if (temp instanceof Sprite)
 					{
-						continue;
+						temp = (Sprite)temp;
+						if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+						{
+							continue;
+						}
 					}
 				}
-			}
 
-			temp.render(g);
+				temp.render(g);
+			}
+			
 		}
 	}
 	
@@ -154,17 +176,22 @@ public class ObjectHandler
 	{
 		LinkedList<Renderable> removes = new LinkedList<Renderable>();
 		
-		for(int i = 0; i < renderables.size(); i++)
+		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
 		{
-			Renderable temp = renderables.get(i);			
-			if (temp.getDestroyNow()) 
+			LinkedList<Renderable> renderLayer = renderables.get(layer);
+		
+			for(int i = 0; i < renderLayer.size(); i++)
 			{
-				removes.add(temp);
-				continue;
+				Renderable temp = renderLayer.get(i);			
+				if (temp.getDestroyNow()) 
+				{
+					removes.add(temp);
+					continue;
+				}
+				
+				temp.gameUpdate();
 			}
-			
-			temp.gameUpdate();
-		}
+		}		
 		
 		for(Renderable remove : removes)
 		{
@@ -177,7 +204,7 @@ public class ObjectHandler
 			}
 			else
 			{
-				renderables.remove(remove);
+				renderables.get(remove.getDepth()).remove(remove);
 			}
 		}
 	}
@@ -219,12 +246,17 @@ public class ObjectHandler
 			}
 		}
 		
-		for(int i = 0; i < renderables.size(); i++)
+		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
 		{
-			Renderable temp = renderables.get(i);
-			if (temp.inputEnabled)
-			{				
-				temp.onMouseClick(e);
+			LinkedList<Renderable> renderLayer = renderables.get(layer);
+		
+			for(int i = 0; i < renderLayer.size(); i++)
+			{
+				Renderable temp = renderLayer.get(i);
+				if (temp.inputEnabled)
+				{				
+					temp.onMouseClick(e);
+				}
 			}
 		}
 		
@@ -249,12 +281,17 @@ public class ObjectHandler
 			}
 		}
 		
-		for(int i = 0; i < renderables.size(); i++)
+		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
 		{
-			Renderable temp = renderables.get(i);
-			if (temp.inputEnabled)
-			{				
-				temp.onMousePressed(e);
+			LinkedList<Renderable> renderLayer = renderables.get(layer);
+		
+			for(int i = 0; i < renderLayer.size(); i++)
+			{
+				Renderable temp = renderLayer.get(i);
+				if (temp.inputEnabled)
+				{				
+					temp.onMousePressed(e);
+				}
 			}
 		}
 		
@@ -279,12 +316,17 @@ public class ObjectHandler
 			}
 		}
 		
-		for(int i = 0; i < renderables.size(); i++)
+		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
 		{
-			Renderable temp = renderables.get(i);
-			if (temp.inputEnabled)
-			{				
-				temp.onMouseReleased(e);
+			LinkedList<Renderable> renderLayer = renderables.get(layer);
+		
+			for(int i = 0; i < renderLayer.size(); i++)
+			{
+				Renderable temp = renderLayer.get(i);
+				if (temp.inputEnabled)
+				{				
+					temp.onMouseReleased(e);
+				}
 			}
 		}
 		

@@ -21,9 +21,9 @@ public class UIGrid extends Renderable
 	public int clickedRow;
 	public int clickedColumn;
 	
-	public UIGrid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, Color bkgColor, int scale, int[][] fillTypes) 
+	public UIGrid(Scene inScene, int x, int y, int rows, int columns, int cellSize, Color gridColor, Color bkgColor, int scale, int depth, int[][] fillTypes) 
 	{
-		super(inScene, x, y, scale);
+		super(inScene, x, y, scale, depth);
 		
 		this.x = x;
 		this.y = y;

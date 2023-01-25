@@ -12,9 +12,9 @@ public class TextDisplay extends Renderable
 	private String text;
 	private Color textColor;
 	
-	public TextDisplay(Scene inScene, String text, int x, int y, Color c) 
+	public TextDisplay(Scene inScene, String text, int x, int y, Color c, int depth) 
 	{
-		super(inScene, x, y, 1);
+		super(inScene, x, y, 1, depth);
 		
 		this.text = text;
 		this.textColor = c;

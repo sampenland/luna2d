@@ -32,9 +32,9 @@ public class Sprite extends Renderable
 	
 	private int objectType = -1;
 	
-	public Sprite(Scene inScene, String name, int x, int y, int scale) 
+	public Sprite(Scene inScene, String name, int x, int y, int scale, int depth) 
 	{
-		super(inScene, x, y, scale);
+		super(inScene, x, y, scale, depth);
 		
 		this.isAnimated = false;
 		this.currentFrame = 0;
@@ -70,9 +70,9 @@ public class Sprite extends Renderable
 		
 	}
 	
-	public Sprite(Scene inScene, String name, int x, int y, int scale, int w, int h) 
+	public Sprite(Scene inScene, String name, int x, int y, int scale, int depth, int w, int h) 
 	{
-		super(inScene, x, y, scale);
+		super(inScene, x, y, scale, depth);
 		
 		this.isAnimated = false;
 		this.currentFrame = 0;
@@ -105,9 +105,9 @@ public class Sprite extends Renderable
 		
 	}
 	
-	public Sprite(Scene inScene, String name, int x, int y, int scale, int frameWidth, int frames, int msBetweenFrames)
+	public Sprite(Scene inScene, String name, int x, int y, int scale, int depth, int frameWidth, int frames, int msBetweenFrames)
 	{
-		super(inScene, x, y, scale);
+		super(inScene, x, y, scale, depth);
 		
 		this.isAnimated = true;
 		this.frames = frames - 1;

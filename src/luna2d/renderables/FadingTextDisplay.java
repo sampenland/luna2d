@@ -12,9 +12,9 @@ public class FadingTextDisplay extends TextDisplay
 	FadingTextDisplayTask fadeTask;
 	Timer fadeTimer;
 	
-	public FadingTextDisplay(Scene inScene, String text, int x, int y, Color c, int msDisplayTime) 
+	public FadingTextDisplay(Scene inScene, String text, int x, int y, Color c, int msDisplayTime, int depth) 
 	{
-		super(inScene, text, x, y, c);
+		super(inScene, text, x, y, c, depth);
 		
 		fadeTask = new FadingTextDisplayTask(this)
 		{

@@ -5,6 +5,7 @@ import luna2d.Scene;
 import luna2d.WeatherSystem;
 import luna2d.renderables.Sprite;
 import luna2d.timers.SpriteTask;
+import theHunter.TheHunter;
 
 public class GrowingBerryBush extends Sprite
 {
@@ -15,9 +16,9 @@ public class GrowingBerryBush extends Sprite
 	
 	public boolean hasWater;
 	
-	public GrowingBerryBush(Scene inScene, int x, int y, int scale) 
+	public GrowingBerryBush(Scene inScene, int x, int y, int scale, int depth) 
 	{
-		super(inScene, "GrowingBerryBush", x, y, scale, 16, 5, 0);
+		super(inScene, "GrowingBerryBush", x, y, scale, depth, 16, 5, 0);
 		
 		this.hasWater = false;
 		
@@ -40,7 +41,7 @@ public class GrowingBerryBush extends Sprite
 				{
 					// Done growing
 					bush.growTimer.cancel();
-					this.sprite.getScene().addSprite(new BerryBush(this.sprite.getScene(), this.sprite.getWorldX(), this.sprite.getWorldY(), 1));
+					this.sprite.getScene().addSprite(new BerryBush(this.sprite.getScene(), this.sprite.getWorldX(), this.sprite.getWorldY(), 1, TheHunter.ENVIRONMENT_DRAW_LAYER));
 					this.sprite.destroy();
 				}
 				else

@@ -14,9 +14,9 @@ import theHunter.TheHunter;
 public class Rock extends Sprite 
 {
 
-	public Rock(Scene inScene, int x, int y, int scale) 
+	public Rock(Scene inScene, int x, int y, int scale, int depth) 
 	{
-		super(inScene, "Rock", x, y, scale);
+		super(inScene, "Rock", x, y, scale, depth);
 		this.inputEnabled = true;
 	}
 	

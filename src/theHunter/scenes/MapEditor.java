@@ -92,7 +92,7 @@ public class MapEditor extends Scene
 			for(int c = 0; c < TheHunter.COLUMNS; c++)
 			{				
 				mapDataGrounds[r][c] = ObjectTypes.GndGrass.intValue;
-				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
 				
 				if (count < ObjectTypes.values().length)
@@ -104,11 +104,11 @@ public class MapEditor extends Scene
 						
 						if (imgName == "Player")
 						{
-							this.selectionSprites[countRow][countColumn] = new Sprite(this, imgName, countColumn * 16, TheHunter.GRIDY_OFFSET + countRow * 16, 1, 16, 16);
+							this.selectionSprites[countRow][countColumn] = new Sprite(this, imgName, countColumn * 16, TheHunter.GRIDY_OFFSET + countRow * 16, 1, Game.TOP_DRAW_LAYER, 16, 16);
 						}
 						else
 						{
-							this.selectionSprites[countRow][countColumn] = new Sprite(this, imgName, countColumn * 16, TheHunter.GRIDY_OFFSET + countRow * 16, 1);	
+							this.selectionSprites[countRow][countColumn] = new Sprite(this, imgName, countColumn * 16, TheHunter.GRIDY_OFFSET + countRow * 16, 1, Game.TOP_DRAW_LAYER);	
 						}
 						
 						this.selectionSprites[countRow][countColumn].setObjectType(objType);
@@ -134,13 +134,13 @@ public class MapEditor extends Scene
 		
 		this.setInputEnabled(false);
 		
-		this.currentSelectionSprite = new Sprite(this, "Player", 0, 0, 1, 16, 16);
+		this.currentSelectionSprite = new Sprite(this, "Player", 0, 0, 1, 16, 16, Game.TOP_DRAW_LAYER);
 		this.currentSelectionSprite.setFixedScreenPosition(true);
 		
 		mapDataSprites[this.playerRow][this.playerCol].updateImageRef("Player", true, 16, 16);
 		mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Player.intValue);
 		
-		this.statusLabel = new TextDisplay(this, "Idle", Game.WIDTH / 2 - 64, Game.HEIGHT - 64, Color.WHITE);
+		this.statusLabel = new TextDisplay(this, "Idle", Game.WIDTH / 2 - 64, Game.HEIGHT - 64, Color.WHITE, Game.TOP_DRAW_LAYER);
 		
 		this.detailedMenu = new MapEditorMenu(this, Game.WIDTH / 2 - 150, Game.HEIGHT / 2 - 100, 300, 200, new Color(0, 0, 0, 0.45f), 1);
 	}
@@ -154,7 +154,7 @@ public class MapEditor extends Scene
 		{
 			for(int c = 0; c < TheHunter.COLUMNS; c++)
 			{		
-				this.mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1);
+				this.mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, 2);
 				
 				ObjectTypes objectType = ObjectTypes.values()[data[r][c]];
 				

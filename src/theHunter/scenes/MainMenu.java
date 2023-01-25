@@ -20,11 +20,11 @@ public class MainMenu extends Scene
 	{
 		Log.println("Main menu started.");
 		
-		new TextDisplay(this, "Main Menu", 200, 150, Color.GREEN);
-		new TextDisplay(this, "(E) Map Editor", 200, 300, Color.GREEN);
-		new TextDisplay(this, "(W) World Editor", 200, 350, Color.GREEN);
-		new TextDisplay(this, "(P) Map Player", 200, 400, Color.GREEN);
-		new TextDisplay(this, "(Q) Quit", 200, 500, Color.GREEN);
+		new TextDisplay(this, "Main Menu", 200, 150, Color.GREEN, 1);
+		new TextDisplay(this, "(E) Map Editor", 200, 300, Color.GREEN, 1);
+		new TextDisplay(this, "(W) World Editor", 200, 350, Color.GREEN, 1);
+		new TextDisplay(this, "(P) Map Player", 200, 400, Color.GREEN, 1);
+		new TextDisplay(this, "(Q) Quit", 200, 500, Color.GREEN, 1);
 		
 	}
 	

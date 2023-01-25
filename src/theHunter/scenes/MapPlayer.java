@@ -63,7 +63,7 @@ public class MapPlayer extends Scene
 					break;
 					
 				case Bush:
-					new BerryBush(this, x, y, 1);
+					new BerryBush(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 					break;
 					
 				case GndDirt:
@@ -86,22 +86,22 @@ public class MapPlayer extends Scene
 					break;
 					
 				case Tree:
-					new Tree(this, x, y, 1);
+					new Tree(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 					break;
 					
 				case Water:
-					new WaterSource(this, x, y, 1);
+					new WaterSource(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 					break;
 					
 				case Wolf:
-					new Wolf(this, x, y, 1);
+					new Wolf(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 					break;
 				case InvBerries:
 					break;
 				case InvRock:
 					break;
 				case Rock:
-					new Rock(this, x, y, 1);
+					new Rock(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 				default:
 					break;
 				}

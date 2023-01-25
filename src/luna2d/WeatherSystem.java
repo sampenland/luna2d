@@ -43,7 +43,7 @@ public class WeatherSystem
 		this.rainSprite.stopAnimation();
 		this.rainSprite.visible = false;
 		
-		this.comingRainSprite = new Sprite(null, comingRainImgName, Game.WIDTH - 64, 20, 2);
+		this.comingRainSprite = new Sprite(null, comingRainImgName, Game.WIDTH - 64, 20, 2, Game.TOP_DRAW_LAYER);
 		this.comingRainSprite.setFixedScreenPosition(true);
 		this.comingRainSprite.disableScaling();
 		this.comingRainSprite.setCustomRender(true);

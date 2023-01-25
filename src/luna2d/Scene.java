@@ -139,15 +139,18 @@ public abstract class Scene
 		this.objHandler.getObjects().clear();
 		this.objHandler.getLights().clear();
 		
-		for(Renderable r : this.objHandler.getRenderables())
+		for (LinkedList<Renderable> renderLayer : this.objHandler.getRenderables())
 		{
-			if (r.inMenu != null)
+			for (Renderable r : renderLayer)
 			{
-				r.inMenu.clearAllRenderables();
+				if (r.inMenu != null)
+				{
+					r.inMenu.clearAllRenderables();
+				}
 			}
 		}
 		
-		this.objHandler.getRenderables().clear();
+		this.objHandler.clearAllRenderables();
 		
 		Game.CAMERA_SCALE = 1;
 		Game.CAMERA_X = 0;
@@ -235,9 +238,12 @@ public abstract class Scene
 			temp.mouseClicked = false;
 		}
 		
-		for (Renderable temp : this.objHandler.getRenderables())
+		for (LinkedList<Renderable> renderLayer : this.objHandler.getRenderables())
 		{
-			temp.mouseClicked = false;
+			for (Renderable temp : renderLayer)
+			{
+				temp.mouseClicked = false;
+			}
 		}
 		
 		for (UI temp : this.objHandler.getUIs())

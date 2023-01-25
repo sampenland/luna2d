@@ -52,7 +52,7 @@ public class Player extends SimplePlayer
 		healthBar.setFixedScreenPosition(true);
 		
 		this.hunger = 100;
-		new TextDisplay(inScene, "Hunger", 10, 35, Color.white);
+		new TextDisplay(inScene, "Hunger", 10, 35, Color.white, Game.TOP_DRAW_LAYER);
 		hungerBar = new FillBar(Math.round(this.hunger), 60, 30, cellSize * 3, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
 		hungerBar.setEnableCameraScaling(false);
 		hungerBar.setFixedScreenPosition(true);
@@ -61,7 +61,7 @@ public class Player extends SimplePlayer
 		
 		torch = new GlowLight(inScene, 0, 0, 2);
 		
-		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white);
+		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white, Game.TOP_DRAW_LAYER);
 		
 		backpack = new Backpack(inScene);		
 		backpack.show();
@@ -227,13 +227,13 @@ public class Player extends SimplePlayer
 		
 		if (this.holdingType == ObjectTypes.InvBerries && e.getButton() == 1)
 		{
-			new GrowingBerryBush(this.inScene, x, y, 1);
+			new GrowingBerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 		}
 		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
 		{
 			Point playerPos = new Point(this.getWorldX(), this.getWorldY());
 			Vector2 dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
-			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir, 0.25f);
+			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir, 0.25f, TheHunter.ENVIRONMENT_DRAW_LAYER);
 		}
 		
 		this.holdingType = ObjectTypes.Empty;
