@@ -30,11 +30,11 @@ public class Backpack extends UIMenu
 	
 	public Backpack(Scene inScene) 
 	{
-		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 200, Game.HEIGHT/2 - (HEIGHT/2), WIDTH, HEIGHT, new Color(0.2f, 0.2f, 0.2f, 0.4f), 1);
+		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 225, Game.HEIGHT/2 - (HEIGHT/2), WIDTH, HEIGHT, new Color(0.2f, 0.2f, 0.2f, 0.4f), 1);
 		
 		items = new LinkedList<InventoryItem>();
 		
-		this.x = Game.WIDTH/2 - (WIDTH/2) - 200;
+		this.x = Game.WIDTH/2 - (WIDTH/2) - 225;
 		this.y = Game.HEIGHT/2 - (HEIGHT/2);
 		
 		title = new TextDisplay(inScene, "Backpack", this.x + 5, this.y + 15, Color.white);

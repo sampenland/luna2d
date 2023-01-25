@@ -3,6 +3,8 @@ package theHunter.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.TextDisplay;
@@ -20,8 +22,9 @@ public class MainMenu extends Scene
 		
 		new TextDisplay(this, "Main Menu", 200, 150, Color.GREEN);
 		new TextDisplay(this, "(E) Map Editor", 200, 300, Color.GREEN);
-		new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN);
-		new TextDisplay(this, "(Q) Quit", 200, 400, Color.GREEN);
+		new TextDisplay(this, "(W) World Editor", 200, 350, Color.GREEN);
+		new TextDisplay(this, "(P) Map Player", 200, 400, Color.GREEN);
+		new TextDisplay(this, "(Q) Quit", 200, 500, Color.GREEN);
 		
 	}
 	

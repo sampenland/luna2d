@@ -118,6 +118,8 @@ public class MapPlayer extends Scene
 	@Override
 	public void end() 
 	{
+		Player p = (Player)this.getPlayer();
+		p.destroy();
 		Log.println("Ended Map Player");
 	}
 

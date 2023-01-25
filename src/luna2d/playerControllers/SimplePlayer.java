@@ -169,8 +169,7 @@ public class SimplePlayer extends GameObject
 	}
 
 	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		
+	public void onDestroy() 
+	{
 	}
 }

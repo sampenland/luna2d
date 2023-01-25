@@ -24,6 +24,8 @@ import theHunter.ui.Backpack;
 public class Player extends SimplePlayer
 {
 	private Backpack backpack;
+	private boolean backpackLock;
+	
 	private ObjectTypes holdingType;
 	
 	private float hunger;
@@ -42,6 +44,7 @@ public class Player extends SimplePlayer
 		
 		this.sprite.enableCulling = false;
 		this.holdingType = ObjectTypes.Empty;
+		this.backpackLock = false;
 		
 		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
@@ -171,9 +174,14 @@ public class Player extends SimplePlayer
 	
 	private void checkKeys()
 	{
-		if (this.isKeyPressed(KeyEvent.VK_TAB))
+		if (!this.backpackLock && this.isKeyPressed(KeyEvent.VK_TAB))
 		{
+			this.backpackLock = true;
 			this.backpack.toggleVisible();
+		}
+		else if (!this.isKeyPressed(KeyEvent.VK_TAB))
+		{
+			this.backpackLock = false;
 		}
 	}
 

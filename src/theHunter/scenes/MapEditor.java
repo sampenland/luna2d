@@ -51,9 +51,6 @@ public class MapEditor extends Scene
 	public MapEditor(String name) 
 	{
 		super(name);
-		mouseStatus = MOUSE_STATUS.IDLE;
-		this.currentSelection = ObjectTypes.Player;
-		this.lastSelection = ObjectTypes.Empty;
 	}
 	
 	public void closeMenu()
@@ -69,6 +66,10 @@ public class MapEditor extends Scene
 	@Override
 	public void start() 
 	{		
+		mouseStatus = MOUSE_STATUS.IDLE;
+		this.currentSelection = ObjectTypes.Player;
+		this.lastSelection = ObjectTypes.Empty;
+		
 		this.setMouseEnabled(true);
 		
 		this.mouseStatus = MOUSE_STATUS.IDLE;

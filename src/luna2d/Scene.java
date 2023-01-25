@@ -143,6 +143,11 @@ public abstract class Scene
 		}
 		
 		this.objHandler.getRenderables().clear();
+		
+		Game.CAMERA_SCALE = 1;
+		Game.CAMERA_X = 0;
+		Game.CAMERA_Y = 0;
+		this.game.updateCameraOffset(0, 0);
 	}
 	
 	public Scene openScene(String sceneName)
