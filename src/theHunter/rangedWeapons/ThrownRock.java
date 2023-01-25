@@ -2,14 +2,15 @@ package theHunter.rangedWeapons;
 
 import luna2d.Log;
 import luna2d.Scene;
+import luna2d.Vector2;
 import theHunter.objects.Rock;
 
 public class ThrownRock extends RangedWeapon
 {
-
-	public ThrownRock(Scene inScene, int x, int y, int scale, float velX, float velY, float friction) 
+	private static final int FORCE = 12;
+	public ThrownRock(Scene inScene, int x, int y, int scale, Vector2 velocity, float friction) 
 	{
-		super(inScene, "Rock", x, y, scale, velX, velY, friction);
+		super(inScene, "Rock", x, y, scale, velocity.x * FORCE, velocity.y * FORCE, friction);
 	}
 	
 	private void stop()

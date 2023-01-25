@@ -38,7 +38,8 @@ public class Rock extends Sprite
 		if (this.mouseClicked && this.mouseClickEvent != null && this.mouseClickEvent.getButton() == 1)
 		{
 			Player player = (Player)this.getScene().getPlayer();
-			if (Maths.distanceBetweenPlayerAndPoint(this.getScene().getPlayer(), new Point(this.worldX, this.worldY)) < TheHunter.RESOURCE_ACTION_DISTANCE)
+			int dist = Maths.distanceBetweenPlayerAndPoint(this.getScene().getPlayer(), new Point(this.worldX, this.worldY));
+			if (dist  != -1 && dist < TheHunter.RESOURCE_ACTION_DISTANCE)
 			{
 				player.pickup(ObjectTypes.InvRock, 1 * InventoryItem.PICKUP_MULTIPLIER);
 				this.playerPickedUp();

@@ -10,6 +10,7 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
+import luna2d.Vector2;
 import luna2d.lights.GlowLight;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
@@ -223,10 +224,8 @@ public class Player extends SimplePlayer
 		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
 		{
 			Point playerPos = new Point(this.getWorldX(), this.getWorldY());
-			Point dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
-			dir.x *= 10;
-			dir.y *= 10;
-			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir.x, dir.y, 0.25f);
+			Vector2 dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
+			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir, 0.25f);
 		}
 		
 		this.holdingType = ObjectTypes.Empty;

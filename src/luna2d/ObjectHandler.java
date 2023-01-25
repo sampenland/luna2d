@@ -177,10 +177,7 @@ public class ObjectHandler
 			}
 			else
 			{
-				if (remove instanceof Rock)
-				{
-					renderables.remove(remove);
-				}
+				renderables.remove(remove);
 			}
 		}
 	}

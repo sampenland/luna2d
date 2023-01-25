@@ -167,4 +167,10 @@ public class SimplePlayer extends GameObject
 	protected void onMouseReleased(MouseEvent e) 
 	{	
 	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -65,6 +65,8 @@ public class BackpackItems extends UIGrid
 	
 	private void checkMouseClicks()
 	{
+		if (!this.backpack.visible) return;
+		
 		if (this.mouseClicked && this.mouseClickEvent != null && (this.mouseClickEvent.getButton() == 3 || this.mouseClickEvent.getButton() == 1)) 
 		{
 			if (items[this.clickedRow][this.clickedColumn] != null)

@@ -23,16 +23,16 @@ public class Maths
 		return val;
 	}
 	
-	public static Point directionBetweenTwoPoints(Point start, Point end, boolean normalized)
+	public static Vector2 directionBetweenTwoPoints(Point start, Point end, boolean normalized)
 	{
 		if(normalized)
 		{
 			Point p = new Point((end.x - start.x), (end.y - start.y));
-			double mag = Math.sqrt(p.x^2 + p.y^2);
-			return new Point((int)Math.round(p.x / mag), (int)Math.round(p.y / mag));
+			double mag = Math.sqrt(p.x * p.x + p.y * p.y);
+			return new Vector2((float)(p.x / mag), (float)(p.y / mag));
 			
 		}
-		return new Point((end.x - start.x), (end.y - start.y));
+		return new Vector2((end.x - start.x), (end.y - start.y));
 	}
 	
 	public static int random(int min, int max)
@@ -54,7 +54,7 @@ public class Maths
 			return d;
 		}
 		
-		return 0;
+		return -1;
 	}
 	
 	public static Point convertToGrid(int x, int y, int cellSize, int startX, int startY)

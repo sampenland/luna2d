@@ -49,8 +49,11 @@ public abstract class GameObject
 		this.worldY = y;
 	}
 	
+	public abstract void onDestroy();
+	
 	public void destroy()
 	{
+		this.onDestroy();
 		this.destroyNow = true;
 	}
 	

@@ -19,6 +19,7 @@ public class RangedWeapon extends GameObject
 		super(x, y, ObjectTypes.ThrownRock.intValue, false, inScene);
 		this.sprite = new Sprite(inScene, imgName, x, y, scale);
 		this.setVelocity(velX, velY, friction);
+		this.getScene().getObjectHandler().addObject(this);
 	}
 
 	@Override
@@ -52,6 +53,12 @@ public class RangedWeapon extends GameObject
 	protected void onMouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onDestroy() 
+	{
+		this.sprite.destroy();
 	}
 	
 }

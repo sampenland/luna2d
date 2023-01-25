@@ -15,6 +15,11 @@ public class Log
 		System.out.println(text);
 	}
 	
+	public static void println(Vector2 text)
+	{
+		System.out.println(text.x + ", " + text.y);
+	}
+	
 	public static void println(Point text)
 	{
 		System.out.println(text.x + ", " + text.y);
