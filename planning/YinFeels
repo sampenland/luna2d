@@ -1,0 +1,39 @@
+With "COME BACK HOME" SONG FEEL:
+	I feel at peace. I want to flow and manage something. I want to pick berries and place them somewhere
+	and I want to build fences and torches to see at night.
+	
+	I want to plant berry bushes around. Sometimes animals come to the bushes and eat them till they are gone. I
+	have to plant more but I can tame the animals, some simply like to be fed while others will fight you.
+	
+	Right click berries to eat them, left click to plant them somewhere.
+	
+	
+	
+	
+	
+	Theme is the King of all Animals.
+	A game like Minecraft and Ark. You start at a random place. You run around for a while and then you
+	pick a berry off a bush. You can eat or plant it. You eat a few then plant one. You see you have
+	to give water to the plant for it to grow (sometimes it rains and helps). 
+	with one berry bush which produces berries. The berry you can either
+	eat or plant. Planting means you must run to a water source and carry it back to your berry bush
+	as it grows. 
+	
+	Since maps are grided to worlds which are grided up more...we keep a bush count per smallest chunk of
+	existence, the map. A bush eating animal is drawn to maps with the highest bush count. But what follows 
+	are predators next. They come to a cow-like animal count per map.
+	
+	You can build fences around your bushes to keep the clumsy cow like creatures from eating the bush, but
+	they still gather around the fences and after bumping into the fence (4 different sprites for damage) the
+	fence is destroyed.
+	
+	You can chop wood from trees to make the fences.
+	
+	
+	
+	Map Renderer/Updater (maps are prioritized)
+	Map player is on is updated.
+	Maps that player is not one are updated once every N amount of seconds.
+	
+	World Renderer/Updater
+	Only updates world that player is on and only tries rendering player world.
