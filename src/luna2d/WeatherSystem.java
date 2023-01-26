@@ -14,6 +14,8 @@ public class WeatherSystem
 	private boolean canRain;
 	public static boolean isRaining = false;
 	
+	private boolean waitingForUnPause = false;
+	
 	private WeatherSystemTask weatherSystemTask, rainComingTask;
 	private Timer weatherSystemTimer, rainComingTimer;
 	
@@ -66,6 +68,12 @@ public class WeatherSystem
 			@Override
 			public void run()
 			{
+				if (Game.paused)
+				{
+					this.weatherSystem.waitingForUnPause = true;
+					return;
+				}
+				
 				if(WeatherSystem.isRaining)
 				{
 					this.weatherSystem.stopRaining();
@@ -84,6 +92,12 @@ public class WeatherSystem
 			@Override
 			public void run()
 			{
+				if (Game.paused)
+				{
+					this.weatherSystem.waitingForUnPause = true;
+					return;
+				}
+				
 				this.weatherSystem.showRainComing();
 			}
 		};
@@ -138,6 +152,11 @@ public class WeatherSystem
 	
 	public void update()
 	{
+		if (this.waitingForUnPause && !Game.paused)
+		{
+			this.resetRainTimers();
+			this.waitingForUnPause = false;
+		}
 	}
 	
 	public void render(Graphics g)

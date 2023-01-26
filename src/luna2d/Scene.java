@@ -229,9 +229,17 @@ public abstract class Scene
 	void backgroundUpdate()
 	{
 		this.objHandler.updateAllObjects();
-		this.objHandler.updateAllRenderables();
-		this.objHandler.updateAllUIs();		
-		this.update();
+		if (!Game.paused)
+		{
+			this.objHandler.updateAllRenderables();
+		}
+		
+		this.objHandler.updateAllUIs();
+		
+		if (!Game.paused)
+		{
+			this.update();
+		}		
 		
 		for (GameObject temp : this.objHandler.getObjects())
 		{

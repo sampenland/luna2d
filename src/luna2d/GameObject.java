@@ -137,5 +137,6 @@ public abstract class GameObject
 	protected abstract void onMouseClick(MouseEvent e);
 	protected abstract void onMousePressed(MouseEvent e);
 	protected abstract void onMouseReleased(MouseEvent e);
+	protected abstract void pauseTick();
 	
 }

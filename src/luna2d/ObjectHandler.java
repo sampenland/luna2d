@@ -162,7 +162,14 @@ public class ObjectHandler
 				continue;
 			}
 			
-			temp.gameUpdate();
+			if (Game.paused)
+			{
+				temp.pauseTick();
+			}
+			else
+			{				
+				temp.gameUpdate();
+			}
 		}
 		
 		for(GameObject remove : removes)

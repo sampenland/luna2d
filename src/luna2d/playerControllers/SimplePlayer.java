@@ -171,4 +171,9 @@ public class SimplePlayer extends GameObject
 	public void onDestroy() 
 	{
 	}
+
+	@Override
+	protected void pauseTick() 
+	{
+	}
 }

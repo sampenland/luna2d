@@ -59,5 +59,11 @@ public class RangedWeapon extends GameObject
 	{
 		this.sprite.destroy();
 	}
+
+	@Override
+	protected void pauseTick() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -196,8 +196,11 @@ public class Sprite extends Renderable
 			@Override
 			public void run()
 			{
-				this.sprite.currentFrame++;
-				if (this.sprite.currentFrame > this.sprite.frames) this.sprite.currentFrame = 0;
+				if (!Game.paused)
+				{
+					this.sprite.currentFrame++;
+					if (this.sprite.currentFrame > this.sprite.frames) this.sprite.currentFrame = 0;					
+				}
 			}
 		};
 		

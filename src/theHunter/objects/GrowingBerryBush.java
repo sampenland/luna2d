@@ -1,6 +1,8 @@
 package theHunter.objects;
 
 import java.util.Timer;
+
+import luna2d.Game;
 import luna2d.Scene;
 import luna2d.WeatherSystem;
 import luna2d.renderables.Sprite;
@@ -27,6 +29,8 @@ public class GrowingBerryBush extends Sprite
 			@Override
 			public void run()
 			{
+				if (Game.paused) return;
+				
 				GrowingBerryBush bush = (GrowingBerryBush)this.sprite;
 				
 				if (!bush.hasWater && !WeatherSystem.isRaining)

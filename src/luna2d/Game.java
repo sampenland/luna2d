@@ -24,6 +24,8 @@ public class Game extends Canvas implements Runnable {
 	private static int CAMERA_Y_OFFSET = 0;
 	public static int CAMERA_SCALE = 1;
 	
+	public static boolean paused = false;
+	
 	protected Window window;
 	public SceneManager sceneManager;
 	private InputHandler inputHandler;

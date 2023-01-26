@@ -23,7 +23,7 @@ import theHunter.ui.Backpack;
 public class Player extends SimplePlayer
 {
 	private Backpack backpack;
-	private boolean backpackLock;
+	private boolean backpackLock, pauseLock;
 	
 	private ObjectTypes holdingType;
 	
@@ -44,6 +44,7 @@ public class Player extends SimplePlayer
 		this.sprite.enableCulling = false;
 		this.holdingType = ObjectTypes.Empty;
 		this.backpackLock = false;
+		this.pauseLock = false;
 		
 		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
@@ -183,11 +184,33 @@ public class Player extends SimplePlayer
 			this.backpackLock = false;
 		}
 	}
+	
+	private void handlePause()
+	{
+		if (!this.pauseLock && this.getScene().isKeyPressed(KeyEvent.VK_P))
+		{
+			this.pauseLock = true;
+			Game.paused = !Game.paused;
+			return;
+		}
+		else if (!this.getScene().isKeyPressed(KeyEvent.VK_P)) 
+		{
+			this.pauseLock = false;
+		}
+	}
+	
+	@Override 
+	public void pauseTick()
+	{
+		this.handlePause();
+	}
 
 	@Override
 	protected void update() 
 	{
 		super.update();
+		this.handlePause();
+		
 		checkKeys();
 		Game.updatePlayerPosition(this.getInternalX(), this.getInternalY(), 200);
 		

@@ -71,7 +71,7 @@ public class BackpackItems extends UIGrid
 		
 		if (this.mouseClicked && this.mouseClickEvent != null && (this.mouseClickEvent.getButton() == 3 || this.mouseClickEvent.getButton() == 1)) 
 		{
-			if (items[this.clickedRow][this.clickedColumn] != null)
+			if (items != null && items[this.clickedRow][this.clickedColumn] != null)
 			{				
 				items[this.clickedRow][this.clickedColumn].use(this.mouseClickEvent.getButton());
 				if (this.backpack != null)
