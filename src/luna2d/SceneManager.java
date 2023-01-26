@@ -124,37 +124,25 @@ public class SceneManager
 	
 	protected void onMouseClick(MouseEvent e)
 	{
-		for(int i = 0; i < this.scenes.size(); i++)
+		if (this.currentScene != null)
 		{
-			Scene temp = this.scenes.get(i);
-			if (temp.getMouseEnabled())
-			{				
-				temp.onMouseClick(e);
-			}
+			this.currentScene.onMouseClick(e);
 		}
 	}
 	
 	protected void onMousePressed(MouseEvent e)
 	{
-		for(int i = 0; i < this.scenes.size(); i++)
+		if (this.currentScene != null)
 		{
-			Scene temp = this.scenes.get(i);
-			if (temp.getMouseEnabled())
-			{
-				temp.onMousePressed(e);
-			}
+			this.currentScene.onMousePressed(e);
 		}
 	}
 	
 	protected void onMouseReleased(MouseEvent e)
 	{
-		for(int i = 0; i < this.scenes.size(); i++)
+		if (this.currentScene != null)
 		{
-			Scene temp = this.scenes.get(i);
-			if (temp.getMouseEnabled())
-			{				
-				temp.onMouseReleased(e);
-			}
+			this.currentScene.onMouseReleased(e);
 		}
 	}
 	

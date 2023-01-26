@@ -92,6 +92,8 @@ public class UIButton extends UI
 	@Override
 	public void onMouseClick(MouseEvent e) 
 	{
+		if (!this.visible) return;
+		
 		Rectangle r = new Rectangle(this.screenX, this.screenY, this.width, this.height);
 		this.mouseClicked = r.contains(new Point(Game.mouseX, Game.mouseY));
 	}

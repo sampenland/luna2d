@@ -48,6 +48,31 @@ public class UITextInput extends UI
 	    this.visible = false;
 	}
 	
+	@Override
+	public void updateScreenPosition(int x, int y)
+	{
+		super.updateScreenPosition(x, y);
+		this.drawRect.x = x;
+		this.drawRect.y = y;
+	}
+	
+	public void updateText(String text)
+	{
+		this.currentText = text;
+	}
+	
+	public void toggleVisible()
+	{
+		if (this.visible)
+		{
+			this.hide();
+		}
+		else
+		{
+			this.show();
+		}
+	}
+	
 	public void hide()
 	{
 		this.inputEnabled = false;
@@ -99,6 +124,10 @@ public class UITextInput extends UI
 	@Override
 	public void update() 
 	{
+		if (this.mouseClicked)
+		{
+			this.setFocus(true);
+		}
 	}
 
 	@Override
@@ -136,6 +165,7 @@ public class UITextInput extends UI
 	@Override
 	public void onMouseClick(MouseEvent e) 
 	{
+		if (!this.visible) return;
 		this.mouseClicked = this.drawRect.contains(new Point(Game.mouseX, Game.mouseY));
 	}
 

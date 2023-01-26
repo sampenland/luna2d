@@ -11,6 +11,7 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.TextDisplay;
+import luna2d.ui.UIButton;
 import luna2d.ui.UITextInput;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
@@ -26,6 +27,8 @@ public class WorldEditor extends Scene
 	
 	private TextDisplay status;
 	private UITextInput mapNameInput;
+	private UIButton mapNameSaveButton, mapNamesCloseButton;
+	private int nameRow, nameColumn;
 	
 	public WorldEditorMenu detailedMenu;
 	
@@ -33,6 +36,8 @@ public class WorldEditor extends Scene
 	{
 		super(name);
 		this.setMouseEnabled(true);
+		nameRow = -1;
+		nameColumn = -1;
 	}
 	
 	public void closeMenu()
@@ -198,7 +203,16 @@ public class WorldEditor extends Scene
 		
 		mapNameInput = new UITextInput(this, "MAP00", 0, 0, 100, 20, 8);
 		mapNameInput.inputEnabled = true;
+		mapNameInput.setColor(Color.white, Color.black, Color.yellow);
 		mapNameInput.visible = false;
+		
+		mapNameSaveButton = new UIButton(this, "Save", 0, 0, 40, 20);
+		mapNameSaveButton.setColors(Color.black, Color.white);
+		mapNameSaveButton.visible = false;
+		
+		mapNamesCloseButton = new UIButton(this, "Close", 0, 0, 40, 20);
+		mapNamesCloseButton.setColors(Color.white, Color.black);
+		mapNamesCloseButton.visible = false;
 		
 		this.detailedMenu = new WorldEditorMenu(this, Game.WIDTH / 2 - 150, Game.HEIGHT / 2 - 100, 300, 200, new Color(1, 1, 1, 0.45f), 1);
 		
@@ -209,10 +223,37 @@ public class WorldEditor extends Scene
 	{
 		Log.println("World Editor ended.");
 	}
+	
+	private void mapNamesInputHide()
+	{
+		this.mapNameInput.hide();
+		this.mapNameInput.setFocus(false);
+		this.mapNameSaveButton.visible = this.mapNameInput.visible;
+		this.mapNamesCloseButton.visible = this.mapNameInput.visible;
+		this.nameRow = -1;
+		this.nameColumn = -1;
+	}
 
 	@Override
 	public void update() 
 	{
+		if (this.mapNameInput.visible) 
+		{
+			if (this.mapNameSaveButton != null && this.mapNameSaveButton.mouseClicked)
+			{
+				this.mapNameSaveButton.mouseClicked = false;
+				this.mapNames[this.nameRow][this.nameColumn] = this.mapNameInput.getText();
+				mapNamesInputHide();
+			}
+			else if (this.mapNamesCloseButton != null && this.mapNamesCloseButton.mouseClicked)
+			{
+				this.mapNamesCloseButton.mouseClicked = false;
+				mapNamesInputHide();
+			}
+			
+			return;
+		}
+		
 		this.checkKeys();
 	}
 
@@ -220,6 +261,7 @@ public class WorldEditor extends Scene
 	protected void onMouseClick(MouseEvent e) 
 	{
 		if (this.detailedMenu != null && this.detailedMenu.visible) return;
+		if (this.mapNameInput.visible) return;
 		
 		if (this.grounds != null && this.grounds.mouseClicked)
 		{
@@ -228,7 +270,8 @@ public class WorldEditor extends Scene
 				// left click - place map
 				if (this.maps[this.grounds.clickedRow][this.grounds.clickedColumn] == ObjectTypes.GndGrass.intValue)
 				{
-					this.maps[this.grounds.clickedRow][this.grounds.clickedColumn] = ObjectTypes.Empty.intValue;
+					this.maps[this.grounds.clickedRow][this.grounds.clickedColumn] = ObjectTypes.GndWater.intValue;
+					this.mapNames[this.grounds.clickedRow][this.grounds.clickedColumn] = "Water";
 				}
 				else
 				{
@@ -237,7 +280,38 @@ public class WorldEditor extends Scene
 			}
 			else if (this.grounds.mouseClickEvent != null && this.grounds.mouseClickEvent.getButton() == 3)
 			{
-				// Right click - name map
+				if (this.maps[this.grounds.clickedRow][this.grounds.clickedColumn] == ObjectTypes.GndGrass.intValue)
+				{
+					// Right click - name map
+					int x = this.grounds.clickedColumn * TheHunter.CELL_SIZE * Game.CAMERA_SCALE;
+					int y = this.grounds.clickedRow * TheHunter.CELL_SIZE * Game.CAMERA_SCALE;
+					
+					if (this.grounds.clickedColumn > TheHunter.COLUMNS - 6)
+					{
+						x -= 150;
+					}
+					
+					y -= 20;
+					
+					this.mapNameInput.updateScreenPosition(x, y);
+					this.mapNameInput.updateText(this.mapNames[this.grounds.clickedRow][this.grounds.clickedColumn]);
+					this.mapNameSaveButton.updateScreenPosition(x + 100, y);
+					this.mapNamesCloseButton.updateScreenPosition(x + 135, y);
+					this.mapNameInput.toggleVisible();
+					this.mapNameSaveButton.visible = this.mapNameInput.visible;
+					this.mapNamesCloseButton.visible = this.mapNameInput.visible;
+					
+					if (this.mapNameInput.visible)
+					{
+						this.nameRow = this.grounds.clickedRow;
+						this.nameColumn = this.grounds.clickedColumn;
+					}
+					else
+					{
+						this.nameRow = -1;
+						this.nameColumn = -1;
+					}	
+				}				
 			}
 			
 			
