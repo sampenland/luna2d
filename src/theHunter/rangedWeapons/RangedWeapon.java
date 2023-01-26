@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import luna2d.GameObject;
-import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 import theHunter.ObjectTypes;

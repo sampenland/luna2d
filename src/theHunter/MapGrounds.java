@@ -61,6 +61,7 @@ public class MapGrounds extends Grid
 					case GndRock:
 						break;
 					case GndWater:
+						groundColor = ColorHandler.getColor("WaterBlue");
 						break;
 					case Player:
 						break;

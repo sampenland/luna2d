@@ -3,8 +3,6 @@ package luna2d;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Timer;
-
-import luna2d.renderables.Rect;
 import luna2d.renderables.Sprite;
 import luna2d.timers.WeatherSystemTask;
 
@@ -25,6 +23,12 @@ public class WeatherSystem
 		cloudColor = new Color(0, 0, 0, 0.75f);;
 	}
 	
+	public void disableRain()
+	{
+		this.stopRaining();
+		this.canRain = false;
+	}
+	
 	public void setupRain(String rainImg, String comingRainImgName, int frameWidth, int frames, int speedOfRainMS, int minMinutesBetweenRain, int maxMinutesBetweenRain, int minMinutesOfRain,
 			int maxMinutesOfRain, int msOfInGameMinute)
 	{
@@ -36,7 +40,7 @@ public class WeatherSystem
 		this.maxMinutesOfRain = maxMinutesOfRain;
 		this.msOfInGameMinute = msOfInGameMinute;
 		
-		this.rainSprite = new Sprite(null, rainImg, Game.WIDTH / 2, Game.HEIGHT / 2, 1, frameWidth, frames, speedOfRainMS);
+		this.rainSprite = new Sprite(null, rainImg, Game.WIDTH / 2, Game.HEIGHT / 2, 1, Game.TOP_DRAW_LAYER, frameWidth, frames, speedOfRainMS);
 		this.rainSprite.setFixedScreenPosition(true);
 		this.rainSprite.disableScaling();
 		this.rainSprite.setCustomRender(true);

@@ -3,8 +3,6 @@ package theHunter.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.TextDisplay;
@@ -21,9 +19,10 @@ public class MainMenu extends Scene
 		Log.println("Main menu started.");
 		
 		new TextDisplay(this, "Main Menu", 200, 150, Color.GREEN, 1);
-		new TextDisplay(this, "(E) Map Editor", 200, 300, Color.GREEN, 1);
-		new TextDisplay(this, "(W) World Editor", 200, 350, Color.GREEN, 1);
-		new TextDisplay(this, "(P) Map Player", 200, 400, Color.GREEN, 1);
+		new TextDisplay(this, "(E) Map Editor", 200, 250, Color.GREEN, 1);
+		new TextDisplay(this, "(W) World Editor", 200, 300, Color.GREEN, 1);
+		new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN, 1);
+		new TextDisplay(this, "(O) World Player", 200, 400, Color.GREEN, 1);
 		new TextDisplay(this, "(Q) Quit", 200, 500, Color.GREEN, 1);
 		
 	}
@@ -46,11 +45,25 @@ public class MainMenu extends Scene
 		{
 			MapPlayer mapPlayer = (MapPlayer)this.openScene("MapPlayer");
 			mapPlayer.loadAndStartMap("m_MAP00");
+			return;
 		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_E))
 		{
 			this.openScene("MapEditor");
+			return;
+		}
+		
+		if (this.isKeyPressed(KeyEvent.VK_W))
+		{
+			this.openScene("WorldEditor");
+			return;
+		}
+		
+		if (this.isKeyPressed(KeyEvent.VK_O))
+		{
+			this.openScene("WorldPlayer");
+			return;
 		}
 	}
 	

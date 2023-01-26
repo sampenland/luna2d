@@ -1,6 +1,5 @@
 package theHunter.rangedWeapons;
 
-import luna2d.Log;
 import luna2d.Scene;
 import luna2d.Vector2;
 import theHunter.TheHunter;

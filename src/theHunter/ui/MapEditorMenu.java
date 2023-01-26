@@ -12,6 +12,7 @@ import luna2d.timers.SceneTask;
 import luna2d.ui.UIButton;
 import luna2d.ui.UIMenu;
 import luna2d.ui.UITextInput;
+import theHunter.LoadDataType;
 import theHunter.TheHunter;
 import theHunter.scenes.MapEditor;
 
@@ -186,8 +187,8 @@ public class MapEditorMenu extends UIMenu
 			this.loading = true;
 			
 			MapEditor me = (MapEditor)this.getScene();
-			int[][] map = TheHunter.loadMapOrGrounds(("m_" + this.mapNameLoadInput.getText()), true);
-			int[][] mapGrounds = TheHunter.loadMapOrGrounds(("m_" + this.mapNameLoadInput.getText()), false);
+			int[][] map = TheHunter.loadCSVints(("m_" + this.mapNameLoadInput.getText()), LoadDataType.MAP);
+			int[][] mapGrounds = TheHunter.loadCSVints(("m_" + this.mapNameLoadInput.getText()), LoadDataType.GROUNDS);
 			
 			me.injectMapData(map, mapGrounds);
 			

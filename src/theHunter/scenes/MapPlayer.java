@@ -10,6 +10,7 @@ import luna2d.Log;
 import luna2d.ResourceHandler;
 import luna2d.Scene;
 import theHunter.DayNightCycleEngine;
+import theHunter.LoadDataType;
 import theHunter.MapGrounds;
 import theHunter.ObjectTypes;
 import theHunter.Player;
@@ -42,8 +43,8 @@ public class MapPlayer extends Scene
 	{
 		Log.println("Loading Map: " + name);
 		
-		mapData = TheHunter.loadMapOrGrounds(name, true);
-		mapDataGrounds = TheHunter.loadMapOrGrounds(name, false);
+		mapData = TheHunter.loadCSVints(name, LoadDataType.MAP);
+		mapDataGrounds = TheHunter.loadCSVints(name, LoadDataType.GROUNDS);
 		
 		new MapGrounds(this, 0, 0, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
 		
@@ -127,6 +128,9 @@ public class MapPlayer extends Scene
 	{
 		Player p = (Player)this.getPlayer();
 		p.destroy();
+		
+		Game.getWeatherSystem().disableRain();
+		
 		Log.println("Ended Map Player");
 	}
 

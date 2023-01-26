@@ -7,17 +7,20 @@ import java.io.IOException;
 
 import luna2d.ColorHandler;
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.ResourceHandler;
 import theHunter.scenes.MainMenu;
 import theHunter.scenes.MapEditor;
 import theHunter.scenes.MapPlayer;
+import theHunter.scenes.WorldEditor;
+import theHunter.scenes.WorldPlayer;
 
 public class TheHunter extends Game 
 {
 
 	private static final long serialVersionUID = -8234717309381689045L;
 
-	public static final String MAP_DIR = System.getProperty("user.dir");
+	public static final String DATA_DIR = System.getProperty("user.dir");
 	public static final int GRIDY_OFFSET = 5;
 	public static final int ROWS = 37;
 	public static final int COLUMNS = 49;
@@ -48,6 +51,12 @@ public class TheHunter extends Game
 		MapEditor mapEditor = new MapEditor("MapEditor");
 		g.sceneManager.addScene(mapEditor);
 		
+		WorldEditor worldEditor = new WorldEditor("WorldEditor");
+		g.sceneManager.addScene(worldEditor);
+		
+		WorldPlayer worldPlayer = new WorldPlayer("WorldPlayer");
+		g.sceneManager.addScene(worldPlayer);
+		
 		loadImages();
 		createColors();
 		
@@ -58,6 +67,7 @@ public class TheHunter extends Game
 	private static void createColors()
 	{
 		ColorHandler.addColor("GrassGreen", new Color(52, 122, 115));
+		ColorHandler.addColor("WaterBlue", new Color(118, 135, 171));
 	}
 	
 	private static void loadImages()
@@ -75,20 +85,27 @@ public class TheHunter extends Game
 		ResourceHandler.addImage("RainComing", "rain-coming.png");
 	}
 	
-	public static int[][] loadMapOrGrounds(String name, boolean isMap)
+	public static int[][] loadCSVints(String name, LoadDataType dataType)
 	{
-		String path = TheHunter.MAP_DIR + "/" + name;
+		String path = TheHunter.DATA_DIR + "/" + name;
 		
-		if (isMap)
+		switch(dataType)
 		{
-			path += ".thm";
-		}
-		else
-		{
+		case GROUNDS:
 			path += ".thmg";
+			break;
+		case MAP:
+			path += ".thm";
+			break;
+		case WORLD:
+			path += ".thw";
+			break;
+		default:
+			Log.println(name + " not a world, map, or grounds name.");
+			return null;	
 		}
 		
-		int[][] map = new int[ROWS][COLUMNS];
+		int[][] data = new int[ROWS][COLUMNS];
 		
 		BufferedReader reader;
 		try 
@@ -103,8 +120,8 @@ public class TheHunter extends Game
 			   int col = 0;
 			   for(String  c : cols)
 			   {
-			      map[row][col] = Integer.parseInt(c);
-			      col++;
+				   data[row][col] = Integer.parseInt(c);
+				   col++;
 			   }
 			   
 			   row++;
@@ -113,7 +130,7 @@ public class TheHunter extends Game
 			
 			reader.close();
 			
-			return map;
+			return data;
 			
 		} 
 		catch (IOException | NumberFormatException e) 
@@ -121,6 +138,56 @@ public class TheHunter extends Game
 			e.printStackTrace();
 		}
 		
-		return map;
+		return data;
+	}
+	
+	public static String[][] loadCSVstrings(String name, LoadDataType dataType)
+	{
+		String path = TheHunter.DATA_DIR + "/" + name;
+		
+		switch(dataType)
+		{
+		case WORLD_NAMES:
+			path += ".thwn";
+			break;
+		default:
+			Log.println(name + " not a world names file.");
+			return null;
+		}
+		
+		String[][] data = new String[ROWS][COLUMNS];
+		
+		BufferedReader reader;
+		try 
+		{
+			reader = new BufferedReader(new FileReader(path));
+			
+			String line = "";
+			int row = 0;
+			while((line = reader.readLine()) != null)
+			{
+			   String[] cols = line.split(","); 
+			   int col = 0;
+			   for(String  c : cols)
+			   {
+				   data[row][col] = c;
+				   col++;
+			   }
+			   
+			   row++;
+			   
+			}
+			
+			reader.close();
+			
+			return data;
+			
+		} 
+		catch (IOException | NumberFormatException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return data;
 	}
 }

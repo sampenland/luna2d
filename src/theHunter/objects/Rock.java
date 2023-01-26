@@ -1,8 +1,6 @@
 package theHunter.objects;
 
 import java.awt.Point;
-
-import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;

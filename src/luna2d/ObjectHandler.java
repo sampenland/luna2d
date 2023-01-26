@@ -12,7 +12,6 @@ import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
-import theHunter.objects.Rock;
 
 public class ObjectHandler 
 {	

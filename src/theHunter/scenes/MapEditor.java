@@ -491,7 +491,7 @@ public class MapEditor extends Scene
 	
 	public void saveMap(String name)
 	{
-		String path = TheHunter.MAP_DIR + "/" + name + ".thm";
+		String path = TheHunter.DATA_DIR + "/" + name + ".thm";
 		
 		StringBuilder builder = new StringBuilder();
 		
@@ -529,7 +529,7 @@ public class MapEditor extends Scene
 	
 	private void saveGrounds(String name)
 	{
-		String path = TheHunter.MAP_DIR + "/" + name + ".thmg";
+		String path = TheHunter.DATA_DIR + "/" + name + ".thmg";
 		
 		StringBuilder builder = new StringBuilder();
 		
