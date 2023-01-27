@@ -9,6 +9,7 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.ResourceHandler;
 import luna2d.Scene;
+import luna2d.lights.GlowLight;
 import theHunter.DayNightCycleEngine;
 import theHunter.LoadDataType;
 import theHunter.MapGrounds;
@@ -84,6 +85,7 @@ public class MapPlayer extends Scene
 					x = x - Game.WIDTH / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					y = y - Game.HEIGHT / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					p.updateWorldPosition(x, y);
+					new GlowLight(this, x + Game.WIDTH/2 - 8, y + Game.HEIGHT/2 - 8, 200);
 					break;
 					
 				case Tree:
@@ -113,7 +115,7 @@ public class MapPlayer extends Scene
 		this.getGame().updateScale(MAP_SCALE);
 		
 		// Startup day and night
-		this.setDayNightCycle(new DayNightCycleEngine(50, 8, 20, Color.orange, Color.white, Color.orange, new Color(0, 0, 0, 0.1f)), new DayNightCycleTime(18, 0, 0));
+		this.setDayNightCycle(new DayNightCycleEngine(50, 8, 20, Color.orange, Color.white, Color.orange, new Color(0, 0, 0, 0.1f)), new DayNightCycleTime(20, 0, 0));
 		
 		ResourceHandler.addRain("Rain", "RainComing", 800, 10, 50, 
 				4 * 60, 3 * 24 * 60, // 4 hrs - 3 days between rain

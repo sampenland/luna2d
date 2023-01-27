@@ -32,7 +32,6 @@ public class Player extends SimplePlayer
 	
 	private FillBar healthBar;
 	private FillBar hungerBar;
-	private GlowLight torch;
 	
 	private TextDisplay timeLabel;
 	
@@ -58,8 +57,6 @@ public class Player extends SimplePlayer
 		hungerBar.setFixedScreenPosition(true);
 
 		this.setZoomingEnabled(true);
-		
-		torch = new GlowLight(inScene, 0, 0, 200);
 		
 		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white, Game.TOP_DRAW_LAYER);
 		
@@ -219,8 +216,6 @@ public class Player extends SimplePlayer
 		healthBar.setValue(Math.round(this.health));
 		
 		handleHunger();
-
-		this.torch.updateScreenPosition(Game.WIDTH / 2 - 8, Game.HEIGHT / 2);
 	}
 	
 	private void handleHunger()

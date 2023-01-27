@@ -222,24 +222,31 @@ public abstract class Scene
 			
 			for (Light light : lights)
 			{
-				if (light instanceof GlowLight)
-				{
-					GlowLight gLight = (GlowLight)light;
-					int radius = gLight.getRadius();
-					Shape circleShape = new Ellipse2D.Double(light.getScreenX() - radius/2, 
-							light.getScreenY() - radius/2, radius, radius);
-					
-					Area lightArea = new Area(circleShape);
-					screenArea.subtract(lightArea);
-					
-					RadialGradientPaint rad = new RadialGradientPaint(light.getScreenX(),
-							light.getScreenY(), radius, gLight.fraction, gLight.color); 
-					
-					graphics.setPaint(rad);
-					graphics.fill(lightArea);					
-					
-				}
+				int x = light.getWorldX();
+				int y = light.getWorldY();
 				
+				if (x > -Game.CAMERA_X - Game.WIDTH && x < -Game.CAMERA_X + Game.WIDTH &&
+					y > -Game.CAMERA_Y - Game.HEIGHT && y < -Game.CAMERA_Y + Game.HEIGHT)
+				{
+					Point p = Maths.convertWorldToScreen(x, y, 16);
+
+					if (light instanceof GlowLight)
+					{
+						GlowLight gLight = (GlowLight)light;
+						int radius = gLight.getRadius();
+						Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);
+						
+						Area lightArea = new Area(circleShape);
+						screenArea.subtract(lightArea);
+						
+						RadialGradientPaint rad = new RadialGradientPaint(p.x, p.y, radius, gLight.fraction, gLight.color); 
+						
+						graphics.setPaint(rad);
+						graphics.fill(lightArea);					
+						
+					}
+					
+				}				
 			}
 			
 			graphics.fill(screenArea);

@@ -57,6 +57,11 @@ public class Maths
 		return -1;
 	}
 	
+	public static Point convertWorldToScreen(int x, int y, int cellSize)
+	{
+		return new Point (Game.CAMERA_X + x, Game.CAMERA_Y + y);
+	}
+	
 	public static Point convertToGrid(int x, int y, int cellSize, int startX, int startY)
 	{
 		Point p = new Point(-1, -1);
@@ -64,7 +69,6 @@ public class Maths
 		if (startX < 0) startX = 0;
 		if (startY < 0) startY = 0;
 		
-		// x - 8 and y - 32 fixes the window padding issue
 		p.x = Math.round((x - startX) / cellSize) * Game.CAMERA_SCALE;
 		p.y = Math.round((y - startY) / cellSize) * Game.CAMERA_SCALE;
 		
