@@ -17,7 +17,6 @@ public class ResourceHandler
 	public static void init()
 	{
 		ResourceHandler.addImage("", ""); // Creates "NONE" empty image
-		ResourceHandler.addGlobalImage("GLOBAL_GlowLight", "glowLight.png");
 		initialized = true;
 	}
 	

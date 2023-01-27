@@ -13,7 +13,7 @@ public abstract class UI
 	protected int scale;
 	public boolean visible;
 	
-	public boolean inputEnabled;
+	public boolean inputEnabled, mouseEnabled;
 	protected boolean destroyNow;
 	public boolean mouseClicked;
 	
@@ -25,6 +25,7 @@ public abstract class UI
 		this.worldX = this.worldY = this.screenX = this.screenY = 0;
 		this.visible = true;
 		this.inputEnabled = false;
+		this.mouseEnabled = false;
 		this.mouseClicked = false;
 	}
 	

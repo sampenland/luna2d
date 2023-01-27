@@ -9,6 +9,7 @@ import luna2d.renderables.Renderable;
 public abstract class GameObject 
 {	
 	public boolean inputEnabled = false;
+	public boolean mouseEnabled = false;
 	private int worldX, worldY;
 	protected int screenX, screenY, objectType; 
 	protected float velocityX, velocityY;

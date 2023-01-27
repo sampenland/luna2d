@@ -102,10 +102,6 @@ public class SceneManager
 		
 		this.currentScene.render(g);
 		
-		if (Game.getWeatherSystem() != null)
-		{
-			Game.getWeatherSystem().render(g);
-		}
 	}
 	
 	public void update()

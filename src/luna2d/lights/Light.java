@@ -10,20 +10,16 @@ import luna2d.Scene;
 
 public abstract class Light 
 {
-	BufferedImage imgRef;
-	
 	private int screenX, screenY, worldX, worldY;
 	protected boolean visible;
-	protected int scale;
 	
 	private Scene inScene;
 	
-	public Light(Scene inScene, int worldX, int worldY, int scale)
+	public Light(Scene inScene, int worldX, int worldY)
 	{
 		this.inScene = inScene;
 		this.worldX = worldX;
 		this.worldY = worldY;
-		this.scale = scale;
 		
 		if (this.inScene == null || this.inScene.getObjectHandler() == null)
 		{
@@ -64,31 +60,6 @@ public abstract class Light
 	public int getScreenY()
 	{
 		return this.screenY;
-	}
-	
-	public int getScale()
-	{
-		return this.scale;
-	}
-	
-	public void updateImageRef(String name)
-	{
-		this.imgRef = ResourceHandler.getImage(name);
-	}
-	
-	public BufferedImage getImageRef()
-	{
-		return this.imgRef;
-	}
-	
-	public int getWidth()
-	{
-		return this.imgRef.getWidth() * Game.CAMERA_SCALE;
-	}
-	
-	public int getHeight()
-	{
-		return this.imgRef.getHeight() * Game.CAMERA_SCALE;
 	}
 	
 	public abstract void update();

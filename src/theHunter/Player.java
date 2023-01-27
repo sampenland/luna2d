@@ -59,7 +59,7 @@ public class Player extends SimplePlayer
 
 		this.setZoomingEnabled(true);
 		
-		torch = new GlowLight(inScene, 0, 0, 2);
+		torch = new GlowLight(inScene, 0, 0, 200);
 		
 		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white, Game.TOP_DRAW_LAYER);
 		
@@ -219,9 +219,8 @@ public class Player extends SimplePlayer
 		healthBar.setValue(Math.round(this.health));
 		
 		handleHunger();
-		
-		this.torch.updateScreenPosition(Game.WIDTH / 2 - this.torch.getWidth(), 
-				Game.HEIGHT / 2 - this.torch.getHeight());
+
+		this.torch.updateScreenPosition(Game.WIDTH / 2 - 8, Game.HEIGHT / 2);
 	}
 	
 	private void handleHunger()

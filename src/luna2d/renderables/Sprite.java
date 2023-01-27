@@ -373,6 +373,7 @@ public class Sprite extends Renderable
 	@Override
 	public void onMouseClick(MouseEvent e) 
 	{
+		if (!mouseEnabled) return;
 		Rectangle r = new Rectangle(this.worldX, this.worldY, this.getWidth(), this.getHeight());
 		this.mouseClicked = r.contains(new Point(Game.mouseWorldX, Game.mouseWorldY));
 		this.mouseClickEvent = e;

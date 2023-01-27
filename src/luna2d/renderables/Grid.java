@@ -13,7 +13,7 @@ public class Grid extends Renderable
 {
 
 	protected int x, y, rows, columns, cellSize;
-	protected Color gridColor;
+	protected Color gridColor, bkgColor;
 	public boolean hideGrid;
 	
 	protected int[][] fillTypes;
@@ -39,27 +39,46 @@ public class Grid extends Renderable
 		this.clickedColumn = -1;
 	}
 	
+	public void updateFillTypes(int[][] fillTypes)
+	{
+		this.fillTypes = fillTypes;
+	}
+	
+	public void setColors(Color gridColor, Color bkgColor)
+	{
+		this.gridColor = gridColor;
+		this.bkgColor = bkgColor;
+	}
+	
 	@Override
 	public void render(Graphics g) 
 	{
 		if (!this.visible) return;
 		
-		for(int row = 0; row < rows; row++)
+		if (bkgColor != null)
 		{
-			for(int col = 0; col < columns; col++)
-			{
-				int cx = col * cellSize * this.scale;
-				int cy = row * cellSize * this.scale;
-							
-				if (!this.hideGrid)
-				{
-					g.setColor(gridColor);
-					
-					g.drawRect(Game.CAMERA_X + this.x + cx, Game.CAMERA_Y + this.y + cy, 
-							Math.round(cellSize * this.scale * Game.CAMERA_SCALE), 
-							Math.round(cellSize * this.scale * Game.CAMERA_SCALE));	
-				}
-			}
+			g.setColor(bkgColor);
+			g.fillRect(
+					Game.CAMERA_X + this.x, 
+					Game.CAMERA_Y + this.y, 
+					cellSize * columns, cellSize * rows);			
+		}
+		
+		g.setColor(gridColor);
+		for (int col = 0; col <= columns; col++)
+		{
+			g.drawLine(Game.CAMERA_X + this.x + (col * cellSize), 
+					Game.CAMERA_Y + this.y, 
+					Game.CAMERA_X + this.x + (col * cellSize), 
+					Game.CAMERA_Y + this.y + (rows * cellSize));
+		}
+		
+		for (int row = 0; row <= columns; row++)
+		{
+			g.drawLine(Game.CAMERA_X + this.x, 
+					Game.CAMERA_Y + this.y + (row * cellSize), 
+					Game.CAMERA_X + this.x + (columns * cellSize), 
+					Game.CAMERA_Y + this.y + (row * cellSize));
 		}
 	}
 
@@ -74,9 +93,7 @@ public class Grid extends Renderable
 
 	@Override
 	public void onMouseClick(MouseEvent e) 
-	{
-		if (!this.inputEnabled) return;
-		
+	{		
 		for(int row = 0; row < rows; row++)
 		{
 			for(int col = 0; col < columns; col++)

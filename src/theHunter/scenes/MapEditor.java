@@ -12,6 +12,7 @@ import java.util.Timer;
 import luna2d.Game;
 import luna2d.Maths;
 import luna2d.Scene;
+import luna2d.renderables.Grid;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
 import luna2d.timers.SceneTask;
@@ -94,6 +95,7 @@ public class MapEditor extends Scene
 				mapDataGrounds[r][c] = ObjectTypes.GndGrass.intValue;
 				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
+				mapDataSprites[r][c].visible = false;
 				
 				if (count < ObjectTypes.values().length)
 				{
@@ -203,6 +205,7 @@ public class MapEditor extends Scene
 				}
 				
 				mapDataSprites[r][c].setObjectType(objectType.intValue);
+				mapDataSprites[r][c].visible = true;
 			}
 		}
 		
@@ -243,12 +246,10 @@ public class MapEditor extends Scene
 					this.currentSelectionSprite.visible = false;	
 				}
 				
-				displaySelection(true);
 				break;
 				
 			case PLACING:
 				
-				displaySelection(false);
 				if( this.currentSelectionSprite != null)
 				{
 					this.currentSelectionSprite.visible = true;	
@@ -265,16 +266,6 @@ public class MapEditor extends Scene
 		if (this.currentSelectionSprite == null) return;
 		
 		this.currentSelectionSprite.visible = !isVisible;
-		
-		// Hide all placed map items
-		for(int r = 0; r < TheHunter.ROWS; r++)
-		{
-			for(int c = 0; c < TheHunter.COLUMNS; c++)
-			{
-				if (this.mapDataSprites[r][c] == null) continue;
-				this.mapDataSprites[r][c].visible = !isVisible;
-			}	
-		}
 		
 		// Show possible selections
 		for(int r = 0; r < TheHunter.ROWS; r++)
@@ -367,12 +358,14 @@ public class MapEditor extends Scene
 					this.mouseStatus = MOUSE_STATUS.SELECTING;
 					this.statusLabel.updateText("Selecting");
 					this.setMapSpritesVisibility(false);
+					this.displaySelection(true);
 					break;
 					
 				case SELECTING:
 					this.mouseStatus = MOUSE_STATUS.PLACING;
 					this.statusLabel.updateText("Placing");
 					this.setMapSpritesVisibility(true);
+					this.displaySelection(false);
 					break;
 					
 				case PLACING:
@@ -467,10 +460,22 @@ public class MapEditor extends Scene
 				{
 					if (!(gPos.x == this.playerCol && gPos.y == this.playerRow))
 					{
-						String imgName = this.currentSelectionSprite.getImageName();
-						int objType = this.currentSelectionSprite.getObjectType();
-						this.mapDataSprites[gPos.y][gPos.x].updateImageRef(imgName, true, 16, 16);
-						this.mapDataSprites[gPos.y][gPos.x].setObjectType(objType);
+						if (this.mapDataSprites[gPos.y][gPos.x].visible)
+						{
+							String imgName = "NONE";
+							int objType = ObjectTypes.Empty.intValue;
+							this.mapDataSprites[gPos.y][gPos.x].updateImageRef(imgName, true, 16, 16);
+							this.mapDataSprites[gPos.y][gPos.x].setObjectType(objType);	
+							this.mapDataSprites[gPos.y][gPos.x].visible = false;
+						}
+						else
+						{
+							String imgName = this.currentSelectionSprite.getImageName();
+							int objType = this.currentSelectionSprite.getObjectType();
+							this.mapDataSprites[gPos.y][gPos.x].updateImageRef(imgName, true, 16, 16);
+							this.mapDataSprites[gPos.y][gPos.x].setObjectType(objType);	
+							this.mapDataSprites[gPos.y][gPos.x].visible = true;
+						}
 					}
 				}
 				

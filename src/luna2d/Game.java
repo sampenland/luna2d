@@ -7,6 +7,8 @@ import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 
+import luna2d.renderables.TextDisplay;
+
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = -2680723036795663013L;
@@ -25,6 +27,7 @@ public class Game extends Canvas implements Runnable {
 	public static int CAMERA_SCALE = 1;
 	
 	public static boolean paused = false;
+	public static boolean DEBUG = true;
 	
 	protected Window window;
 	public SceneManager sceneManager;
@@ -41,6 +44,8 @@ public class Game extends Canvas implements Runnable {
 	private Color bkgColor;
 	
 	public static String resDir; 
+	
+	private TextDisplay lbFramesPerSecond;
 		
 	public void init(int width, int height, String title, Color bkgColor, String resourceDir)
 	{
@@ -156,6 +161,11 @@ public class Game extends Canvas implements Runnable {
 			weatherSystem = new WeatherSystem();
 		}
 		
+		if (this.lbFramesPerSecond == null)
+		{
+			this.lbFramesPerSecond = new TextDisplay(null, "FPS: " + Game.FPS, Game.WIDTH/2 - 20, 40, Color.white, Game.TOP_DRAW_LAYER);
+		}
+		
 		this.sceneManager.update();
 	}
 	
@@ -174,6 +184,11 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		this.sceneManager.render(g);
+		
+		if (DEBUG && this.lbFramesPerSecond != null)
+		{
+			this.lbFramesPerSecond.render(g);			
+		}
 		
 		g.dispose();
 		bs.show();
@@ -240,6 +255,12 @@ public class Game extends Canvas implements Runnable {
 			if(System.currentTimeMillis() - timer > 1000)
 			{
 				FPS = framesPerSecond;
+				
+				if (this.lbFramesPerSecond != null)
+				{
+					this.lbFramesPerSecond.updateText("FPS: " + FPS);
+				}
+				
 				timer += 1000;
 				framesPerSecond = 0;
 			}

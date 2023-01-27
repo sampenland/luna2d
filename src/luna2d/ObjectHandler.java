@@ -113,7 +113,7 @@ public class ObjectHandler
 	
 	public void renderAllRenderables(Graphics g)
 	{
-		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
+		for (int layer = 0; layer < Game.DRAW_LAYERS - 1; layer++)
 		{
 			LinkedList<Renderable> renderLayer = renderables.get(layer);
 		
@@ -246,7 +246,7 @@ public class ObjectHandler
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
-			if (temp.inputEnabled)
+			if (temp.mouseEnabled)
 			{				
 				temp.onMouseClick(e);
 			}
@@ -259,7 +259,7 @@ public class ObjectHandler
 			for(int i = 0; i < renderLayer.size(); i++)
 			{
 				Renderable temp = renderLayer.get(i);
-				if (temp.inputEnabled)
+				if (temp.mouseEnabled)
 				{				
 					temp.onMouseClick(e);
 				}
@@ -269,7 +269,7 @@ public class ObjectHandler
 		for(int i = 0; i < uis.size(); i++)
 		{
 			UI temp = uis.get(i);
-			if (temp.inputEnabled)
+			if (temp.mouseEnabled)
 			{				
 				temp.onMouseClick(e);
 			}
@@ -281,7 +281,7 @@ public class ObjectHandler
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
-			if (temp.inputEnabled)
+			if (temp.mouseEnabled)
 			{				
 				temp.onMousePressed(e);
 			}
@@ -294,7 +294,7 @@ public class ObjectHandler
 			for(int i = 0; i < renderLayer.size(); i++)
 			{
 				Renderable temp = renderLayer.get(i);
-				if (temp.inputEnabled)
+				if (temp.mouseEnabled)
 				{				
 					temp.onMousePressed(e);
 				}
@@ -304,7 +304,7 @@ public class ObjectHandler
 		for(int i = 0; i < uis.size(); i++)
 		{
 			UI temp = uis.get(i);
-			if (temp.inputEnabled)
+			if (temp.mouseEnabled)
 			{				
 				temp.onMousePressed(e);
 			}
@@ -316,7 +316,7 @@ public class ObjectHandler
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
-			if (temp.inputEnabled)
+			if (temp.mouseEnabled)
 			{				
 				temp.onMouseReleased(e);
 			}
@@ -329,7 +329,7 @@ public class ObjectHandler
 			for(int i = 0; i < renderLayer.size(); i++)
 			{
 				Renderable temp = renderLayer.get(i);
-				if (temp.inputEnabled)
+				if (temp.mouseEnabled)
 				{				
 					temp.onMouseReleased(e);
 				}
@@ -339,7 +339,7 @@ public class ObjectHandler
 		for(int i = 0; i < uis.size(); i++)
 		{
 			UI temp = uis.get(i);
-			if (temp.inputEnabled)
+			if (temp.mouseEnabled)
 			{				
 				temp.onMouseReleased(e);
 			}

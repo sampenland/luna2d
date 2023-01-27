@@ -22,6 +22,7 @@ public class TextDisplay extends Renderable
 		this.screenY = y;
 		this.visible = true;
 		this.enableCulling = false;
+		this.mouseEnabled = true;
 	}
 	
 	public void updateText(String text)

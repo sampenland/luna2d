@@ -1,13 +1,22 @@
 package luna2d;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RadialGradientPaint;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import luna2d.lights.GlowLight;
 import luna2d.lights.Light;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
@@ -187,13 +196,20 @@ public abstract class Scene
 		this.objHandler.renderAllObjects(g);
 		this.objHandler.renderAllRenderables(g);		
 		
+		if (Game.getWeatherSystem() != null)
+		{
+			Game.getWeatherSystem().render(g);
+		}
+		
 		if ((this.dayNightCycle != null && !this.dayNightCycle.isDayTime()) || WeatherSystem.isRaining)
 		{
 			// Render lights with over-top Day/Night cycle background
 			LinkedList<Light> lights = this.objHandler.getLights();
 			
 			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			Graphics graphics = img.getGraphics();
+			Graphics2D graphics = (Graphics2D)img.getGraphics();
+			
+			Area screenArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
 			
 			if (WeatherSystem.isRaining)
 			{
@@ -204,25 +220,62 @@ public abstract class Scene
 				graphics.setColor(this.dayNightCycle.getCurrentColor());
 			}
 			
-			
-			graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
-			graphics.dispose();
-			
-			Graphics2D g2d = img.createGraphics();
-			g2d.setComposite(AlphaComposite.DstOut);
-			
 			for (Light light : lights)
 			{
-				BufferedImage lightImg = light.getImageRef();
-			    g2d.drawImage(lightImg, light.getScreenX(), light.getScreenY(), 
-			    		lightImg.getWidth() * Game.CAMERA_SCALE * light.getScale(), 
-			    		lightImg.getHeight() * Game.CAMERA_SCALE * light.getScale(), null);
+				if (light instanceof GlowLight)
+				{
+					GlowLight gLight = (GlowLight)light;
+					int radius = gLight.getRadius();
+					Shape circleShape = new Ellipse2D.Double(light.getScreenX() - radius/2, 
+							light.getScreenY() - radius/2, radius, radius);
+					
+					Area lightArea = new Area(circleShape);
+					screenArea.subtract(lightArea);
+					
+					RadialGradientPaint rad = new RadialGradientPaint(light.getScreenX(),
+							light.getScreenY(), radius, gLight.fraction, gLight.color); 
+					
+					graphics.setPaint(rad);
+					graphics.fill(lightArea);					
+					
+				}
+				
 			}
 			
-			g2d.dispose();
+			graphics.fill(screenArea);
+			graphics.dispose();
+
 			g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);	
+		
 		}
 			
+		LinkedList<Renderable> renderLayer = this.objHandler.getRenderables().get(Game.TOP_DRAW_LAYER);
+		
+		for(int i = 0; i < renderLayer.size(); i++)
+		{
+			Renderable temp = renderLayer.get(i);
+			
+			// Culling			
+			if (temp.enableCulling)
+			{
+				if (temp instanceof Sprite)
+				{
+					temp = (Sprite)temp;
+					if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+					{
+						continue;
+					}
+				}
+			}
+
+			temp.render(g);
+		}
+		
+		if (Game.getWeatherSystem() != null)
+		{
+			Game.getWeatherSystem().renderTopLayer(g);
+		}
+		
 		this.objHandler.renderAllUIs(g);
 	}
 	

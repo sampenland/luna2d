@@ -22,7 +22,7 @@ public class BerryBush extends Sprite
 	public BerryBush(Scene inScene, int x, int y, int scale, int depth)
 	{
 		super(inScene, "BerryBush", x, y, scale, depth, 16, 2, 0);
-		this.inputEnabled = true;
+		this.mouseEnabled = true;
 		this.hasBerries = true;
 	}
 	

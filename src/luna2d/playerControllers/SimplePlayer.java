@@ -22,6 +22,9 @@ public class SimplePlayer extends GameObject
 	{
 		super(0, 0, Game.PLAYER_ID, true, inScene);
 		
+		this.inputEnabled = true;
+		this.mouseEnabled = true;
+		
 		this.worldX = x;
 		this.worldY = y;
 		

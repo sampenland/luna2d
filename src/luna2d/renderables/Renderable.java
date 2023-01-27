@@ -23,6 +23,7 @@ public abstract class Renderable
 	
 	public boolean enableCulling;
 	public boolean inputEnabled;
+	public boolean mouseEnabled;
 	public boolean mouseClicked;
 	public MouseEvent mouseClickEvent;
 	
@@ -47,6 +48,7 @@ public abstract class Renderable
 		this.destroyNow = false;
 		this.enableCulling = true;
 		this.inputEnabled = false;
+		this.mouseEnabled = false;
 		this.mouseClicked = false;
 	}
 	

@@ -22,7 +22,7 @@ public class BackpackItems extends UIGrid
 	{
 		super(inScene, x, y, rows, columns, cellSize, gridColor, bkgColor, scale, Game.TOP_DRAW_LAYER, null);
 		this.backpack = backpack;
-		this.inputEnabled = true;
+		this.mouseEnabled = true;
 	}
 	
 	public int totalItems()

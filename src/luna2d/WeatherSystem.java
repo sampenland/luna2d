@@ -159,11 +159,18 @@ public class WeatherSystem
 		}
 	}
 	
+	public void renderTopLayer(Graphics g)
+	{
+		if (this.canRain)
+		{		
+			this.comingRainSprite.customRender(g);
+		}
+	}
+	
 	public void render(Graphics g)
 	{
 		if (this.canRain)
 		{			
-			this.comingRainSprite.customRender(g);
 			this.rainSprite.customRender(g);
 		}
 	}
