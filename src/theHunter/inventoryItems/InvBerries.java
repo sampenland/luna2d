@@ -11,7 +11,7 @@ public class InvBerries extends InventoryItem
 	
 	public InvBerries(Scene inScene, int amount) 
 	{
-		super(inScene, ObjectTypes.InvBerries.intValue, amount);
+		super(inScene, ObjectTypes.InvBerries, amount);
 	}
 
 	@Override

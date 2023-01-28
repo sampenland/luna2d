@@ -10,7 +10,7 @@ public class InvRock extends InventoryItem
 
 	public InvRock(Scene inScene, int amount) 
 	{
-		super(inScene, ObjectTypes.InvRock.intValue, amount);
+		super(inScene, ObjectTypes.InvRock, amount);
 	}
 
 	@Override

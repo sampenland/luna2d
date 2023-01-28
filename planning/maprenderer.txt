@@ -1,3 +1,18 @@
+
+ modulate the maps in world by their distance from player * constant for example
+ 
+ while(gameRunning)
+ {
+ 
+ 	
+ 	for (all maps)
+ 	{
+ 		get 
+ 	}
+ 
+ }
+
+
 MAP_RENDER_DISTANCE = 2 	// how far away to start culling maps
 
 gridX, gridY = getPlayerPosition()

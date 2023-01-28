@@ -13,7 +13,8 @@ import theHunter.TheHunter;
 
 public class BerryBush extends Sprite
 {
-	private final int BERRY_REGROW_TIME = 1000;//10000;
+	private static final int PICKUP_AMOUNT = 3 * InventoryItem.PICKUP_MULTIPLIER;
+	private final int BERRY_REGROW_TIME = 10000;
 	private boolean hasBerries;
 	
 	private SpriteTask regrowBerriesTask;
@@ -62,7 +63,7 @@ public class BerryBush extends Sprite
 			int dist = Maths.distanceBetweenPlayerAndPoint(this.getScene().getPlayer(), new Point(this.worldX, this.worldY));
 			if (dist  != -1 && dist < TheHunter.RESOURCE_ACTION_DISTANCE)
 			{
-				player.pickup(ObjectTypes.InvBerries, 2 * InventoryItem.PICKUP_MULTIPLIER);
+				player.pickup(ObjectTypes.InvBerries, PICKUP_AMOUNT);
 				this.pickBerries();
 			}
 		}

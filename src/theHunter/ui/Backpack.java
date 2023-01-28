@@ -30,12 +30,12 @@ public class Backpack extends UIMenu
 	
 	public Backpack(Scene inScene) 
 	{
-		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 225, Game.HEIGHT/2 - (HEIGHT/2), WIDTH, HEIGHT, new Color(0.2f, 0.2f, 0.2f, 0.4f), 1);
+		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 225, Game.HEIGHT/2 - (HEIGHT/2) + 30, WIDTH, HEIGHT, new Color(0.2f, 0.2f, 0.2f, 0.4f), 1);
 		
 		items = new LinkedList<InventoryItem>();
 		
 		this.x = Game.WIDTH/2 - (WIDTH/2) - 225;
-		this.y = Game.HEIGHT/2 - (HEIGHT/2);
+		this.y = Game.HEIGHT/2 - (HEIGHT/2) + 30;
 		
 		title = new TextDisplay(inScene, "Backpack", this.x + 5, this.y + 15, Color.white, Game.TOP_DRAW_LAYER);
 		this.addTextDisplay(title);
@@ -45,6 +45,11 @@ public class Backpack extends UIMenu
 		backpackItems.enableCulling = false;
 		this.addRenderable(backpackItems);
 		
+	}
+	
+	public int itemQty(ObjectTypes type)
+	{
+		return this.backpackItems.itemQty(type);
 	}
 	
 	public boolean isFull()
@@ -63,7 +68,7 @@ public class Backpack extends UIMenu
 	{
 		if (items.size() >= TOTAL_ITEMS) return false;
 		
-		ObjectTypes t = ObjectTypes.values()[item.TYPE];
+		ObjectTypes t = ObjectTypes.values()[item.TYPE.intValue];
 		switch(t)
 		{
 		case Bush:
@@ -104,11 +109,34 @@ public class Backpack extends UIMenu
 		return true;
 	}
 	
+	public boolean removeNextTypeFromBackpack(ObjectTypes type)
+	{
+		int index = -1;
+		int cnt = 0;
+		for (InventoryItem item : items)
+		{
+			if (item.TYPE == type)
+			{
+				index = cnt;
+				break;
+			}
+			cnt++;
+		}
+		
+		if (index != -1)
+		{
+			items.remove(index);
+			compact();
+		}
+		
+		return false;
+	}
+	
 	public boolean removeFromBackpack(InventoryItem item)
 	{
 		if (items.removeFirstOccurrence(item))
 		{
-			ObjectTypes t = ObjectTypes.values()[item.TYPE];
+			ObjectTypes t = ObjectTypes.values()[item.TYPE.intValue];
 			switch(t)
 			{
 			case Bush:

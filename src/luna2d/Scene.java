@@ -86,6 +86,40 @@ public abstract class Scene
 		return "No day/night cycle";
 	}
 	
+	public String getWeather()
+	{
+		if (this.isDayTime()) 
+		{
+			if (WeatherSystem.isRaining)
+			{
+				return "Dark and stormy daytime";
+			}
+			else if(WeatherSystem.rainComing)
+			{
+				return "Cloudy daytime";
+			}
+			else
+			{
+				return "Mostly Sunny daytime";
+			}
+		}
+		else
+		{
+			if (WeatherSystem.isRaining)
+			{
+				return "Dark and stormy nighttime";
+			}
+			else if(WeatherSystem.rainComing)
+			{
+				return "Lightly cloudly nighttime";
+			}
+			else
+			{
+				return "Mostly Sunny nighttime";
+			}
+		}
+	}
+	
 	public boolean isDayTime()
 	{
 		if (this.dayNightCycle != null)

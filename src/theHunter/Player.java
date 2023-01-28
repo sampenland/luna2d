@@ -27,13 +27,12 @@ public class Player extends SimplePlayer
 	
 	private ObjectTypes holdingType;
 	
-	private float hunger;
+	private float hunger, temperature;
 	private float hungerDrain = 0.02f;
 	
-	private FillBar healthBar;
-	private FillBar hungerBar;
+	private FillBar healthBar, hungerBar, temperatureBar;
 	
-	private TextDisplay timeLabel;
+	private TextDisplay timeLabel, weatherLabel;
 	
 	public Player(Scene inScene, String imageName, int x, int y, int scale, int cellSize, int frames,
 			int msBetweenFrames) 
@@ -43,7 +42,10 @@ public class Player extends SimplePlayer
 		this.sprite.enableCulling = false;
 		this.holdingType = ObjectTypes.Empty;
 		this.backpackLock = false;
-		this.pauseLock = false;
+		this.pauseLock = false;		
+		
+		int currentY = 60;
+		int statsPaddingY = 18;
 		
 		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
@@ -51,14 +53,26 @@ public class Player extends SimplePlayer
 		healthBar.setFixedScreenPosition(true);
 		
 		this.hunger = 100;
-		new TextDisplay(inScene, "Hunger", 10, 35, Color.white, Game.TOP_DRAW_LAYER);
-		hungerBar = new FillBar(Math.round(this.hunger), 60, 30, cellSize * 3, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
+		new TextDisplay(inScene, "Hunger", 10, currentY, Color.white, Game.TOP_DRAW_LAYER);
+		hungerBar = new FillBar(Math.round(this.hunger), 60, currentY - 5, cellSize * 3, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
 		hungerBar.setEnableCameraScaling(false);
 		hungerBar.setFixedScreenPosition(true);
+		
+		// -----
+		currentY += statsPaddingY;
+		
+		this.temperature = 50;
+		new TextDisplay(inScene, "Temp", 10, currentY, Color.white, Game.TOP_DRAW_LAYER);
+		temperatureBar = new FillBar(Math.round(this.temperature), 60, currentY - 5, cellSize * 3, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
+		temperatureBar.setEnableCameraScaling(false);
+		temperatureBar.setFixedScreenPosition(true);
+		
+		// -----
 
 		this.setZoomingEnabled(true);
 		
-		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), 10, 20, Color.white, Game.TOP_DRAW_LAYER);
+		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), Game.WIDTH - 160, Game.HEIGHT - 50, Color.white, Game.TOP_DRAW_LAYER);
+		this.weatherLabel = new TextDisplay(inScene, inScene.getWeather(), 10, 30, Color.white, Game.TOP_DRAW_LAYER);
 		
 		backpack = new Backpack(inScene);		
 		backpack.show();
@@ -212,6 +226,7 @@ public class Player extends SimplePlayer
 		Game.updatePlayerPosition(this.getInternalX(), this.getInternalY(), 200);
 		
 		this.timeLabel.updateText(this.inScene.getDaysAndTime());
+		this.weatherLabel.updateText(this.inScene.getWeather());
 		
 		healthBar.setValue(Math.round(this.health));
 		
@@ -241,19 +256,36 @@ public class Player extends SimplePlayer
 		int x = gPos.x * TheHunter.CELL_SIZE;
 		int y = gPos.y * TheHunter.CELL_SIZE;
 		
-		if (this.holdingType == ObjectTypes.InvBerries && e.getButton() == 1)
+		if (this.holdingType == ObjectTypes.InvBerries)
 		{
-			new GrowingBerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+			if (e.getButton() == 1)
+			{
+				new GrowingBerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+				
+				if (this.backpack.itemQty(this.holdingType) > 0)
+				{
+					this.backpack.removeNextTypeFromBackpack(ObjectTypes.InvBerries);
+				}
+				else
+				{
+					this.holdingType = ObjectTypes.Empty;
+				}
+			}
+			else if (e.getButton() == 3)
+			{
+				this.holdingType = ObjectTypes.Empty;
+				this.backpack.addToBackpack(new InvBerries(this.getScene(), 2));
+			}			
 		}
 		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
 		{
+			
 			Point playerPos = new Point(this.getWorldX(), this.getWorldY());
 			Vector2 dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
 			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir, 0.25f, TheHunter.ENVIRONMENT_DRAW_LAYER);
-		}
-		
-		this.holdingType = ObjectTypes.Empty;
-		
+			this.holdingType = ObjectTypes.Empty;
+			
+		}		
 	}
 
 	@Override

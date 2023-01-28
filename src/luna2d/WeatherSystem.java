@@ -13,6 +13,7 @@ public class WeatherSystem
 	public static Color cloudColor;
 	private boolean canRain;
 	public static boolean isRaining = false;
+	public static boolean rainComing = false;
 	
 	private boolean waitingForUnPause = false;
 	
@@ -127,12 +128,14 @@ public class WeatherSystem
 	public void showRainComing()
 	{
 		this.comingRainSprite.visible = true;
+		rainComing = true;
 	}
 	
 	public void startRaining()
 	{
 		if (this.canRain)
 		{
+			rainComing = false;
 			isRaining = true;
 			this.rainSprite.visible = true;
 			this.rainSprite.playAnimation(true);			

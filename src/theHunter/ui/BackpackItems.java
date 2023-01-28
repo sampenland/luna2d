@@ -44,6 +44,28 @@ public class BackpackItems extends UIGrid
 		return cnt;
 	}
 	
+	public int itemQty(ObjectTypes type)
+	{
+		int cnt = 0;
+		for (int r = 0; r < Backpack.BACKPACK_ROWS; r++)
+		{
+			for (int c = 0; c < Backpack.BACKPACK_COLUMNS; c++)
+			{
+				if (items[r][c] == null)
+				{
+					return cnt;
+				}
+				
+				if (items[r][c].TYPE == type)
+				{
+					cnt++;					
+				}				
+			}
+		}
+		
+		return cnt;
+	}
+	
 	public void updateItems(LinkedList<InventoryItem> inItems)
 	{
 		items = new InventoryItem[Backpack.BACKPACK_ROWS][Backpack.BACKPACK_COLUMNS];
@@ -120,7 +142,7 @@ public class BackpackItems extends UIGrid
 				
 				if (items != null && items[row][col] != null)
 				{
-					String imgName = ObjectTypes.values()[items[row][col].TYPE].imgName;
+					String imgName = ObjectTypes.values()[items[row][col].TYPE.intValue].imgName;
 					BufferedImage img = ResourceHandler.getImage(imgName);
 					g.drawImage(img, 
 							cx, cy, cx + Math.round(cellSize * this.scale), cy + Math.round(cellSize * this.scale), 
