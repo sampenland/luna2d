@@ -27,8 +27,8 @@ public abstract class Scene
 
 	public String name;
 	
-	private final Color color[] = new Color[11];
-	private final float fraction[] = new float[11];
+	private final Color color[] = new Color[5];
+	private final float fraction[] = new float[5];
 
 	protected ObjectHandler objHandler;
 	protected MouseHandler objMouseHandler;
@@ -42,29 +42,17 @@ public abstract class Scene
 	
 	public Scene(String name)
 	{
-		color[0] = new Color(0, 0, 0, 0f);
-		color[1] = new Color(0, 0, 0, 0.1f);
-		color[2] = new Color(0, 0, 0, 0.2f);
-		color[3] = new Color(0, 0, 0, 0.3f);
-		color[4] = new Color(0, 0, 0, 0.4f);
-		color[5] = new Color(0, 0, 0, 0.5f);
-		color[6] = new Color(0, 0, 0, 0.65f);
-		color[7] = new Color(0, 0, 0, 0.7f);
-		color[8] = new Color(0, 0, 0, 0.75f);
-		color[9] = new Color(0, 0, 0, 0.8f);
-		color[10] = new Color(0, 0, 0, 0.85f);
+		color[4] = new Color(0, 0, 0, 0.f);
+		color[3] = new Color(0, 0, 0, 0.f);
+		color[2] = new Color(0, 0, 0, 0.1f);
+		color[1] = new Color(0, 0, 0, 0.2f);
+		color[0] = new Color(0, 0, 0, 0.75f);
 		
-		fraction[0] = 0f;
-		fraction[1] = 0.1f;
-		fraction[2] = 0.2f;
-		fraction[3] = 0.3f;
-		fraction[4] = 0.4f;
-		fraction[5] = 0.5f;
-		fraction[6] = 0.6f;
-		fraction[7] = 0.7f;
-		fraction[8] = 0.8f;
-		fraction[9] = 0.9f;
-		fraction[10] = 1f;
+		fraction[0] = 0.0f;
+		fraction[1] = 0.2f;
+		fraction[2] = 0.23f;
+		fraction[3] = 0.5f;
+		fraction[4] = 1f;
 		
 		this.name = name;
 		this.keys = new HashMap<Integer, Boolean>();
@@ -230,13 +218,12 @@ public abstract class Scene
 		
 		if ((this.dayNightCycle != null && !this.dayNightCycle.isDayTime()) || WeatherSystem.isRaining)
 		{
+			
 			// Render lights with over-top Day/Night cycle background
 			LinkedList<Light> lights = this.objHandler.getLights();
 			
 			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			Graphics2D graphics = (Graphics2D)img.getGraphics();
-			
-			Area screenArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
+			Graphics graphics = img.getGraphics();
 			
 			if (WeatherSystem.isRaining)
 			{
@@ -246,36 +233,102 @@ public abstract class Scene
 			{
 				graphics.setColor(this.dayNightCycle.getCurrentColor());
 			}
-					
-			Area lightsArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
-			lightsArea.subtract(screenArea);
+			
+			
+			graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+			graphics.dispose();
+			
+			Graphics2D g2d = img.createGraphics();
+			g2d.setComposite(AlphaComposite.DstOut);
+			
 			for (Light light : lights)
 			{
 				int x = light.getWorldX();
 				int y = light.getWorldY();
 				
 				Point p = Maths.convertWorldToScreen(x, y, 16);
-
+				
 				if (light instanceof GlowLight)
 				{
-					GlowLight gLight = (GlowLight)light;
-					int radius = gLight.getRadius();
+					GlowLight gl = (GlowLight)light;
+					int radius = gl.getRadius();
+					BufferedImage lightImg = new BufferedImage(radius, radius, BufferedImage.TYPE_INT_ARGB);
 					
-					Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);
-					
+					Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);					
 					RadialGradientPaint rad = new RadialGradientPaint(p.x, p.y, radius, fraction, color); 
-					graphics.setPaint(rad);
+					g2d.setPaint(rad);
+					g2d.fill(circleShape);
 					
-					Area lightArea = new Area(circleShape);											
-					lightsArea.add(lightArea);
-				}				
+					g2d.drawImage(lightImg, light.getScreenX(), light.getScreenY(), 
+							lightImg.getWidth() * Game.CAMERA_SCALE, 
+							lightImg.getHeight() * Game.CAMERA_SCALE, null);
+				}
 			}
 			
-			screenArea.subtract(lightsArea);
-			graphics.fill(screenArea);
-			graphics.dispose();
+			g2d.dispose();
+			
+			g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 
-			g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);	
+			
+			
+			
+			
+//			// Render lights with over-top Day/Night cycle background
+//			LinkedList<Light> lights = this.objHandler.getLights();
+//			
+//			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+//			Graphics2D graphics = (Graphics2D)img.getGraphics();
+//			
+//			Graphics2D g2d = img.createGraphics();
+//			g2d.setComposite(AlphaComposite.DstOut);
+//			
+//			Area screenArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
+//			
+//			if (WeatherSystem.isRaining)
+//			{
+//				graphics.setColor(WeatherSystem.cloudColor);				
+//			}
+//			else
+//			{
+//				graphics.setColor(this.dayNightCycle.getCurrentColor());
+//			}
+					
+			//Area lightsArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
+			//lightsArea.subtract(screenArea);
+//			for (Light light : lights)
+//			{
+//				int x = light.getWorldX();
+//				int y = light.getWorldY();
+//				
+//				Point p = Maths.convertWorldToScreen(x, y, 16);
+//
+//				if (light instanceof GlowLight)
+//				{
+//					GlowLight gLight = (GlowLight)light;
+//					int radius = gLight.getRadius();
+//					
+//					BufferedImage lightImg = new BufferedImage(radius * 2, radius * 2, BufferedImage.TYPE_INT_ARGB);
+//					Graphics2D lightGraphics = (Graphics2D)lightImg.getGraphics();		
+//					
+//					Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);
+//					Area lightArea = new Area(circleShape);											
+//					
+////					RadialGradientPaint rad = new RadialGradientPaint(p.x, p.y, radius, fraction, color); 
+////					g2d.setPaint(rad);
+//
+//					lightGraphics.setColor(Color.green);
+//					lightGraphics.fill(lightArea);
+//					//lightGraphics.drawImage(lightImg, 0, 0, radius, radius, 0, 0, Game.WIDTH, Game.HEIGHT, null);
+//					//lightsArea.add(lightArea);
+//				}				
+//			}
+			
+			//g2d.dispose();
+			//screenArea.subtract(lightsArea);
+			//graphics.fill(screenArea);
+			//graphics.dispose();
+
+			//g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);	
 		
 		}
 			
