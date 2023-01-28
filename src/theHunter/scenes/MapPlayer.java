@@ -44,6 +44,8 @@ public class MapPlayer extends Scene
 	{
 		Log.println("Loading Map: " + name);
 		
+		name = "m_" + name;
+		
 		mapData = TheHunter.loadCSVints(name, LoadDataType.MAP);
 		mapDataGrounds = TheHunter.loadCSVints(name, LoadDataType.GROUNDS);
 		

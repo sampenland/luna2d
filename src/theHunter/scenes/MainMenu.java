@@ -43,7 +43,7 @@ public class MainMenu extends Scene
 		if (this.isKeyPressed(KeyEvent.VK_P))
 		{
 			MapPlayer mapPlayer = (MapPlayer)this.openScene("MapPlayer");
-			mapPlayer.loadAndStartMap("m_MAP00");
+			mapPlayer.loadAndStartMap("MAP00");
 			return;
 		}
 		
@@ -61,7 +61,8 @@ public class MainMenu extends Scene
 		
 		if (this.isKeyPressed(KeyEvent.VK_O))
 		{
-			this.openScene("WorldPlayer");
+			WorldPlayer worldPlayer = (WorldPlayer)this.openScene("WorldPlayer");
+			worldPlayer.loadAndStart("WORLD00");
 			return;
 		}
 	}

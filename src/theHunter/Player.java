@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import luna2d.Game;
 import luna2d.Maths;
 import luna2d.Scene;
-import luna2d.Vector2;
+import luna2d.Vector2f;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
 import luna2d.renderables.TextDisplay;
@@ -78,6 +78,11 @@ public class Player extends SimplePlayer
 		
 		this.inScene.setPlayer(this);
 		
+	}
+	
+	public void setCustomRender(boolean val)
+	{
+		this.sprite.setCustomRender(val);
 	}
 	
 	public boolean addToBackpack(InventoryItem item)
@@ -280,7 +285,7 @@ public class Player extends SimplePlayer
 		{
 			
 			Point playerPos = new Point(this.getWorldX(), this.getWorldY());
-			Vector2 dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
+			Vector2f dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
 			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir, 0.25f, TheHunter.ENVIRONMENT_DRAW_LAYER);
 			this.holdingType = ObjectTypes.Empty;
 			

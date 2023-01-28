@@ -2,9 +2,9 @@ package luna2d;
 
 public class Vector2 
 {
-	public float x, y;
+	public int x, y;
 	
-	public Vector2(float x, float y)
+	public Vector2(int x, int y)
 	{
 		this.x = x;
 		this.y = y;

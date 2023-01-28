@@ -23,16 +23,16 @@ public class Maths
 		return val;
 	}
 	
-	public static Vector2 directionBetweenTwoPoints(Point start, Point end, boolean normalized)
+	public static Vector2f directionBetweenTwoPoints(Point start, Point end, boolean normalized)
 	{
 		if(normalized)
 		{
 			Point p = new Point((end.x - start.x), (end.y - start.y));
 			double mag = Math.sqrt(p.x * p.x + p.y * p.y);
-			return new Vector2((float)(p.x / mag), (float)(p.y / mag));
+			return new Vector2f((float)(p.x / mag), (float)(p.y / mag));
 			
 		}
-		return new Vector2((end.x - start.x), (end.y - start.y));
+		return new Vector2f((end.x - start.x), (end.y - start.y));
 	}
 	
 	public static int random(int min, int max)

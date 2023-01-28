@@ -164,7 +164,7 @@ public class WorldEditorMenu extends UIMenu
 			this.saving = true;
 			
 			WorldEditor me = (WorldEditor)this.inScene;
-			me.saveMap("m_" + this.worldNameInput.getText());
+			me.saveMap("w_" + this.worldNameInput.getText());
 			
 			FadingTextDisplay saveStatusDisplay = new FadingTextDisplay(inScene, "World Saved", this.screenX + 10, this.screenY + this.getHeight() - 15, Color.GREEN, 2000, Game.TOP_DRAW_LAYER);
 			saveStatusDisplay.setInMenu(this);
@@ -192,8 +192,8 @@ public class WorldEditorMenu extends UIMenu
 			this.loading = true;
 			
 			WorldEditor me = (WorldEditor)this.getScene();
-			int[][] maps = TheHunter.loadCSVints(("m_" + this.worldNameLoadInput.getText()), LoadDataType.WORLD);
-			String[][] mapNames = TheHunter.loadCSVstrings(("m_" + this.worldNameLoadInput.getText()), LoadDataType.WORLD_NAMES);
+			int[][] maps = TheHunter.loadCSVints(("w_" + this.worldNameLoadInput.getText()), LoadDataType.WORLD);
+			String[][] mapNames = TheHunter.loadCSVstrings(("w_" + this.worldNameLoadInput.getText()), LoadDataType.WORLD_NAMES);
 			
 			me.injectMapData(maps, mapNames);
 			

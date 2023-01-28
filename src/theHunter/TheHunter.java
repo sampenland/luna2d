@@ -20,7 +20,7 @@ public class TheHunter extends Game
 
 	private static final long serialVersionUID = -8234717309381689045L;
 
-	public static final String DATA_DIR = System.getProperty("user.dir");
+	public static final String DATA_DIR = System.getProperty("user.dir") + "/data/";
 	public static final int GRIDY_OFFSET = 5;
 	public static final int ROWS = 37;
 	public static final int COLUMNS = 49;
