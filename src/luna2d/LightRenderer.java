@@ -31,7 +31,7 @@ public class LightRenderer extends Thread
 	{
 		this.running = true;
 		while (running)
-		{
+		{			
 			if (this.inScene == null || this.inScene.getDayNightCycle() == null) 
 			{
 				try 

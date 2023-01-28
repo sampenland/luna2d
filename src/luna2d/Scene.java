@@ -38,6 +38,7 @@ public abstract class Scene
 	private Object player;
 	
 	private BufferedImage lightImg;
+
 	public static LightRenderer lightRenderer = null;
 	
 	public Scene(String name)
@@ -250,9 +251,12 @@ public abstract class Scene
 			Game.getWeatherSystem().render(g);
 		}
 		
-		if (this.lightImg != null)
-		{		
-			g.drawImage(lightImg, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);
+		if (this.getDayNightCycle() != null)
+		{
+			if (WeatherSystem.isRaining || !this.getDayNightCycle().isDayTime()) 
+			{
+				g.drawImage(lightImg, 0, 0, null);
+			}			
 		}
 			
 		LinkedList<Renderable> renderLayer = this.objHandler.getRenderables().get(Game.TOP_DRAW_LAYER);
