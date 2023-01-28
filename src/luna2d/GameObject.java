@@ -5,9 +5,12 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 import luna2d.renderables.Renderable;
+import theHunter.WorldPosition;
 
 public abstract class GameObject 
 {	
+	protected WorldPosition worldPosition;
+	
 	public boolean inputEnabled = false;
 	public boolean mouseEnabled = false;
 	private int worldX, worldY;

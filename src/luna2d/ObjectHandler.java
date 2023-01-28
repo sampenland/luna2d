@@ -103,6 +103,15 @@ public class ObjectHandler
 		}
 	}
 	
+	public void worldRenderAllObjects(Graphics g)
+	{
+		for(int i = 0; i < objects.size(); i++)
+		{
+			GameObject temp = objects.get(i);
+			temp.render(g);
+		}
+	}
+	
 	public void clearAllRenderables()
 	{
 		for (int layer = 0; layer < Game.DRAW_LAYERS; layer++)
@@ -140,7 +149,45 @@ public class ObjectHandler
 		}
 	}
 	
+	public void worldRenderAllRenderables(Graphics g)
+	{
+		for (int layer = 0; layer < Game.DRAW_LAYERS - 1; layer++)
+		{
+			LinkedList<Renderable> renderLayer = renderables.get(layer);
+		
+			for(int i = 0; i < renderLayer.size(); i++)
+			{
+				Renderable temp = renderLayer.get(i);
+				
+				// Culling			
+				if (temp.enableCulling)
+				{
+					if (temp instanceof Sprite)
+					{
+						temp = (Sprite)temp;
+						if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+						{
+							continue;
+						}
+					}
+				}
+
+				temp.render(g);
+			}
+			
+		}
+	}
+	
 	public void renderAllUIs(Graphics g)
+	{
+		for(int i = 0; i < uis.size(); i++)
+		{
+			UI temp = uis.get(i);
+			temp.render(g);
+		}
+	}
+	
+	public void worldRenderAllUIs(Graphics g)
 	{
 		for(int i = 0; i < uis.size(); i++)
 		{

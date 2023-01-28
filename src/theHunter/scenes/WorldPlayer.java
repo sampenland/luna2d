@@ -21,8 +21,6 @@ public class WorldPlayer extends Scene
 	private static final int WORLD_RENDER_DISTANCE = 1;
 	private static final int WORLD_UPDATE_DISTANCE = 2;
 	
-	private WorldStruct worldData;
-	
 	public WorldPlayer(String name) 
 	{
 		super(name);

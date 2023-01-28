@@ -6,10 +6,13 @@ import java.awt.event.MouseEvent;
 import luna2d.Game;
 import luna2d.Scene;
 import luna2d.ui.UIMenu;
+import theHunter.WorldPosition;
 
 public abstract class Renderable 
 {
 	private Scene inScene;
+	
+	protected WorldPosition worldPosition;
 	
 	private int depth;
 	public int worldX, worldY, screenX, screenY; 
