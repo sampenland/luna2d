@@ -10,7 +10,7 @@ public class Fire extends Sprite
 	public Fire(Scene inScene, int x, int y, int scale, int depth)
 	{
 		super(inScene, "Fire", x, y, scale, depth, 16, 5, 100);
-		light = new GlowLight(inScene, 0, 0, 200);
+		light = new GlowLight(inScene, 0, 0, 500);
 	}
 	
 	@Override

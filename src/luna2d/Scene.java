@@ -26,9 +26,6 @@ public abstract class Scene
 {
 
 	public String name;
-	
-	private final Color color[] = new Color[5];
-	private final float fraction[] = new float[5];
 
 	protected ObjectHandler objHandler;
 	protected MouseHandler objMouseHandler;
@@ -42,18 +39,6 @@ public abstract class Scene
 	
 	public Scene(String name)
 	{
-		color[4] = new Color(0, 0, 0, 0.f);
-		color[3] = new Color(0, 0, 0, 0.f);
-		color[2] = new Color(0, 0, 0, 0.1f);
-		color[1] = new Color(0, 0, 0, 0.2f);
-		color[0] = new Color(0, 0, 0, 0.75f);
-		
-		fraction[0] = 0.0f;
-		fraction[1] = 0.2f;
-		fraction[2] = 0.23f;
-		fraction[3] = 0.5f;
-		fraction[4] = 1f;
-		
 		this.name = name;
 		this.keys = new HashMap<Integer, Boolean>();
 		this.objHandler = new ObjectHandler();
@@ -225,17 +210,15 @@ public abstract class Scene
 			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			Graphics graphics = img.getGraphics();
 			
+			graphics.setColor(this.dayNightCycle.getCurrentColor());
+			graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+			
 			if (WeatherSystem.isRaining)
 			{
-				graphics.setColor(WeatherSystem.cloudColor);				
-			}
-			else
-			{
-				graphics.setColor(this.dayNightCycle.getCurrentColor());
+				graphics.setColor(WeatherSystem.cloudColor);
+				graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 			}
 			
-			
-			graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 			graphics.dispose();
 			
 			Graphics2D g2d = img.createGraphics();
@@ -246,22 +229,21 @@ public abstract class Scene
 				int x = light.getWorldX();
 				int y = light.getWorldY();
 				
+				if (x < -Game.CAMERA_X - Light.CullDistance || x > -Game.CAMERA_X + Game.WIDTH + Light.CullDistance ||
+					y < -Game.CAMERA_Y - Light.CullDistance || y > -Game.CAMERA_Y + Game.HEIGHT + Light.CullDistance)
+				{
+					continue;
+				}
+				
 				Point p = Maths.convertWorldToScreen(x, y, 16);
 				
 				if (light instanceof GlowLight)
 				{
 					GlowLight gl = (GlowLight)light;
-					int radius = gl.getRadius();
-					BufferedImage lightImg = new BufferedImage(radius, radius, BufferedImage.TYPE_INT_ARGB);
-					
-					Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);					
-					RadialGradientPaint rad = new RadialGradientPaint(p.x, p.y, radius, fraction, color); 
-					g2d.setPaint(rad);
-					g2d.fill(circleShape);
-					
-					g2d.drawImage(lightImg, light.getScreenX(), light.getScreenY(), 
-							lightImg.getWidth() * Game.CAMERA_SCALE, 
-							lightImg.getHeight() * Game.CAMERA_SCALE, null);
+					g2d.drawImage(gl.getImage(), p.x - gl.getRadius() / 2, 
+							p.y - gl.getRadius() / 2, 
+							gl.getRadius(), 
+							gl.getRadius(), null);					
 				}
 			}
 			
@@ -269,67 +251,6 @@ public abstract class Scene
 			
 			g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 
-			
-			
-			
-			
-//			// Render lights with over-top Day/Night cycle background
-//			LinkedList<Light> lights = this.objHandler.getLights();
-//			
-//			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-//			Graphics2D graphics = (Graphics2D)img.getGraphics();
-//			
-//			Graphics2D g2d = img.createGraphics();
-//			g2d.setComposite(AlphaComposite.DstOut);
-//			
-//			Area screenArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
-//			
-//			if (WeatherSystem.isRaining)
-//			{
-//				graphics.setColor(WeatherSystem.cloudColor);				
-//			}
-//			else
-//			{
-//				graphics.setColor(this.dayNightCycle.getCurrentColor());
-//			}
-					
-			//Area lightsArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
-			//lightsArea.subtract(screenArea);
-//			for (Light light : lights)
-//			{
-//				int x = light.getWorldX();
-//				int y = light.getWorldY();
-//				
-//				Point p = Maths.convertWorldToScreen(x, y, 16);
-//
-//				if (light instanceof GlowLight)
-//				{
-//					GlowLight gLight = (GlowLight)light;
-//					int radius = gLight.getRadius();
-//					
-//					BufferedImage lightImg = new BufferedImage(radius * 2, radius * 2, BufferedImage.TYPE_INT_ARGB);
-//					Graphics2D lightGraphics = (Graphics2D)lightImg.getGraphics();		
-//					
-//					Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);
-//					Area lightArea = new Area(circleShape);											
-//					
-////					RadialGradientPaint rad = new RadialGradientPaint(p.x, p.y, radius, fraction, color); 
-////					g2d.setPaint(rad);
-//
-//					lightGraphics.setColor(Color.green);
-//					lightGraphics.fill(lightArea);
-//					//lightGraphics.drawImage(lightImg, 0, 0, radius, radius, 0, 0, Game.WIDTH, Game.HEIGHT, null);
-//					//lightsArea.add(lightArea);
-//				}				
-//			}
-			
-			//g2d.dispose();
-			//screenArea.subtract(lightsArea);
-			//graphics.fill(screenArea);
-			//graphics.dispose();
-
-			//g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);	
-		
 		}
 			
 		LinkedList<Renderable> renderLayer = this.objHandler.getRenderables().get(Game.TOP_DRAW_LAYER);

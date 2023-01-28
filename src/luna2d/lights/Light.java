@@ -10,10 +10,15 @@ import luna2d.Scene;
 
 public abstract class Light 
 {
+	public static final int CullDistance = Game.WIDTH/2;
+	
 	private int screenX, screenY, worldX, worldY;
 	protected boolean visible;
 	
+	protected int radius;
+	
 	private Scene inScene;
+	protected BufferedImage img;
 	
 	public Light(Scene inScene, int worldX, int worldY)
 	{
@@ -28,6 +33,23 @@ public abstract class Light
 		}
 		
 		this.inScene.getObjectHandler().addLight(this);
+	}
+	
+	public void setRadius(int r)
+	{
+		this.radius = r;
+	}
+	
+	public int getRadius()
+	{
+		return this.radius;
+	}
+	
+	public abstract void buildLightImage();
+	
+	public BufferedImage getImage()
+	{
+		return this.img;
 	}
 	
 	public void updateWorldPosition(int x, int y)
