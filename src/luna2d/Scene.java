@@ -37,12 +37,25 @@ public abstract class Scene
 	private DayNightCycle dayNightCycle = null;
 	private Object player;
 	
+	private BufferedImage lightImg;
+	public static LightRenderer lightRenderer = null;
+	
 	public Scene(String name)
 	{
 		this.name = name;
 		this.keys = new HashMap<Integer, Boolean>();
 		this.objHandler = new ObjectHandler();
 		this.dayNightCycle = null;
+	}
+	
+	public DayNightCycle getDayNightCycle()
+	{
+		return this.dayNightCycle;
+	}
+	
+	public void updateLightImage(BufferedImage img)
+	{
+		this.lightImg = img;
 	}
 	
 	public void setPlayer(Object player)
@@ -178,6 +191,8 @@ public abstract class Scene
 	
 	public void unload()
 	{
+		Scene.lightRenderer.setRunning(false);
+		
 		this.objHandler.getUIs().clear();
 		this.objHandler.getObjects().clear();
 		this.objHandler.getLights().clear();
@@ -235,56 +250,9 @@ public abstract class Scene
 			Game.getWeatherSystem().render(g);
 		}
 		
-		if ((this.dayNightCycle != null && !this.dayNightCycle.isDayTime()) || WeatherSystem.isRaining)
-		{
-			
-			// Render lights with over-top Day/Night cycle background
-			LinkedList<Light> lights = this.objHandler.getLights();
-			
-			BufferedImage img = new BufferedImage(Game.WIDTH, Game.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			Graphics graphics = img.getGraphics();
-			
-			graphics.setColor(this.dayNightCycle.getCurrentColor());
-			graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
-			
-			if (WeatherSystem.isRaining)
-			{
-				graphics.setColor(WeatherSystem.cloudColor);
-				graphics.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
-			}
-			
-			graphics.dispose();
-			
-			Graphics2D g2d = img.createGraphics();
-			g2d.setComposite(AlphaComposite.DstOut);
-			
-			for (Light light : lights)
-			{
-				int x = light.getWorldX();
-				int y = light.getWorldY();
-				
-				if (x < -Game.CAMERA_X - Light.CullDistance || x > -Game.CAMERA_X + Game.WIDTH + Light.CullDistance ||
-					y < -Game.CAMERA_Y - Light.CullDistance || y > -Game.CAMERA_Y + Game.HEIGHT + Light.CullDistance)
-				{
-					continue;
-				}
-				
-				Point p = Maths.convertWorldToScreen(x, y, 16);
-				
-				if (light instanceof GlowLight)
-				{
-					GlowLight gl = (GlowLight)light;
-					g2d.drawImage(gl.getImage(), p.x - gl.getRadius() / 2, 
-							p.y - gl.getRadius() / 2, 
-							gl.getRadius(), 
-							gl.getRadius(), null);					
-				}
-			}
-			
-			g2d.dispose();
-			
-			g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);
-
+		if (this.lightImg != null)
+		{		
+			g.drawImage(lightImg, 0, 0, Game.WIDTH, Game.HEIGHT, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		}
 			
 		LinkedList<Renderable> renderLayer = this.objHandler.getRenderables().get(Game.TOP_DRAW_LAYER);

@@ -15,6 +15,11 @@ public class Log
 		System.out.println(text);
 	}
 	
+	public static void println(Scene scene)
+	{
+		System.out.println(scene.name);
+	}
+	
 	public static void println(Vector2 text)
 	{
 		System.out.println(text.x + ", " + text.y);

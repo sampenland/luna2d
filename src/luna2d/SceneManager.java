@@ -55,6 +55,10 @@ public class SceneManager
 				this.currentScene.keys.clear();
 				this.currentScene.setInputEnabled(false);
 				this.currentScene.setGame(this.game);
+				
+				Scene.lightRenderer = new LightRenderer(this.currentScene);
+				Scene.lightRenderer.start();
+				
 				this.currentScene.start();
 				
 				// Wait a 350 milliseconds before enabling input
