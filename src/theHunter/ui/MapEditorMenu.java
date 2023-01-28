@@ -202,13 +202,17 @@ public class MapEditorMenu extends UIMenu
 				public void run()
 				{
 					MapEditor mapEditor = (MapEditor)this.scene;
-					mapEditor.detailedMenu.focusedTextInput.setFocus(false);
-					mapEditor.detailedMenu.focusedTextInput = null;
-					mapEditor.detailedMenu.loading = false;
 					
-					FadingTextDisplay loadStatusDisplay = new FadingTextDisplay(inScene, "Map Loaded", mapEditor.detailedMenu.screenX + 10, mapEditor.detailedMenu.screenY + mapEditor.detailedMenu.getHeight() - 15, Color.GREEN, 2000, Game.TOP_DRAW_LAYER);
-					loadStatusDisplay.setInMenu(mapEditor.detailedMenu);
-					mapEditor.detailedMenu.addTextDisplay(loadStatusDisplay);
+					if (mapEditor.detailedMenu.focusedTextInput != null)
+					{
+						mapEditor.detailedMenu.focusedTextInput.setFocus(false);
+						mapEditor.detailedMenu.focusedTextInput = null;
+						mapEditor.detailedMenu.loading = false;
+						
+						FadingTextDisplay loadStatusDisplay = new FadingTextDisplay(inScene, "Map Loaded", mapEditor.detailedMenu.screenX + 10, mapEditor.detailedMenu.screenY + mapEditor.detailedMenu.getHeight() - 15, Color.GREEN, 2000, Game.TOP_DRAW_LAYER);
+						loadStatusDisplay.setInMenu(mapEditor.detailedMenu);
+						mapEditor.detailedMenu.addTextDisplay(loadStatusDisplay);						
+					}
 					
 				}
 			};
@@ -222,21 +226,28 @@ public class MapEditorMenu extends UIMenu
 		{
 			MapEditor mapEditor = (MapEditor)this.inScene;
 			
-			mapEditor.detailedMenu.focusedTextInput.setFocus(false);
-			mapEditor.detailedMenu.focusedTextInput = this.mapNameInput;
-			mapEditor.detailedMenu.focusedTextInput.setFocus(true);
-			
-			this.mapNameInput.mouseClicked = false;
+			if(mapEditor.detailedMenu.focusedTextInput != null)
+			{
+				mapEditor.detailedMenu.focusedTextInput.setFocus(false);
+				mapEditor.detailedMenu.focusedTextInput = this.mapNameInput;
+				mapEditor.detailedMenu.focusedTextInput.setFocus(true);
+				
+				this.mapNameInput.mouseClicked = false;				
+			}
 		}
 		else if (this.mapNameLoadInput.mouseClicked)
 		{
 			MapEditor mapEditor = (MapEditor)this.inScene;
 			
-			mapEditor.detailedMenu.focusedTextInput.setFocus(false);
-			mapEditor.detailedMenu.focusedTextInput = this.mapNameLoadInput;
-			mapEditor.detailedMenu.focusedTextInput.setFocus(true);
+			if(mapEditor.detailedMenu.focusedTextInput != null)
+			{
+				mapEditor.detailedMenu.focusedTextInput.setFocus(false);
+				mapEditor.detailedMenu.focusedTextInput = this.mapNameLoadInput;
+				mapEditor.detailedMenu.focusedTextInput.setFocus(true);
+				
+				this.mapNameLoadInput.mouseClicked = false;			
+			}
 			
-			this.mapNameLoadInput.mouseClicked = false;
 		}
 	}
 	

@@ -24,8 +24,7 @@ public class WorldEditor extends Scene
 	private MapGrounds grounds;
 	private int[][] maps;
 	private String[][] mapNames;
-	
-	private TextDisplay status;
+
 	private UITextInput mapNameInput;
 	private UIButton mapNameSaveButton, mapNamesCloseButton;
 	private int nameRow, nameColumn;
@@ -196,7 +195,7 @@ public class WorldEditor extends Scene
 		
 		grounds.updateFillTypes(maps);
 		
-		status = new TextDisplay(this, "Left Click to place map. Right click to name it.", Game.WIDTH / 2 - 150, 
+		new TextDisplay(this, "Left Click to place map. Right click to name it.", Game.WIDTH / 2 - 150, 
 				Game.HEIGHT - 60, Color.white, Game.TOP_DRAW_LAYER);
 		
 		mapNameInput = new UITextInput(this, "MAP00", 0, 0, 100, 20, 8);

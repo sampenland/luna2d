@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.Timer;
 
 import luna2d.Game;
-import luna2d.Log;
-import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
@@ -154,16 +152,28 @@ public class MapEditor extends Scene
 	
 	public void injectMapData(int[][] data, int[][] grounds)
 	{
-		mapDataSprites[this.playerRow][this.playerCol].updateImageRef("", false, true);
-		mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Empty.intValue);
+		if (this.playerRow != -1 && this.playerCol != -1)
+		{
+			mapDataSprites[this.playerRow][this.playerCol].updateImageRef("", false, true);
+			mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Empty.intValue);
+		}
+		
+		for(int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for(int c = 0; c < TheHunter.COLUMNS; c++)
+			{	
+				mapDataSpritesPlaced[r][c] = false;
+			}
+		}
 		
 		for(int r = 0; r < TheHunter.ROWS; r++)
 		{
 			for(int c = 0; c < TheHunter.COLUMNS; c++)
 			{		
-				this.mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, 2);
-				
 				ObjectTypes objectType = ObjectTypes.values()[data[r][c]];
+				
+				this.mapDataSprites[r][c].visible = false;
+				this.mapDataSpritesPlaced[r][c] = false;
 				
 				switch(objectType)
 				{
@@ -175,6 +185,7 @@ public class MapEditor extends Scene
 					this.mapDataSprites[r][c].updateImageRef("BerryBush", true, true);
 					this.mapDataSprites[r][c].setFrameWidth(16);
 					this.mapDataSprites[r][c].setFrameCount(1, true);
+					this.mapDataSpritesPlaced[r][c] = true;
 					break;
 					
 				case GndDirt:
@@ -193,32 +204,35 @@ public class MapEditor extends Scene
 					this.playerRow = r;
 					this.playerCol = c;
 					this.mapDataSprites[r][c].updateImageRef("Player", true, 16, 16);
+					this.mapDataSpritesPlaced[r][c] = true;
 					break;
 					
 				case Tree:
 					this.mapDataSprites[r][c].updateImageRef("Tree", true, true);
+					this.mapDataSpritesPlaced[r][c] = true;
 					break;
 					
 				case Water:
 					this.mapDataSprites[r][c].updateImageRef("Water", true, true);
+					this.mapDataSpritesPlaced[r][c] = true;
 					break;
 					
 				case Wolf:
 					this.mapDataSprites[r][c].updateImageRef("Wolf", true, true);
+					this.mapDataSpritesPlaced[r][c] = true;
 					break;
 					
 				case Fire:
 					this.mapDataSprites[r][c].updateImageRef("Fire", true, true);
 					this.mapDataSprites[r][c].setFrameWidth(16);
 					this.mapDataSprites[r][c].setFrameCount(1, true);
+					this.mapDataSpritesPlaced[r][c] = true;
 					
 				default:
-					this.mapDataSprites[r][c].visible = false;
 					break;
 				}
 				
 				mapDataSprites[r][c].setObjectType(objectType.intValue);
-				mapDataSprites[r][c].visible = true;
 			}
 		}
 		
@@ -345,6 +359,13 @@ public class MapEditor extends Scene
 		
 		if (this.isKeyPressed(KeyEvent.VK_M)) 
 		{			
+			if (this.mouseStatus != MOUSE_STATUS.IDLE)
+			{
+				this.mouseStatus = MOUSE_STATUS.PLACING;
+				userSwitching();
+				this.displaySelection(false);
+			}
+			
 			this.detailedMenu.toggleVisible();
 		}
 	}
