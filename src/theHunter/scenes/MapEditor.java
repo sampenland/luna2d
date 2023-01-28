@@ -168,6 +168,8 @@ public class MapEditor extends Scene
 					
 				case Bush:
 					this.mapDataSprites[r][c].updateImageRef("BerryBush", true, true);
+					this.mapDataSprites[r][c].setFrameWidth(16);
+					this.mapDataSprites[r][c].setFrameCount(1, true);
 					break;
 					
 				case GndDirt:
@@ -199,6 +201,11 @@ public class MapEditor extends Scene
 				case Wolf:
 					this.mapDataSprites[r][c].updateImageRef("Wolf", true, true);
 					break;
+					
+				case Fire:
+					this.mapDataSprites[r][c].updateImageRef("Fire", true, true);
+					this.mapDataSprites[r][c].setFrameWidth(16);
+					this.mapDataSprites[r][c].setFrameCount(1, true);
 					
 				default:
 					break;

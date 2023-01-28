@@ -26,6 +26,9 @@ public abstract class Scene
 {
 
 	public String name;
+	
+	private final Color color[] = new Color[11];
+	private final float fraction[] = new float[11];
 
 	protected ObjectHandler objHandler;
 	protected MouseHandler objMouseHandler;
@@ -39,6 +42,30 @@ public abstract class Scene
 	
 	public Scene(String name)
 	{
+		color[0] = new Color(0, 0, 0, 0f);
+		color[1] = new Color(0, 0, 0, 0.1f);
+		color[2] = new Color(0, 0, 0, 0.2f);
+		color[3] = new Color(0, 0, 0, 0.3f);
+		color[4] = new Color(0, 0, 0, 0.4f);
+		color[5] = new Color(0, 0, 0, 0.5f);
+		color[6] = new Color(0, 0, 0, 0.65f);
+		color[7] = new Color(0, 0, 0, 0.7f);
+		color[8] = new Color(0, 0, 0, 0.75f);
+		color[9] = new Color(0, 0, 0, 0.8f);
+		color[10] = new Color(0, 0, 0, 0.85f);
+		
+		fraction[0] = 0f;
+		fraction[1] = 0.1f;
+		fraction[2] = 0.2f;
+		fraction[3] = 0.3f;
+		fraction[4] = 0.4f;
+		fraction[5] = 0.5f;
+		fraction[6] = 0.6f;
+		fraction[7] = 0.7f;
+		fraction[8] = 0.8f;
+		fraction[9] = 0.9f;
+		fraction[10] = 1f;
+		
 		this.name = name;
 		this.keys = new HashMap<Integer, Boolean>();
 		this.objHandler = new ObjectHandler();
@@ -219,36 +246,32 @@ public abstract class Scene
 			{
 				graphics.setColor(this.dayNightCycle.getCurrentColor());
 			}
-			
+					
+			Area lightsArea = new Area(new Rectangle2D.Double(0, 0, Game.WIDTH, Game.HEIGHT));
+			lightsArea.subtract(screenArea);
 			for (Light light : lights)
 			{
 				int x = light.getWorldX();
 				int y = light.getWorldY();
 				
-				if (x > -Game.CAMERA_X - Game.WIDTH && x < -Game.CAMERA_X + Game.WIDTH &&
-					y > -Game.CAMERA_Y - Game.HEIGHT && y < -Game.CAMERA_Y + Game.HEIGHT)
-				{
-					Point p = Maths.convertWorldToScreen(x, y, 16);
+				Point p = Maths.convertWorldToScreen(x, y, 16);
 
-					if (light instanceof GlowLight)
-					{
-						GlowLight gLight = (GlowLight)light;
-						int radius = gLight.getRadius();
-						Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);
-						
-						Area lightArea = new Area(circleShape);
-						screenArea.subtract(lightArea);
-						
-						RadialGradientPaint rad = new RadialGradientPaint(p.x, p.y, radius, gLight.fraction, gLight.color); 
-						
-						graphics.setPaint(rad);
-						graphics.fill(lightArea);					
-						
-					}
+				if (light instanceof GlowLight)
+				{
+					GlowLight gLight = (GlowLight)light;
+					int radius = gLight.getRadius();
 					
+					Shape circleShape = new Ellipse2D.Double(p.x - radius/2, p.y - radius/2, radius, radius);
+					
+					RadialGradientPaint rad = new RadialGradientPaint(p.x, p.y, radius, fraction, color); 
+					graphics.setPaint(rad);
+					
+					Area lightArea = new Area(circleShape);											
+					lightsArea.add(lightArea);
 				}				
 			}
 			
+			screenArea.subtract(lightsArea);
 			graphics.fill(screenArea);
 			graphics.dispose();
 

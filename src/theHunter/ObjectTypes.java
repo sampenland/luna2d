@@ -15,7 +15,8 @@ public enum ObjectTypes
 	InvBerries(10, "INV_Berries", false),
 	Rock(11, "Rock", true),
 	InvRock(12, "INV_Rock", false),
-	ThrownRock(13, "Rock", false);
+	ThrownRock(13, "Rock", false),
+	Fire(14, "Fire", true);
 	
 	public final int intValue;
 	public final String imgName;

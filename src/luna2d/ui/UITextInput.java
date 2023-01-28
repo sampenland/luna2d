@@ -45,6 +45,7 @@ public class UITextInput extends UI
 	    this.paddingY = h / 2 + 6;
 	    
 	    this.inputEnabled = true;
+	    this.mouseEnabled = true;
 	    this.visible = false;
 	}
 	

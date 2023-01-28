@@ -174,6 +174,17 @@ public class Sprite extends Renderable
 		}
 	}
 	
+	public void setFrameCount(int frames, boolean animated)
+	{
+		this.frames = frames;
+		this.isAnimated = animated;
+	}
+	
+	public void setFrameWidth(int width)
+	{
+		this.frameWidth = width;
+	}
+	
 	public Point getWorldPosition()
 	{
 		return new Point(this.worldX, this.worldY);
@@ -304,8 +315,8 @@ public class Sprite extends Renderable
 			{
 				drawX = Game.CAMERA_X + this.drawRect.x;
 				drawY = Game.CAMERA_Y + this.drawRect.y;
-				drawX2 = Game.CAMERA_X + this.drawRect.x + Math.round(this.frameWidth * this.scale * Game.CAMERA_SCALE);
-				drawY2 = Game.CAMERA_Y + this.drawRect.y + Math.round(this.drawRect.height * this.scale * Game.CAMERA_SCALE);
+				drawX2 = drawX + Math.round(this.frameWidth * this.scale * Game.CAMERA_SCALE);
+				drawY2 = drawY + Math.round(this.drawRect.height * this.scale * Game.CAMERA_SCALE);
 			}
 		
 			g.drawImage(imgRef, 

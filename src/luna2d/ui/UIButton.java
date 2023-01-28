@@ -33,7 +33,7 @@ public class UIButton extends UI
 		this.bkgColor = Color.gray;
 		this.textColor = Color.black;
 		
-		this.inputEnabled = true;
+		this.mouseEnabled = true;
 		
 		this.inScene.getGame().getObjectHandler().addUI(this);
 	}

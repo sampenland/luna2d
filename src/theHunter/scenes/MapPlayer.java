@@ -17,6 +17,7 @@ import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
 import theHunter.objects.BerryBush;
+import theHunter.objects.Fire;
 import theHunter.objects.Rock;
 import theHunter.objects.Tree;
 import theHunter.objects.WaterSource;
@@ -85,7 +86,6 @@ public class MapPlayer extends Scene
 					x = x - Game.WIDTH / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					y = y - Game.HEIGHT / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					p.updateWorldPosition(x, y);
-					new GlowLight(this, x + Game.WIDTH/2 - 8, y + Game.HEIGHT/2 - 8, 200);
 					break;
 					
 				case Tree:
@@ -105,6 +105,10 @@ public class MapPlayer extends Scene
 					break;
 				case Rock:
 					new Rock(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					break;
+				case Fire:
+					new Fire(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					break;
 				default:
 					break;
 				}

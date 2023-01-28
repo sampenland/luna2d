@@ -41,6 +41,7 @@ public abstract class UIMenu extends UI
 		
 		this.bkgColor = bkgColor;
 		this.visible = false;
+		this.mouseEnabled = true;
 	}
 	
 	public Scene getScene()
