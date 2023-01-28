@@ -3,14 +3,10 @@ package luna2d.lights;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RadialGradientPaint;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-
-import luna2d.Maths;
-import luna2d.ResourceHandler;
 import luna2d.Scene;
 
 public class GlowLight extends Light

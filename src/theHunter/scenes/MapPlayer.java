@@ -9,7 +9,6 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.ResourceHandler;
 import luna2d.Scene;
-import luna2d.lights.GlowLight;
 import theHunter.DayNightCycleEngine;
 import theHunter.LoadDataType;
 import theHunter.MapGrounds;
@@ -48,7 +47,8 @@ public class MapPlayer extends Scene
 		mapData = TheHunter.loadCSVints(name, LoadDataType.MAP);
 		mapDataGrounds = TheHunter.loadCSVints(name, LoadDataType.GROUNDS);
 		
-		new MapGrounds(this, 0, 0, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
+		MapGrounds grounds = new MapGrounds(this, 0, 0, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
+		grounds.enableCulling = true;
 		
 		// Populate objects
 		for (int r = 0; r < TheHunter.ROWS; r++)

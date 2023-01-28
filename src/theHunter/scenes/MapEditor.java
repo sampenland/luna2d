@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.Timer;
 
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
-import luna2d.renderables.Grid;
 import luna2d.renderables.Sprite;
 import luna2d.renderables.TextDisplay;
 import luna2d.timers.SceneTask;
@@ -45,9 +45,12 @@ public class MapEditor extends Scene
 	private Sprite[][] mapDataSprites;
 	private int[][] mapDataGrounds;
 	private Sprite[][] selectionSprites;
+	private boolean[][] mapDataSpritesPlaced;
 	
 	private TextDisplay statusLabel;
 	public MapEditorMenu detailedMenu;
+	
+	private MapGrounds grounds;
 	
 	public MapEditor(String name) 
 	{
@@ -79,11 +82,11 @@ public class MapEditor extends Scene
 		this.playerCol = 0;
 		
 		this.mapDataSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
+		this.mapDataSpritesPlaced = new boolean[TheHunter.ROWS][TheHunter.COLUMNS];
 		this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
 		this.selectionSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
 		
-		MapGrounds grounds = new MapGrounds(this, 0, TheHunter.GRIDY_OFFSET, new Color(1.0f, 1.0f, 0.0f, 0.1f), 1, null);
-		grounds.enableCulling = false;
+		grounds = new MapGrounds(this, 0, TheHunter.GRIDY_OFFSET, new Color(1.0f, 1.0f, 0.0f, 0.1f), 1, null);
 		
 		int count = 0;
 		int countRow = 0;
@@ -91,9 +94,11 @@ public class MapEditor extends Scene
 		for(int r = 0; r < TheHunter.ROWS; r++)
 		{
 			for(int c = 0; c < TheHunter.COLUMNS; c++)
-			{				
+			{	
+				mapDataSpritesPlaced[r][c] = false;
 				mapDataGrounds[r][c] = ObjectTypes.GndGrass.intValue;
 				mapDataSprites[r][c] = new Sprite(this, "", c * 16, TheHunter.GRIDY_OFFSET + r * 16, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+				mapDataSprites[r][c].enableCulling = false;
 				mapDataSprites[r][c].setObjectType(ObjectTypes.Empty.intValue);
 				mapDataSprites[r][c].visible = false;
 				
@@ -132,7 +137,7 @@ public class MapEditor extends Scene
 			}
 		}
 		
-		grounds.updateFillTypes(mapDataGrounds);
+		this.grounds.updateFillTypes(mapDataGrounds);
 		
 		this.setInputEnabled(false);
 		
@@ -208,6 +213,7 @@ public class MapEditor extends Scene
 					this.mapDataSprites[r][c].setFrameCount(1, true);
 					
 				default:
+					this.mapDataSprites[r][c].visible = false;
 					break;
 				}
 				
@@ -343,17 +349,6 @@ public class MapEditor extends Scene
 		}
 	}
 	
-	private void setMapSpritesVisibility(boolean v)
-	{
-		for (int r = 0; r < TheHunter.ROWS; r++)
-		{
-			for (int c = 0; c < TheHunter.COLUMNS; c++)
-			{
-				this.mapDataSprites[r][c].visible = v;
-			}
-		}
-	}
-	
 	private void userSwitching()
 	{
 		if (!this.disableSwitching)
@@ -399,16 +394,24 @@ public class MapEditor extends Scene
 			this.resetInputTimer.schedule(resetInputTask, 500);
 		}
 	}
+	
+	private void setMapSpritesVisibility(boolean v)
+	{
+		for (int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for (int c = 0; c < TheHunter.COLUMNS; c++)
+			{
+				this.mapDataSprites[r][c].visible = v;
+			}
+		}
+	}
 
 	@Override
 	public void onMouseClick(MouseEvent e) 
-	{
-		int x = Game.mouseX;
-		int y = Game.mouseY;
+	{		
+		if (this.grounds.clickedColumn == -1 || this.grounds.clickedRow == -1) return;
 		
-		Point gPos = Maths.convertToGrid(x, y, 16, 0, TheHunter.GRIDY_OFFSET);
-
-		if (gPos.x == -1 || gPos.y == -1) return;
+		Point gPos = new Point(this.grounds.clickedColumn, this.grounds.clickedRow);
 		
 		switch(this.mouseStatus)
 		{
@@ -455,25 +458,42 @@ public class MapEditor extends Scene
 					{
 						this.mapDataSprites[gPos.y][gPos.x].updateImageRef("Player", true, 16, 16);
 						this.mapDataSprites[gPos.y][gPos.x].setObjectType(ObjectTypes.Player.intValue);
+						this.mapDataSpritesPlaced[gPos.y][gPos.x] = true;
 						
-						this.mapDataSprites[this.playerRow][this.playerCol].updateImageRef("", false, false);
-						this.mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Empty.intValue);
+						if (this.playerRow != -1 && this.playerCol == -1)
+						{
+							this.mapDataSprites[this.playerRow][this.playerCol].updateImageRef("", false, false);
+							this.mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Empty.intValue);
+							this.mapDataSpritesPlaced[this.playerRow][this.playerCol] = false;
+						}
 						
 						this.playerCol = gPos.x;
 						this.playerRow = gPos.y;	
+					}
+					else
+					{
+						this.mapDataSprites[this.playerRow][this.playerCol].updateImageRef("", false, false);
+						this.mapDataSprites[this.playerRow][this.playerCol].setObjectType(ObjectTypes.Empty.intValue);
+						
+						this.mapDataSpritesPlaced[this.playerRow][this.playerCol] = false;
+						this.mapDataSprites[this.playerRow][this.playerCol].visible = false;
+
+						this.playerCol = -1;
+						this.playerRow = -1;
 					}
 				}
 				else
 				{
 					if (!(gPos.x == this.playerCol && gPos.y == this.playerRow))
 					{
-						if (this.mapDataSprites[gPos.y][gPos.x].visible)
+						if (this.mapDataSpritesPlaced[gPos.y][gPos.x])
 						{
 							String imgName = "NONE";
 							int objType = ObjectTypes.Empty.intValue;
 							this.mapDataSprites[gPos.y][gPos.x].updateImageRef(imgName, true, 16, 16);
 							this.mapDataSprites[gPos.y][gPos.x].setObjectType(objType);	
 							this.mapDataSprites[gPos.y][gPos.x].visible = false;
+							this.mapDataSpritesPlaced[gPos.y][gPos.x] = false;
 						}
 						else
 						{
@@ -482,6 +502,7 @@ public class MapEditor extends Scene
 							this.mapDataSprites[gPos.y][gPos.x].updateImageRef(imgName, true, 16, 16);
 							this.mapDataSprites[gPos.y][gPos.x].setObjectType(objType);	
 							this.mapDataSprites[gPos.y][gPos.x].visible = true;
+							this.mapDataSpritesPlaced[gPos.y][gPos.x] = true;
 						}
 					}
 				}

@@ -64,21 +64,24 @@ public class Grid extends Renderable
 					cellSize * columns, cellSize * rows);			
 		}
 		
-		g.setColor(gridColor);
-		for (int col = 0; col <= columns; col++)
+		if (!this.hideGrid)
 		{
-			g.drawLine(Game.CAMERA_X + this.x + (col * cellSize), 
-					Game.CAMERA_Y + this.y, 
-					Game.CAMERA_X + this.x + (col * cellSize), 
-					Game.CAMERA_Y + this.y + (rows * cellSize));
-		}
-		
-		for (int row = 0; row <= columns; row++)
-		{
-			g.drawLine(Game.CAMERA_X + this.x, 
-					Game.CAMERA_Y + this.y + (row * cellSize), 
-					Game.CAMERA_X + this.x + (columns * cellSize), 
-					Game.CAMERA_Y + this.y + (row * cellSize));
+			g.setColor(gridColor);
+			for (int col = 0; col <= columns; col++)
+			{
+				g.drawLine(Game.CAMERA_X + this.x + (col * cellSize), 
+						Game.CAMERA_Y + this.y, 
+						Game.CAMERA_X + this.x + (col * cellSize), 
+						Game.CAMERA_Y + this.y + (rows * cellSize));
+			}
+			
+			for (int row = 0; row <= columns; row++)
+			{
+				g.drawLine(Game.CAMERA_X + this.x, 
+						Game.CAMERA_Y + this.y + (row * cellSize), 
+						Game.CAMERA_X + this.x + (columns * cellSize), 
+						Game.CAMERA_Y + this.y + (row * cellSize));
+			}	
 		}
 	}
 

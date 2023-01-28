@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 import luna2d.Game;
 import luna2d.Log;
-import luna2d.ResourceHandler;
 import luna2d.Scene;
 
 public abstract class Light 
