@@ -188,7 +188,7 @@ public class WorldEditor extends Scene
 	{
 		Log.println("World Editor started.");
 		
-		grounds = new MapGrounds(this, 0, TheHunter.GRIDY_OFFSET, new Color(1.0f, 1.0f, 0.0f, 0.1f), 1, null);
+		grounds = new MapGrounds(this, 0, TheHunter.GRIDY_OFFSET, 1, null);
 		
 		clearMaps();
 		clearMapNames();

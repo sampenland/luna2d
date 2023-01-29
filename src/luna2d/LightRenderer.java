@@ -69,6 +69,8 @@ public class LightRenderer extends Thread
 			{
 				for (Light light : lights)
 				{
+					if (!light.visible) continue;
+					
 					int x = light.getWorldX();
 					int y = light.getWorldY();
 					

@@ -364,7 +364,12 @@ public class Sprite extends Renderable
 		{
 			this.drawRect.x = this.screenX;
 			this.drawRect.y = this.screenY;
-		}	
+		}
+		else if (this.isAnimated)
+		{
+			this.drawRect.x = this.worldX;
+			this.drawRect.y = this.worldY;
+		}
 	}
 	
 	public int getWidth()

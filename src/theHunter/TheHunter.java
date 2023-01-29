@@ -67,6 +67,8 @@ public class TheHunter extends Game
 	private static void createColors()
 	{
 		ColorHandler.addColor("GrassGreen", new Color(52, 122, 115));
+		ColorHandler.addColor("GrassYellow", new Color(155, 161, 95));
+		ColorHandler.addColor("GrassGridYellow", new Color(155, 161, 95), 0.25f);
 		ColorHandler.addColor("WaterBlue", new Color(118, 135, 171));
 	}
 	
@@ -86,6 +88,7 @@ public class TheHunter extends Game
 		ResourceHandler.addImage("Fire", "fire_16x16_5-frames.png");
 		ResourceHandler.addImage("InvFence","inv-fence.png");
 		ResourceHandler.addImage("Fence","fence_16x16-6-colors.png");
+		ResourceHandler.addImage("InvFire", "inv-fire.png");
 	}
 	
 	public static int[][] loadCSVints(String name, LoadDataType dataType)

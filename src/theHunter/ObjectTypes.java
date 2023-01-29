@@ -19,7 +19,8 @@ public enum ObjectTypes
 	Fire(14, "Fire", true),
 	FenceVert(15, "Fence", true),
 	FenceHorz(16, "Fence", true),
-	InvFence(17, "InvFence", false);
+	InvFence(17, "InvFence", false),
+	InvFire(18, "InvFire", false);
 	
 	public final int intValue;
 	public final String imgName;

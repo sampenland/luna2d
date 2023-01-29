@@ -16,8 +16,10 @@ import luna2d.renderables.FillBar;
 import luna2d.renderables.TextDisplay;
 import theHunter.inventoryItems.InvBerries;
 import theHunter.inventoryItems.InvFence;
+import theHunter.inventoryItems.InvFire;
 import theHunter.inventoryItems.InvRock;
 import theHunter.objects.Fence;
+import theHunter.objects.Fire;
 import theHunter.objects.GrowingBerryBush;
 import theHunter.rangedWeapons.ThrownRock;
 import theHunter.ui.Backpack;
@@ -78,6 +80,9 @@ public class Player extends SimplePlayer
 		this.weatherLabel = new TextDisplay(inScene, inScene.getWeather(), 10, 30, Color.white, Game.TOP_DRAW_LAYER);
 		
 		backpack = new Backpack(inScene);
+
+		// add a fire to back pack
+		backpack.addToBackpack(new InvFire(this.getScene()));
 		
 		// add to backpack 15 Fences
 		for (int i = 0; i < 15; i++)
@@ -189,6 +194,9 @@ public class Player extends SimplePlayer
 			break;
 		case InvFence:
 			this.holdingObject = new Fence(this.getScene());
+			break;
+		case InvFire:
+			this.holdingObject = new Fire(this.getScene(), true);
 			break;
 		case InvRock:
 			break;
@@ -358,12 +366,40 @@ public class Player extends SimplePlayer
 				this.backpack.addToBackpack(new InvBerries(this.getScene(), 2));
 			}			
 		}
+		else if (this.holdingType == ObjectTypes.InvFire && this.holdingObject != null)
+		{
+			if (e.getButton() == 1)
+			{
+				Fire fire = (Fire)this.holdingObject;
+				if (true) // TODO: CAN PLACE
+				{
+					fire.placeOnGround();
+					
+					if (this.backpack.itemQty(this.holdingType) > 0)
+					{
+						this.backpack.removeNextTypeFromBackpack(this.holdingType);
+						this.holdingObject = new Fire(this.getScene(), true);
+					}
+					else
+					{
+						this.holdingObject = null;
+					}
+				}
+			}
+			else if (e.getButton() == 3)
+			{
+				Fire fire = (Fire)this.holdingObject;
+				fire.destroy();
+				this.holdingObject = null;
+				this.backpack.addToBackpack(new InvFence(this.getScene(), 1));
+			}		
+		}
 		else if(this.holdingType == ObjectTypes.InvFence && this.holdingObject != null)
 		{
 			if (e.getButton() == 1)
 			{
 				Fence fence = (Fence)this.holdingObject;
-				if (true) // CAN PLACE
+				if (true) // TODO: CAN PLACE
 				{
 					fence.placeOnGround();
 					

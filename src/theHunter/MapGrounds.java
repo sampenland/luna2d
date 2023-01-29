@@ -10,21 +10,27 @@ import luna2d.renderables.Grid;
 
 public class MapGrounds extends Grid
 {	
-	public MapGrounds(Scene inScene, int x, int y, Color gridColor, int scale, int[][] fillTypes) 
+	public MapGrounds(Scene inScene, int x, int y,int scale, int[][] fillTypes) 
 	{
-		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, gridColor, scale, 0, fillTypes);
-		this.setColors(gridColor, ColorHandler.getColor("GrassGreen"));
+		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, 
+				ColorHandler.getColor("GrassYellow"), scale, Game.BOTTOM_DRAW_LAYER, fillTypes);
+		
+		this.setColors(ColorHandler.getColor("GrassGridYellow"), ColorHandler.getColor("GrassGreen"));
 		this.mouseEnabled = true;
 		this.enableCulling = false;
-		//this.hideGrid = true;
 	}
 	
 	@Override
 	public void render(Graphics g)
 	{		
-		super.render(g);
+		if (!this.visible) return;
 		
-		if (this.fillTypes == null) return;
+		if (this.fillTypes == null)
+		{
+			return;
+		}
+		
+		super.renderBackground(g);
 		
 		for(int row = 0; row < rows; row++)
 		{
@@ -80,11 +86,13 @@ public class MapGrounds extends Grid
 				
 				g.setColor(groundColor);
 				
-				g.fillRect(drawX + 1, drawY + 1, 
-						Math.round(cellSize * this.scale) - 1, 
-						Math.round(cellSize * this.scale) - 1);
+				g.fillRect(drawX, drawY, 
+						Math.round(cellSize * this.scale), 
+						Math.round(cellSize * this.scale));
 			}
-		}	
+		}
+		
+		super.renderGrid(g);
 	}
 
 	@Override

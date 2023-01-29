@@ -12,7 +12,7 @@ public abstract class Light
 	public static final int CullDistance = Game.WIDTH/2;
 	
 	private int screenX, screenY, worldX, worldY;
-	protected boolean visible;
+	public boolean visible;
 	
 	protected int radius;
 	

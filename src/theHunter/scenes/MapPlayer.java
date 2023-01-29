@@ -16,6 +16,7 @@ import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
 import theHunter.objects.BerryBush;
+import theHunter.objects.Fence;
 import theHunter.objects.Fire;
 import theHunter.objects.Rock;
 import theHunter.objects.Tree;
@@ -49,7 +50,7 @@ public class MapPlayer extends Scene
 		mapData = TheHunter.loadCSVints(name, LoadDataType.MAP);
 		mapDataGrounds = TheHunter.loadCSVints(name, LoadDataType.GROUNDS);
 		
-		MapGrounds grounds = new MapGrounds(this, 0, 0, new Color(0, 0, 0, 0.2f), MAP_SCALE, mapDataGrounds);
+		MapGrounds grounds = new MapGrounds(this, 0, 0, MAP_SCALE, mapDataGrounds);
 		grounds.enableCulling = true;
 		
 		// Populate objects
@@ -109,7 +110,23 @@ public class MapPlayer extends Scene
 					new Rock(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 					break;
 				case Fire:
-					new Fire(this, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					Fire f = new Fire(this, false);
+					f.placeOnGround(x, y);
+					break;
+				case FenceHorz:
+					Fence fenH = new Fence(this);
+					fenH.placeOnGround(x, y);
+					fenH.rotate();
+					break;
+				case FenceVert:
+					Fence fenV = new Fence(this);
+					fenV.placeOnGround(x, y);
+					break;
+				case InvFence:
+					break;
+				case InvFire:
+					break;
+				case ThrownRock:
 					break;
 				default:
 					break;

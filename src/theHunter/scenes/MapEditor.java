@@ -84,7 +84,7 @@ public class MapEditor extends Scene
 		this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
 		this.selectionSprites = new Sprite[TheHunter.ROWS][TheHunter.COLUMNS];
 		
-		grounds = new MapGrounds(this, 0, TheHunter.GRIDY_OFFSET, new Color(1.0f, 1.0f, 0.0f, 0.1f), 1, null);
+		grounds = new MapGrounds(this, 0, TheHunter.GRIDY_OFFSET, 1, null);
 		
 		int count = 0;
 		int countRow = 0;

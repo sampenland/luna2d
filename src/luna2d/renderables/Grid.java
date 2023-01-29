@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-
 import luna2d.Game;
 import luna2d.Scene;
 
@@ -50,11 +49,8 @@ public class Grid extends Renderable
 		this.bkgColor = bkgColor;
 	}
 	
-	@Override
-	public void render(Graphics g) 
+	public void renderBackground(Graphics g)
 	{
-		if (!this.visible) return;
-		
 		if (bkgColor != null)
 		{
 			g.setColor(bkgColor);
@@ -63,26 +59,41 @@ public class Grid extends Renderable
 					Game.CAMERA_Y + this.y, 
 					cellSize * columns, cellSize * rows);			
 		}
-		
+	}
+	
+	public void renderGrid(Graphics g)
+	{
 		if (!this.hideGrid)
 		{
+			int drawX = Game.CAMERA_X + this.x * Game.CAMERA_SCALE;
+			int drawY = Game.CAMERA_Y + this.y * Game.CAMERA_SCALE;
+			
 			g.setColor(gridColor);
 			for (int col = 0; col <= columns; col++)
 			{
-				g.drawLine(Game.CAMERA_X + this.x + (col * cellSize), 
-						Game.CAMERA_Y + this.y, 
-						Game.CAMERA_X + this.x + (col * cellSize), 
-						Game.CAMERA_Y + this.y + (rows * cellSize));
+				g.drawLine(drawX + (col * cellSize * Game.CAMERA_SCALE), 
+						drawY, 
+						drawX + (col * cellSize * Game.CAMERA_SCALE), 
+						drawY + (rows * cellSize * Game.CAMERA_SCALE));
 			}
 			
 			for (int row = 0; row <= columns; row++)
 			{
-				g.drawLine(Game.CAMERA_X + this.x, 
-						Game.CAMERA_Y + this.y + (row * cellSize), 
-						Game.CAMERA_X + this.x + (columns * cellSize), 
-						Game.CAMERA_Y + this.y + (row * cellSize));
+				g.drawLine(drawX, 
+						drawY + (row * cellSize * Game.CAMERA_SCALE), 
+						drawX + (columns * cellSize * Game.CAMERA_SCALE), 
+						drawY + (row * cellSize * Game.CAMERA_SCALE));
 			}	
 		}
+	}
+	
+	@Override
+	public void render(Graphics g) 
+	{
+		if (!this.visible) return;
+		
+		this.renderBackground(g);		
+		this.renderGrid(g);
 	}
 
 	@Override

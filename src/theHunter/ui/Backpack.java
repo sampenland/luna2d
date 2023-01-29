@@ -11,7 +11,6 @@ import luna2d.renderables.TextDisplay;
 import luna2d.ui.UIMenu;
 import theHunter.InventoryItem;
 import theHunter.ObjectTypes;
-import theHunter.objects.Fence;
 
 public class Backpack extends UIMenu
 {

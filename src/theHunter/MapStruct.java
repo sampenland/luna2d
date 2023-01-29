@@ -1,6 +1,5 @@
 package theHunter;
 
-import java.awt.Color;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
@@ -44,7 +43,7 @@ public class MapStruct
 		int mX = this.worldPosition.y + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.COLUMNS);
 		int mY = this.worldPosition.x + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.ROWS);
 		
-		grounds = new MapGrounds(this.inScene, mX, mY, new Color(0, 0, 0, 0.2f), MAP_SCALE, this.mapDataGrounds);
+		grounds = new MapGrounds(this.inScene, mX, mY, MAP_SCALE, this.mapDataGrounds);
 		grounds.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(0, 0)));
 		grounds.enableCulling = true;
 		
@@ -111,7 +110,8 @@ public class MapStruct
 					rock.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 				case Fire:
-					Fire f = new Fire(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					Fire f = new Fire(this.inScene, false);
+					f.placeOnGround(x, y);
 					f.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 				default:

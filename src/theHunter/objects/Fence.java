@@ -22,13 +22,22 @@ public class Fence extends Sprite
 		this.mouseEnabled = true;
 	}
 	
+	public void placeOnGround(int x, int y)
+	{
+		this.placing = false;
+		this.enableCulling = true;
+		this.setFixedScreenPosition(false);
+		this.updateWorldPosition(x, y);
+	}
+	
 	public void placeOnGround()
 	{
 		Vector2 gPos = Maths.convertToGrid(Game.mouseWorldX, Game.mouseWorldY, TheHunter.CELL_SIZE * Game.CAMERA_SCALE);
-				
-		this.placing = false;
-		this.setFixedScreenPosition(false);
-		this.updateWorldPosition(gPos.x * 16, gPos.y * 16);
+		
+		int x = gPos.x * 16;
+		int y = gPos.y * 16;
+		
+		this.placeOnGround(x, y);
 	}
 	
 	public void pickup()
