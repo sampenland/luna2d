@@ -55,6 +55,18 @@ public class WorldStruct
 		return this.worldName;
 	}
 	
+	public void setPlayerWorldPosition(WorldPosition wp)
+	{
+		this.playerWorldPosition = wp.getWorldPos();
+		this.playerMapPosition = wp.getMapPos();
+	}
+	
+	public WorldPosition getPlayerWorldPosition()
+	{
+		return new WorldPosition(this.playerWorldPosition, this.playerMapPosition);
+		
+	}
+	
 	/*
 	 * Returns Vector2 (COLUMN, ROW)    NOT r, c
 	 */

@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import luna2d.Game;
 import luna2d.Scene;
 import luna2d.renderables.Renderable;
+import theHunter.WorldPosition;
 
 public class UIGrid extends Renderable
 {
@@ -39,6 +40,7 @@ public class UIGrid extends Renderable
 		this.mouseClicked = false;
 		this.clickedRow = -1;
 		this.clickedColumn = -1;
+		this.updateWorldPosition(WorldPosition.zero());
 	}
 	
 	public void updateFillTypes(int[][] fillTypes)

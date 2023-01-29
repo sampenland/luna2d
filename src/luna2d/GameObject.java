@@ -37,6 +37,11 @@ public abstract class GameObject
 		this.inScene.getObjectHandler().addObject(this);
 	}
 	
+	public void updateWorldPosition(WorldPosition wp)
+	{
+		this.worldPosition = wp;
+	}
+	
 	public int getWorldX()
 	{
 		return this.worldX;

@@ -55,6 +55,16 @@ public abstract class Renderable
 		this.mouseClicked = false;
 	}
 	
+	public WorldPosition getWorldPosition()
+	{
+		return this.worldPosition;
+	}
+	
+	public void updateWorldPosition(WorldPosition wp)
+	{
+		this.worldPosition = wp;
+	}
+	
 	public void setDepth(int depth)
 	{
 		if (depth < 0) depth = 0;

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import luna2d.Scene;
+import theHunter.WorldPosition;
 
 public class TextDisplay extends Renderable
 {
@@ -23,6 +24,7 @@ public class TextDisplay extends Renderable
 		this.visible = true;
 		this.enableCulling = false;
 		this.mouseEnabled = true;
+		this.updateWorldPosition(WorldPosition.zero());
 	}
 	
 	public void updateText(String text)

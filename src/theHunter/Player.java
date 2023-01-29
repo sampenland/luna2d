@@ -80,6 +80,13 @@ public class Player extends SimplePlayer
 		
 	}
 	
+	@Override 
+	public void updateWorldPosition(WorldPosition p)
+	{
+		super.updateWorldPosition(p);
+		this.sprite.updateWorldPosition(p);
+	}
+	
 	public void setCustomRender(boolean val)
 	{
 		this.sprite.setCustomRender(val);

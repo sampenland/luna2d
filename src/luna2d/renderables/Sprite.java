@@ -185,11 +185,6 @@ public class Sprite extends Renderable
 		this.frameWidth = width;
 	}
 	
-	public Point getWorldPosition()
-	{
-		return new Point(this.worldX, this.worldY);
-	}
-	
 	public int getCurrentFrame()
 	{
 		return this.currentFrame;

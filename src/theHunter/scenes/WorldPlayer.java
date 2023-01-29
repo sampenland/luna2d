@@ -18,8 +18,8 @@ import theHunter.WorldStruct;
 
 public class WorldPlayer extends Scene
 {
-	private static final int WORLD_RENDER_DISTANCE = 1;
-	private static final int WORLD_UPDATE_DISTANCE = 2;
+	public static final int WORLD_RENDER_DISTANCE = 1;
+	public static final int WORLD_UPDATE_DISTANCE = 2;
 	
 	public WorldPlayer(String name) 
 	{

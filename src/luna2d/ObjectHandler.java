@@ -12,6 +12,8 @@ import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
+import theHunter.WorldPosition;
+import theHunter.scenes.WorldPlayer;
 
 public class ObjectHandler 
 {	
@@ -103,12 +105,18 @@ public class ObjectHandler
 		}
 	}
 	
-	public void worldRenderAllObjects(Graphics g)
+	public void worldRenderAllObjects(Graphics g, WorldPosition playerWP)
 	{
 		for(int i = 0; i < objects.size(); i++)
 		{
 			GameObject temp = objects.get(i);
-			temp.render(g);
+			
+			Vector2 distance = WorldPosition.distanceFromWPs(temp.worldPosition, playerWP);
+			
+			if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
+			{
+				temp.render(g);
+			}			
 		}
 	}
 	
@@ -149,7 +157,7 @@ public class ObjectHandler
 		}
 	}
 	
-	public void worldRenderAllRenderables(Graphics g)
+	public void worldRenderAllRenderables(Graphics g, WorldPosition playerWP)
 	{
 		for (int layer = 0; layer < Game.DRAW_LAYERS - 1; layer++)
 		{
@@ -159,20 +167,25 @@ public class ObjectHandler
 			{
 				Renderable temp = renderLayer.get(i);
 				
-				// Culling			
-				if (temp.enableCulling)
+				Vector2 distance = WorldPosition.distanceFromWPs(temp.getWorldPosition(), playerWP);
+				
+				if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
 				{
-					if (temp instanceof Sprite)
+					// Culling			
+					if (temp.enableCulling)
 					{
-						temp = (Sprite)temp;
-						if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+						if (temp instanceof Sprite)
 						{
-							continue;
+							temp = (Sprite)temp;
+							if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+							{
+								continue;
+							}
 						}
 					}
-				}
 
-				temp.render(g);
+					temp.render(g);
+				}
 			}
 			
 		}
@@ -187,7 +200,7 @@ public class ObjectHandler
 		}
 	}
 	
-	public void worldRenderAllUIs(Graphics g)
+	public void worldRenderAllUIs(Graphics g, WorldPosition playerWP)
 	{
 		for(int i = 0; i < uis.size(); i++)
 		{

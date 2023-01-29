@@ -19,7 +19,7 @@ public class MapStruct
 	private int[][] mapDataGrounds;
 	private String mapName;
 	
-	private Vector2 mapPosition;
+	private Vector2 worldPosition;
 	
 	MapGrounds grounds;
 	Scene inScene;
@@ -31,7 +31,7 @@ public class MapStruct
 		this.mapName = mapName;
 		mapName = "m_" + mapName;
 		
-		this.mapPosition = new Vector2(c, r);
+		this.worldPosition = new Vector2(c, r);
 		
 		this.mapData = TheHunter.loadCSVints(mapName, LoadDataType.MAP);
 		this.mapDataGrounds = TheHunter.loadCSVints(mapName, LoadDataType.GROUNDS);
@@ -41,10 +41,11 @@ public class MapStruct
 	{
 		Log.println("Loading Map: " + this.mapName);
 		
-		int mX = this.mapPosition.y + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.COLUMNS);
-		int mY = this.mapPosition.x + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.ROWS);
+		int mX = this.worldPosition.y + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.COLUMNS);
+		int mY = this.worldPosition.x + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.ROWS);
 		
 		grounds = new MapGrounds(this.inScene, mX, mY, new Color(0, 0, 0, 0.2f), MAP_SCALE, this.mapDataGrounds);
+		grounds.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(0, 0)));
 		grounds.enableCulling = true;
 		
 		// Populate objects
@@ -63,7 +64,8 @@ public class MapStruct
 					break;
 					
 				case Bush:
-					new BerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					BerryBush bush = new BerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					bush.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 					
 				case GndDirt:
@@ -83,28 +85,34 @@ public class MapStruct
 					x = x - Game.WIDTH / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					y = y - Game.HEIGHT / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					p.updateWorldPosition(x, y);
+					p.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 					
 				case Tree:
-					new Tree(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					Tree t = new Tree(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					t.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 					
 				case Water:
-					new WaterSource(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					WaterSource ws = new WaterSource(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					ws.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 					
 				case Wolf:
-					new Wolf(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					Wolf w = new Wolf(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					w.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 				case InvBerries:
 					break;
 				case InvRock:
 					break;
 				case Rock:
-					new Rock(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					Rock rock = new Rock(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					rock.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 				case Fire:
-					new Fire(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					Fire f = new Fire(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					f.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
 					break;
 				default:
 					break;

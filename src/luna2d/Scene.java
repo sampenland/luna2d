@@ -9,7 +9,9 @@ import java.util.LinkedList;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
+import theHunter.WorldPosition;
 import theHunter.WorldStruct;
+import theHunter.scenes.WorldPlayer;
 
 public abstract class Scene
 {
@@ -238,9 +240,10 @@ public abstract class Scene
 	 */
 	private void renderWorld(Graphics g)
 	{
-		Log.println("World");
-		this.objHandler.worldRenderAllObjects(g);
-		this.objHandler.worldRenderAllRenderables(g);		
+		WorldPosition pWP = this.worldData.getPlayerWorldPosition();
+		
+		this.objHandler.worldRenderAllObjects(g, pWP);
+		this.objHandler.worldRenderAllRenderables(g, pWP);		
 		
 		if (Game.getWeatherSystem() != null)
 		{
@@ -261,20 +264,25 @@ public abstract class Scene
 		{
 			Renderable temp = renderLayer.get(i);
 			
-			// Culling			
-			if (temp.enableCulling)
+			Vector2 distance = WorldPosition.distanceFromWPs(temp.getWorldPosition(), pWP);
+			
+			if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
 			{
-				if (temp instanceof Sprite)
+				// Culling (within map)			
+				if (temp.enableCulling)
 				{
-					temp = (Sprite)temp;
-					if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+					if (temp instanceof Sprite)
 					{
-						continue;
+						temp = (Sprite)temp;
+						if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+						{
+							continue;
+						}
 					}
 				}
-			}
 
-			temp.render(g);
+				temp.render(g);
+			}
 		}
 		
 		if (Game.getWeatherSystem() != null)
@@ -282,7 +290,7 @@ public abstract class Scene
 			Game.getWeatherSystem().renderTopLayer(g);
 		}
 		
-		this.objHandler.worldRenderAllUIs(g);
+		this.objHandler.worldRenderAllUIs(g, pWP);
 		
 	}
 	
