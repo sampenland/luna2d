@@ -16,7 +16,10 @@ public enum ObjectTypes
 	Rock(11, "Rock", true),
 	InvRock(12, "INV_Rock", false),
 	ThrownRock(13, "Rock", false),
-	Fire(14, "Fire", true);
+	Fire(14, "Fire", true),
+	FenceVert(15, "Fence", true),
+	FenceHorz(16, "Fence", true),
+	InvFence(17, "InvFence", false);
 	
 	public final int intValue;
 	public final String imgName;

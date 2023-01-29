@@ -9,12 +9,15 @@ import java.awt.event.MouseEvent;
 import luna2d.Game;
 import luna2d.Maths;
 import luna2d.Scene;
+import luna2d.Vector2;
 import luna2d.Vector2f;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
 import luna2d.renderables.TextDisplay;
 import theHunter.inventoryItems.InvBerries;
+import theHunter.inventoryItems.InvFence;
 import theHunter.inventoryItems.InvRock;
+import theHunter.objects.Fence;
 import theHunter.objects.GrowingBerryBush;
 import theHunter.rangedWeapons.ThrownRock;
 import theHunter.ui.Backpack;
@@ -25,6 +28,7 @@ public class Player extends SimplePlayer
 	private boolean backpackLock, pauseLock;
 	
 	private ObjectTypes holdingType;
+	private Object holdingObject;
 	
 	private float hunger, temperature;
 	private float hungerDrain = 0.02f;
@@ -41,7 +45,7 @@ public class Player extends SimplePlayer
 		this.sprite.enableCulling = false;
 		this.holdingType = ObjectTypes.Empty;
 		this.backpackLock = false;
-		this.pauseLock = false;		
+		this.pauseLock = false;	
 		
 		int currentY = 60;
 		int statsPaddingY = 18;
@@ -73,7 +77,14 @@ public class Player extends SimplePlayer
 		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), Game.WIDTH - 160, Game.HEIGHT - 50, Color.white, Game.TOP_DRAW_LAYER);
 		this.weatherLabel = new TextDisplay(inScene, inScene.getWeather(), 10, 30, Color.white, Game.TOP_DRAW_LAYER);
 		
-		backpack = new Backpack(inScene);		
+		backpack = new Backpack(inScene);
+		
+		// add to backpack 15 Fences
+		for (int i = 0; i < 15; i++)
+		{			
+			backpack.addToBackpack(new InvFence(this.getScene(), 1));
+		}
+		
 		backpack.show();
 		
 		this.inScene.setPlayer(this);
@@ -129,6 +140,21 @@ public class Player extends SimplePlayer
 			break;
 		case Wolf:
 			break;
+		case FenceHorz:
+			break;
+		case FenceVert:
+			break;
+		case Fire:
+			break;
+		case InvFence:
+			new Fence(this.getScene());
+			break;
+		case InvRock:
+			break;
+		case Rock:
+			break;
+		case ThrownRock:
+			break;
 		default:
 			break;
 		
@@ -138,6 +164,50 @@ public class Player extends SimplePlayer
 	public void readyHoldItem(ObjectTypes type)
 	{
 		this.holdingType = type;
+		
+		switch(type)
+		{
+		case Bush:
+			break;
+		case Empty:
+			break;
+		case FenceHorz:
+			break;
+		case FenceVert:
+			break;
+		case Fire:
+			break;
+		case GndDirt:
+			break;
+		case GndGrass:
+			break;
+		case GndRock:
+			break;
+		case GndWater:
+			break;
+		case InvBerries:
+			break;
+		case InvFence:
+			this.holdingObject = new Fence(this.getScene());
+			break;
+		case InvRock:
+			break;
+		case Player:
+			break;
+		case Rock:
+			break;
+		case ThrownRock:
+			break;
+		case Tree:
+			break;
+		case Water:
+			break;
+		case Wolf:
+			break;
+		default:
+			break;
+		
+		}
 	}
 	
 	public void eat(int hunger)
@@ -262,7 +332,7 @@ public class Player extends SimplePlayer
 	{
 		if (this.holdingType == ObjectTypes.Empty) return;
 		
-		Point gPos = Maths.convertToGrid(Game.mouseWorldX, Game.mouseWorldY, TheHunter.CELL_SIZE * Game.CAMERA_SCALE, 0, 0);
+		Vector2 gPos = Maths.convertToGrid(Game.mouseWorldX, Game.mouseWorldY, TheHunter.CELL_SIZE * Game.CAMERA_SCALE, 0, 0);
 
 		int x = gPos.x * TheHunter.CELL_SIZE;
 		int y = gPos.y * TheHunter.CELL_SIZE;
@@ -287,6 +357,34 @@ public class Player extends SimplePlayer
 				this.holdingType = ObjectTypes.Empty;
 				this.backpack.addToBackpack(new InvBerries(this.getScene(), 2));
 			}			
+		}
+		else if(this.holdingType == ObjectTypes.InvFence && this.holdingObject != null)
+		{
+			if (e.getButton() == 1)
+			{
+				Fence fence = (Fence)this.holdingObject;
+				if (true) // CAN PLACE
+				{
+					fence.placeOnGround();
+					
+					if (this.backpack.itemQty(this.holdingType) > 0)
+					{
+						this.backpack.removeNextTypeFromBackpack(this.holdingType);
+						this.holdingObject = new Fence(this.getScene());
+					}
+					else
+					{
+						this.holdingObject = null;
+					}
+				}
+			}
+			else if (e.getButton() == 3)
+			{
+				Fence fence = (Fence)this.holdingObject;
+				fence.destroy();
+				this.holdingObject = null;
+				this.backpack.addToBackpack(new InvFence(this.getScene(), 1));
+			}
 		}
 		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
 		{

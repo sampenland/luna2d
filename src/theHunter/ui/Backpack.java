@@ -11,6 +11,7 @@ import luna2d.renderables.TextDisplay;
 import luna2d.ui.UIMenu;
 import theHunter.InventoryItem;
 import theHunter.ObjectTypes;
+import theHunter.objects.Fence;
 
 public class Backpack extends UIMenu
 {
@@ -166,6 +167,16 @@ public class Backpack extends UIMenu
 				this.showLog("Removed " + item.AMOUNT + " rocks", Color.red);
 				break;
 			case Rock:
+				break;
+			case FenceHorz:
+				break;
+			case FenceVert:
+				break;
+			case Fire:
+				break;
+			case InvFence:
+				break;
+			case ThrownRock:
 				break;
 			default:
 				break;

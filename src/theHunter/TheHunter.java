@@ -84,6 +84,8 @@ public class TheHunter extends Game
 		ResourceHandler.addImage("Rain", "rain.png"); 
 		ResourceHandler.addImage("RainComing", "rain-coming.png");
 		ResourceHandler.addImage("Fire", "fire_16x16_5-frames.png");
+		ResourceHandler.addImage("InvFence","inv-fence.png");
+		ResourceHandler.addImage("Fence","fence_16x16-6-colors.png");
 	}
 	
 	public static int[][] loadCSVints(String name, LoadDataType dataType)

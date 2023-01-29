@@ -62,9 +62,14 @@ public class Maths
 		return new Point (Game.CAMERA_X + x, Game.CAMERA_Y + y);
 	}
 	
-	public static Point convertToGrid(int x, int y, int cellSize, int startX, int startY)
+	public static Vector2 convertToGrid(int x, int y, int cellSize)
 	{
-		Point p = new Point(-1, -1);
+		return convertToGrid(x, y, cellSize, 0, 0);
+	}
+	
+	public static Vector2 convertToGrid(int x, int y, int cellSize, int startX, int startY)
+	{
+		Vector2 p = new Vector2(-1, -1);
 		
 		if (startX < 0) startX = 0;
 		if (startY < 0) startY = 0;

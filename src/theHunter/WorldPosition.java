@@ -29,11 +29,6 @@ public class WorldPosition
 	
 	public static Vector2 distanceFromWPs(WorldPosition p1, WorldPosition p2)
 	{
-		if (p1 == null)
-		{
-			int i = 0;
-			i++;
-		}
 		int oRow = p1.getWorldPos().y;
 		int oCol = p1.getWorldPos().x;
 		
