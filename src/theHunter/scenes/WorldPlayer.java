@@ -90,7 +90,7 @@ public class WorldPlayer extends Scene
 	@Override
 	public void update() 
 	{
-		//this.updateWorld();
+		this.updateWorld();
 		this.checkKeys();
 	}
 

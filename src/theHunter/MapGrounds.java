@@ -8,6 +8,7 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Grid;
+import theHunter.scenes.WorldPlayer;
 
 public class MapGrounds extends Grid
 {	
@@ -65,7 +66,7 @@ public class MapGrounds extends Grid
 						drawY + (rows * cellSize * Game.CAMERA_SCALE));
 			}
 
-			for (int row = 0; row <= columns; row++)
+			for (int row = 0; row <= rows; row++)
 			{
 				int thisDrawX = drawX;
 				int thisDrawY = drawY + (row * cellSize * Game.CAMERA_SCALE);
@@ -80,17 +81,13 @@ public class MapGrounds extends Grid
 		}
 	}
 	
-	private void renderWorldGrid(Graphics g)
+	private void renderWorldGrid(Graphics g, WorldPosition playerWP)
 	{
-		if (!this.hideGrid && this.getScene() != null && this.getScene().getPlayer() != null)
+		if (!this.hideGrid)
 		{
-			WorldPosition playerWP = ((Player)this.getScene().getPlayer()).getWorldPosition();
-			
-			Log.println(playerWP);
-			
 			int drawX = Game.CAMERA_X + this.x * Game.CAMERA_SCALE;
 			int drawY = Game.CAMERA_Y + this.y * Game.CAMERA_SCALE;
-			
+						
 			g.setColor(gridColor);
 			
 			for (int col = 0; col <= columns; col++)
@@ -98,7 +95,6 @@ public class MapGrounds extends Grid
 				int thisDrawX = drawX + (col * cellSize * Game.CAMERA_SCALE);
 				int thisDrawY = drawY;
 				
-				Log.println(thisDrawX);;
 				if (!(thisDrawX > 0 && thisDrawX < Game.WIDTH)) continue; // cull
 				
 				g.drawLine(thisDrawX, thisDrawY, 
@@ -106,7 +102,7 @@ public class MapGrounds extends Grid
 						drawY + (rows * cellSize * Game.CAMERA_SCALE));
 			}
 
-			for (int row = 0; row <= columns; row++)
+			for (int row = 0; row <= rows; row++)
 			{
 				int thisDrawX = drawX;
 				int thisDrawY = drawY + (row * cellSize * Game.CAMERA_SCALE);
@@ -123,8 +119,27 @@ public class MapGrounds extends Grid
 	
 	private void worldRender(Graphics g)
 	{
-		this.renderBackground(g);
-		this.renderWorldGrid(g);
+		WorldPosition playerWP = ((Player)this.getScene().getPlayer()).getWorldPosition();
+				
+		int playerWorldCol = playerWP.worldColumn;
+		int playerWorldRow = playerWP.worldRow;
+		
+		int mapWorldCol = this.worldPosition.worldColumn;
+		int mapWorldRow = this.worldPosition.worldRow;
+		
+		int colDist = Math.abs(playerWorldCol - mapWorldCol);
+		int rowDist = Math.abs(playerWorldRow - mapWorldRow); 
+		
+		Log.println(colDist, rowDist);
+		Log.println("Rendering: " + mapWorldCol + ", " + mapWorldRow);
+
+		if (colDist <= WorldPlayer.WORLD_RENDER_DISTANCE &&
+			rowDist <= WorldPlayer.WORLD_RENDER_DISTANCE)
+		{			
+			this.renderBackground(g);
+			this.renderWorldGrid(g, playerWP);
+		}
+
 	}
 	
 	@Override

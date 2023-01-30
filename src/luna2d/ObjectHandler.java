@@ -167,10 +167,11 @@ public class ObjectHandler
 			{
 				Renderable temp = renderLayer.get(i);
 				
-				Vector2 distance = WorldPosition.distanceFromWPs(temp.getWorldPosition(), playerWP);
 				
 				if (temp.enableCulling)
 				{
+					Vector2 distance = WorldPosition.distanceFromWPs(temp.getWorldPosition(), playerWP);
+
 					if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
 					{
 						// Culling			

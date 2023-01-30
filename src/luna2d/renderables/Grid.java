@@ -79,7 +79,7 @@ public class Grid extends Renderable
 						drawY + (rows * cellSize * Game.CAMERA_SCALE));
 			}
 			
-			for (int row = 0; row <= columns; row++)
+			for (int row = 0; row <= rows; row++)
 			{
 				g.drawLine(drawX, 
 						drawY + (row * cellSize * Game.CAMERA_SCALE), 

@@ -19,7 +19,7 @@ public class MapStruct
 	private int[][] mapDataGrounds;
 	private String mapName;
 	
-	private Vector2 worldPosition;
+	private WorldPosition worldPosition;
 	
 	MapGrounds grounds;
 	Scene inScene;
@@ -31,7 +31,7 @@ public class MapStruct
 		this.mapName = mapName;
 		mapName = "m_" + mapName;
 		
-		this.worldPosition = new Vector2(c, r);
+		this.worldPosition = new WorldPosition(new Vector2(c, r), new Vector2(0, 0));
 		
 		this.mapData = TheHunter.loadCSVints(mapName, LoadDataType.MAP);
 		this.mapDataGrounds = TheHunter.loadCSVints(mapName, LoadDataType.GROUNDS);
@@ -40,13 +40,10 @@ public class MapStruct
 	public void load()
 	{
 		Log.println("Loading Map: " + this.mapName);
-		
-		int mX = this.worldPosition.y + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.COLUMNS);
-		int mY = this.worldPosition.x + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.ROWS);
-		
-		grounds = new MapGrounds(this.inScene, mX, mY, MAP_SCALE, this.mapDataGrounds);
+				
+		grounds = new MapGrounds(this.inScene, 0, 0, MAP_SCALE, this.mapDataGrounds);
 		grounds.setWorldRender(true);
-		grounds.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(0, 0)));
+		grounds.updateWorldPosition(this.worldPosition);
 		grounds.setColors(ColorHandler.getColor("GrassGridYellow"), ColorHandler.getColor("GrassGreen"));
 		grounds.enableCulling = true;
 		
@@ -55,8 +52,8 @@ public class MapStruct
 		{
 			for (int c = 0; c < TheHunter.COLUMNS; c++)
 			{
-				int x = mX + c * TheHunter.CELL_SIZE * MAP_SCALE;
-				int y = mY + (r * TheHunter.CELL_SIZE) * MAP_SCALE;
+				int x = c * TheHunter.CELL_SIZE * MAP_SCALE;
+				int y = (r * TheHunter.CELL_SIZE) * MAP_SCALE;
 				
 				ObjectTypes objectType = ObjectTypes.values()[mapData[r][c]];
 				
@@ -67,7 +64,7 @@ public class MapStruct
 					
 				case Bush:
 					BerryBush bush = new BerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					bush.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
+					bush.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
 					break;
 					
 				case GndDirt:
@@ -87,22 +84,22 @@ public class MapStruct
 					x = x - Game.WIDTH / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					y = y - Game.HEIGHT / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					p.updateWorldPosition(x, y);
-					p.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
+					p.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
 					break;
 					
 				case Tree:
 					Tree t = new Tree(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					t.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
+					t.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
 					break;
 					
 				case Water:
 					WaterSource ws = new WaterSource(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					ws.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
+					ws.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
 					break;
 					
 				case Wolf:
 					Wolf w = new Wolf(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					w.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
+					w.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
 					break;
 				case InvBerries:
 					break;
@@ -110,12 +107,12 @@ public class MapStruct
 					break;
 				case Rock:
 					Rock rock = new Rock(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					rock.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
+					rock.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
 					break;
 				case Fire:
 					Fire f = new Fire(this.inScene, false);
 					f.placeOnGround(x, y);
-					f.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(c, r)));
+					f.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
 					break;
 				default:
 					break;

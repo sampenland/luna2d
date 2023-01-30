@@ -407,7 +407,7 @@ public class Player extends SimplePlayer
 				Fire fire = (Fire)this.holdingObject;
 				fire.destroy();
 				this.holdingObject = null;
-				this.backpack.addToBackpack(new InvFence(this.getScene(), 1));
+				this.backpack.addToBackpack(new InvFire(this.getScene()));
 			}		
 		}
 		else if(this.holdingType == ObjectTypes.InvFence && this.holdingObject != null)
