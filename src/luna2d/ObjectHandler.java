@@ -13,8 +13,6 @@ import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
 import theHunter.MapGrounds;
-import theHunter.Player;
-import theHunter.TheHunter;
 import theHunter.WorldPosition;
 import theHunter.scenes.WorldPlayer;
 

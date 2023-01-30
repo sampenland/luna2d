@@ -12,7 +12,6 @@ import luna2d.ui.UI;
 import theHunter.Player;
 import theHunter.WorldPosition;
 import theHunter.WorldStruct;
-import theHunter.scenes.WorldPlayer;
 
 public abstract class Scene
 {

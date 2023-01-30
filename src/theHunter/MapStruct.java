@@ -58,7 +58,10 @@ public class MapStruct
 				WorldPosition thisWorldPosition = new WorldPosition(wp, new Vector2(c, r));
 				int x = c * TheHunter.CELL_SIZE * MAP_SCALE;
 				int y = (r * TheHunter.CELL_SIZE) * MAP_SCALE;
-								
+						
+				x += wp.x * TheHunter.CELL_SIZE * TheHunter.COLUMNS * MAP_SCALE;
+				y += wp.y * TheHunter.CELL_SIZE * TheHunter.ROWS * MAP_SCALE;
+				
 				ObjectTypes objectType = ObjectTypes.values()[mapData[r][c]];
 				
 				switch(objectType)

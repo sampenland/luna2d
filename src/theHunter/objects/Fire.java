@@ -29,6 +29,10 @@ public class Fire extends Sprite
 		this.setFixedScreenPosition(false);
 		this.enableCulling = true;
 		this.updateWorldPosition(x, y);
+		
+		// TODO: Fix this for no bug when placing fire (also do to fence and growing bush)
+		//this.updateWorldPosition(Maths.convertToWorldPosition(x, y, TheHunter.CELL_SIZE * Game.CAMERA_SCALE, 1, TheHunter.ROWS, TheHunter.COLUMNS));
+		
 		light = new GlowLight(this.getScene(), 0, 0, FIRE_LIGHT_DISTANCE);
 		light.visible = true;
 	}

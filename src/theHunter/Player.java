@@ -5,9 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
 import luna2d.Game;
-import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;

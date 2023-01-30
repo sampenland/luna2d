@@ -3,8 +3,6 @@ package luna2d.renderables;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-
-import luna2d.Log;
 import luna2d.Scene;
 import theHunter.WorldPosition;
 
