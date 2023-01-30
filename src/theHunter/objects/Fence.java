@@ -10,15 +10,16 @@ import theHunter.TheHunter;
 public class Fence extends Sprite
 {
 	private boolean placing;
-	private boolean isVert;
+	
+	private int[] rotations = {0, 3, 6, 7, 8, 9};
+	private int rotationIndex = 0;
 	
 	public Fence(Scene inScene) 
 	{
-		super(inScene, "Fence", 0, 0, 1, TheHunter.ENVIRONMENT_DRAW_LAYER, 16, 6, 0);
+		super(inScene, "Fence", 0, 0, 1, TheHunter.ENVIRONMENT_DRAW_LAYER, 16, 10, 0);
 		this.enableCulling = false;
 		this.setFixedScreenPosition(true);
 		this.placing = true;
-		this.isVert = true;
 		this.mouseEnabled = true;
 	}
 	
@@ -48,16 +49,15 @@ public class Fence extends Sprite
 	
 	public void rotate()
 	{
-		if (this.isVert)
+		this.rotationIndex++;
+		if (this.rotationIndex >= this.rotations.length) 
 		{
-			this.setFrame(3, false);
-		}
-		else
-		{
-			this.setFrame(0, false);
+			this.rotationIndex = 0;
 		}
 		
-		this.isVert = !this.isVert;
+		int frame = this.rotations[this.rotationIndex];
+		
+		this.setFrame(frame, false);
 	}
 	
 	private void checkClicks()

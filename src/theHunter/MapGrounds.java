@@ -5,11 +5,13 @@ import java.awt.Graphics;
 import java.awt.Point;
 import luna2d.ColorHandler;
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Scene;
 import luna2d.renderables.Grid;
 
 public class MapGrounds extends Grid
 {	
+	private boolean worldRendering;
 	public MapGrounds(Scene inScene, int x, int y,int scale, int[][] fillTypes) 
 	{
 		super(inScene, x, y, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, 
@@ -18,6 +20,111 @@ public class MapGrounds extends Grid
 		this.setColors(ColorHandler.getColor("GrassGridYellow"), ColorHandler.getColor("GrassGreen"));
 		this.mouseEnabled = true;
 		this.enableCulling = false;
+		this.worldRendering = false;
+	}
+	
+	public void setWorldRender(boolean val)
+	{
+		this.worldRendering = val;
+	}
+	
+	public boolean getWorldRendering()
+	{
+		return this.worldRendering;
+	}
+	
+	@Override
+	public void renderBackground(Graphics g)
+	{
+		if (bkgColor != null)
+		{
+			g.setColor(bkgColor);
+			g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);			
+		}
+	}
+	
+	@Override 
+	public void renderGrid(Graphics g)
+	{
+		if (!this.hideGrid)
+		{
+			int drawX = Game.CAMERA_X + this.x * Game.CAMERA_SCALE;
+			int drawY = Game.CAMERA_Y + this.y * Game.CAMERA_SCALE;
+			
+			g.setColor(gridColor);
+			
+			for (int col = 0; col <= columns; col++)
+			{
+				int thisDrawX = drawX + (col * cellSize * Game.CAMERA_SCALE);
+				int thisDrawY = drawY;
+				
+				if (!(thisDrawX > 0 && thisDrawX < Game.WIDTH)) continue; // cull
+				
+				g.drawLine(thisDrawX, thisDrawY, 
+						drawX + (col * cellSize * Game.CAMERA_SCALE), 
+						drawY + (rows * cellSize * Game.CAMERA_SCALE));
+			}
+
+			for (int row = 0; row <= columns; row++)
+			{
+				int thisDrawX = drawX;
+				int thisDrawY = drawY + (row * cellSize * Game.CAMERA_SCALE);
+				
+				if (!(thisDrawY > 0 && thisDrawY < Game.HEIGHT)) continue; // cull
+				
+				g.drawLine(thisDrawX, thisDrawY, 
+						drawX + (columns * cellSize * Game.CAMERA_SCALE), 
+						drawY + (row * cellSize * Game.CAMERA_SCALE));
+			}	
+			
+		}
+	}
+	
+	private void renderWorldGrid(Graphics g)
+	{
+		if (!this.hideGrid && this.getScene() != null && this.getScene().getPlayer() != null)
+		{
+			WorldPosition playerWP = ((Player)this.getScene().getPlayer()).getWorldPosition();
+			
+			Log.println(playerWP);
+			
+			int drawX = Game.CAMERA_X + this.x * Game.CAMERA_SCALE;
+			int drawY = Game.CAMERA_Y + this.y * Game.CAMERA_SCALE;
+			
+			g.setColor(gridColor);
+			
+			for (int col = 0; col <= columns; col++)
+			{
+				int thisDrawX = drawX + (col * cellSize * Game.CAMERA_SCALE);
+				int thisDrawY = drawY;
+				
+				Log.println(thisDrawX);;
+				if (!(thisDrawX > 0 && thisDrawX < Game.WIDTH)) continue; // cull
+				
+				g.drawLine(thisDrawX, thisDrawY, 
+						drawX + (col * cellSize * Game.CAMERA_SCALE), 
+						drawY + (rows * cellSize * Game.CAMERA_SCALE));
+			}
+
+			for (int row = 0; row <= columns; row++)
+			{
+				int thisDrawX = drawX;
+				int thisDrawY = drawY + (row * cellSize * Game.CAMERA_SCALE);
+				
+				if (!(thisDrawY > 0 && thisDrawY < Game.HEIGHT)) continue; // cull
+				
+				g.drawLine(thisDrawX, thisDrawY, 
+						drawX + (columns * cellSize * Game.CAMERA_SCALE), 
+						drawY + (row * cellSize * Game.CAMERA_SCALE));
+			}	
+			
+		}
+	}
+	
+	private void worldRender(Graphics g)
+	{
+		this.renderBackground(g);
+		this.renderWorldGrid(g);
 	}
 	
 	@Override
@@ -30,7 +137,12 @@ public class MapGrounds extends Grid
 			return;
 		}
 		
-		super.renderBackground(g);
+		if (this.worldRendering)
+		{
+			this.worldRender(g);
+		}
+		
+		this.renderBackground(g);
 		
 		for(int row = 0; row < rows; row++)
 		{
@@ -92,7 +204,7 @@ public class MapGrounds extends Grid
 			}
 		}
 		
-		super.renderGrid(g);
+		this.renderGrid(g);
 	}
 
 	@Override

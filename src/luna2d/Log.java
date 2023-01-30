@@ -2,12 +2,21 @@ package luna2d;
 
 import java.awt.Point;
 
+import theHunter.WorldPosition;
+
 public class Log 
 {
 
 	public static void print(String text)
 	{
 		System.out.print(text);
+	}
+	
+	public static void println(WorldPosition pos)
+	{
+		Log.println("World Position: Wrd[" + pos.getWorldPos().x +
+				", " + pos.getWorldPos().y + "]  Map[" + pos.getMapPos().x + ", " +
+				pos.getMapPos().y + "]");
 	}
 	
 	public static void println(String text)

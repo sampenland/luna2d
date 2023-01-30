@@ -257,32 +257,27 @@ public abstract class Scene
 				g.drawImage(lightImg, 0, 0, null);
 			}			
 		}
-			
+		
 		LinkedList<Renderable> renderLayer = this.objHandler.getRenderables().get(Game.TOP_DRAW_LAYER);
 		
 		for(int i = 0; i < renderLayer.size(); i++)
 		{
 			Renderable temp = renderLayer.get(i);
 			
-			Vector2 distance = WorldPosition.distanceFromWPs(temp.getWorldPosition(), pWP);
-			
-			if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
+			// Culling			
+			if (temp.enableCulling)
 			{
-				// Culling (within map)			
-				if (temp.enableCulling)
+				if (temp instanceof Sprite)
 				{
-					if (temp instanceof Sprite)
+					temp = (Sprite)temp;
+					if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
 					{
-						temp = (Sprite)temp;
-						if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
-						{
-							continue;
-						}
+						continue;
 					}
 				}
-
-				temp.render(g);
 			}
+
+			temp.render(g);
 		}
 		
 		if (Game.getWeatherSystem() != null)

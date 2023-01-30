@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import java.util.concurrent.ThreadLocalRandom;
 
 import luna2d.playerControllers.SimplePlayer;
+import theHunter.TheHunter;
+import theHunter.WorldPosition;
 
 public class Maths 
 {
@@ -65,6 +67,20 @@ public class Maths
 	public static Vector2 convertToGrid(int x, int y, int cellSize)
 	{
 		return convertToGrid(x, y, cellSize, 0, 0);
+	}
+	
+	public static WorldPosition convertToWorldPosition(Vector2 worldGridPosition, int scale, int worldRows, int worldColumns)
+	{
+		int c = worldGridPosition.x / scale;
+		int r = worldGridPosition.y / scale;
+		
+		int wrdCol = c / worldColumns - 1;
+		int wrdRow = r / worldRows - 1;
+		
+		int mapCol = c % worldColumns;
+		int mapRow = r % worldRows;
+	
+		return new WorldPosition(wrdRow, wrdCol, mapRow, mapCol);
 	}
 	
 	public static Vector2 convertToGrid(int x, int y, int cellSize, int startX, int startY)

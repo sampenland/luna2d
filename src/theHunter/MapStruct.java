@@ -1,5 +1,6 @@
 package theHunter;
 
+import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
@@ -44,7 +45,9 @@ public class MapStruct
 		int mY = this.worldPosition.x + (MAP_SCALE * TheHunter.CELL_SIZE * TheHunter.ROWS);
 		
 		grounds = new MapGrounds(this.inScene, mX, mY, MAP_SCALE, this.mapDataGrounds);
+		grounds.setWorldRender(true);
 		grounds.updateWorldPosition(new WorldPosition(this.worldPosition, new Vector2(0, 0)));
+		grounds.setColors(ColorHandler.getColor("GrassGridYellow"), ColorHandler.getColor("GrassGreen"));
 		grounds.enableCulling = true;
 		
 		// Populate objects

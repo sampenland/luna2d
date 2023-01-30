@@ -23,6 +23,7 @@ public class BackpackItems extends UIGrid
 		super(inScene, x, y, rows, columns, cellSize, gridColor, bkgColor, scale, Game.TOP_DRAW_LAYER, null);
 		this.backpack = backpack;
 		this.mouseEnabled = true;
+		this.enableCulling = false;
 	}
 	
 	public int totalItems()
@@ -120,25 +121,15 @@ public class BackpackItems extends UIGrid
 	{
 		if (!this.visible) return;
 		if (this.customRender) return;
-		
+			
+		super.renderBackground(g);
+
 		for(int row = 0; row < rows; row++)
 		{
 			for(int col = 0; col < columns; col++)
 			{
 				int cx = this.x + col * cellSize * this.scale;
 				int cy = this.y + row * cellSize * this.scale;
-								
-				g.setColor(bkgColor);
-				
-				g.fillRect(cx, cy, 
-						Math.round(cellSize * this.scale), 
-						Math.round(cellSize * this.scale));
-				
-				g.setColor(gridColor);
-				
-				g.drawRect(cx, cy, 
-						Math.round(cellSize * this.scale), 
-						Math.round(cellSize * this.scale));
 				
 				if (items != null && items[row][col] != null)
 				{
@@ -150,6 +141,8 @@ public class BackpackItems extends UIGrid
 				}
 			}
 		}
+		
+		super.renderGrid(g);
 	}
 
 }

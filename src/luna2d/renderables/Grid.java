@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Scene;
 
 public class Grid extends Renderable
@@ -65,6 +66,7 @@ public class Grid extends Renderable
 	{
 		if (!this.hideGrid)
 		{
+			Log.println("Rendering grid", Game.CAMERA_X + ", " + Game.CAMERA_Y);
 			int drawX = Game.CAMERA_X + this.x * Game.CAMERA_SCALE;
 			int drawY = Game.CAMERA_Y + this.y * Game.CAMERA_SCALE;
 			

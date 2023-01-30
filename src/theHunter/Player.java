@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
@@ -101,6 +102,11 @@ public class Player extends SimplePlayer
 	{
 		super.updateWorldPosition(p);
 		this.sprite.updateWorldPosition(p);
+	}
+	
+	public WorldPosition getWorldPosition()
+	{
+		return this.worldPosition;
 	}
 	
 	public void setCustomRender(boolean val)
@@ -320,6 +326,16 @@ public class Player extends SimplePlayer
 		healthBar.setValue(Math.round(this.health));
 		
 		handleHunger();
+		
+		this.handleWorldPosition();
+	}
+	
+	private void handleWorldPosition()
+	{
+		Vector2 gPos = Maths.convertToGrid(this.getWorldX(), this.getWorldY(), TheHunter.CELL_SIZE * Game.CAMERA_SCALE);
+		WorldPosition pWP = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
+
+		this.updateWorldPosition(pWP);
 	}
 	
 	private void handleHunger()

@@ -169,21 +169,28 @@ public class ObjectHandler
 				
 				Vector2 distance = WorldPosition.distanceFromWPs(temp.getWorldPosition(), playerWP);
 				
-				if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
+				if (temp.enableCulling)
 				{
-					// Culling			
-					if (temp.enableCulling)
+					if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
 					{
-						if (temp instanceof Sprite)
+						// Culling			
+						if (temp.enableCulling)
 						{
-							temp = (Sprite)temp;
-							if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+							if (temp instanceof Sprite)
 							{
-								continue;
+								temp = (Sprite)temp;
+								if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
+								{
+									continue;
+								}
 							}
 						}
-					}
 
+						temp.render(g);
+					}
+				}
+				else
+				{
 					temp.render(g);
 				}
 			}
