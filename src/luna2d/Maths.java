@@ -74,8 +74,8 @@ public class Maths
 		int c = worldGridPosition.x / scale;
 		int r = worldGridPosition.y / scale;
 		
-		int wrdCol = c / worldColumns - 1;
-		int wrdRow = r / worldRows - 1;
+		int wrdCol = c / worldColumns;
+		int wrdRow = r / worldRows;
 		
 		int mapCol = c % worldColumns;
 		int mapRow = r % worldRows;

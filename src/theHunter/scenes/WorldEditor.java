@@ -285,10 +285,15 @@ public class WorldEditor extends Scene
 					
 					if (this.grounds.clickedColumn > TheHunter.COLUMNS - 6)
 					{
-						x -= 150;
+						x -= 170;
 					}
 					
 					y -= 20;
+					
+					if (this.grounds.clickedRow < 5)
+					{
+						y += 50;
+					}
 					
 					this.mapNameInput.updateScreenPosition(x, y);
 					this.mapNameInput.updateText(this.mapNames[this.grounds.clickedRow][this.grounds.clickedColumn]);

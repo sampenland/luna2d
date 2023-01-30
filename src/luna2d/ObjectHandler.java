@@ -12,6 +12,9 @@ import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
+import theHunter.MapGrounds;
+import theHunter.Player;
+import theHunter.TheHunter;
 import theHunter.WorldPosition;
 import theHunter.scenes.WorldPlayer;
 
@@ -158,7 +161,10 @@ public class ObjectHandler
 	}
 	
 	public void worldRenderAllRenderables(Graphics g, WorldPosition playerWP)
-	{
+	{		
+		int playerWorldCol = playerWP.worldColumn;
+		int playerWorldRow = playerWP.worldRow;
+		
 		for (int layer = 0; layer < Game.DRAW_LAYERS - 1; layer++)
 		{
 			LinkedList<Renderable> renderLayer = renderables.get(layer);
@@ -166,29 +172,40 @@ public class ObjectHandler
 			for(int i = 0; i < renderLayer.size(); i++)
 			{
 				Renderable temp = renderLayer.get(i);
+					
+				if (temp instanceof MapGrounds)
+				{
+					MapGrounds grounds = (MapGrounds)temp;
+					
+					if (playerWorldCol == grounds.getWorldPosition().worldColumn &&
+						playerWorldRow == grounds.getWorldPosition().worldRow)
+					{
+						grounds.worldRender(g, playerWP);
+					}
+					
+					continue;
+				}
 				
-				
+				// Culling			
 				if (temp.enableCulling)
 				{
-					Vector2 distance = WorldPosition.distanceFromWPs(temp.getWorldPosition(), playerWP);
-
-					if (distance.y < WorldPlayer.WORLD_RENDER_DISTANCE && distance.x < WorldPlayer.WORLD_RENDER_DISTANCE)
+					WorldPosition wp = temp.getWorldPosition();
+					if (wp.worldColumn == playerWorldCol && wp.worldRow == playerWorldRow)
 					{
-						// Culling			
-						if (temp.enableCulling)
+						if (temp instanceof Sprite)
 						{
-							if (temp instanceof Sprite)
+							temp = (Sprite)temp;
+							
+							int x = temp.worldX;
+							int y = temp.worldY;
+							
+							if(!Game.getScreenBounds().contains(new Point(x, y)))
 							{
-								temp = (Sprite)temp;
-								if(!Game.getScreenBounds().contains(new Point(temp.worldX, temp.worldY)))
-								{
-									continue;
-								}
+								continue;
 							}
+							temp.render(g);
 						}
-
-						temp.render(g);
-					}
+					}					
 				}
 				else
 				{

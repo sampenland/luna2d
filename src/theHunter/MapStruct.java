@@ -41,20 +41,24 @@ public class MapStruct
 	{
 		Log.println("Loading Map: " + this.mapName);
 				
-		grounds = new MapGrounds(this.inScene, 0, 0, MAP_SCALE, this.mapDataGrounds);
+		grounds = new MapGrounds(this.inScene, this.worldPosition.worldColumn * (TheHunter.CELL_SIZE * TheHunter.COLUMNS), 
+				this.worldPosition.worldRow * (TheHunter.CELL_SIZE * TheHunter.ROWS), MAP_SCALE, this.mapDataGrounds);
+		
 		grounds.setWorldRender(true);
 		grounds.updateWorldPosition(this.worldPosition);
 		grounds.setColors(ColorHandler.getColor("GrassGridYellow"), ColorHandler.getColor("GrassGreen"));
 		grounds.enableCulling = true;
 		
 		// Populate objects
+		Vector2 wp = this.worldPosition.getWorldPos();
 		for (int r = 0; r < TheHunter.ROWS; r++)
 		{
 			for (int c = 0; c < TheHunter.COLUMNS; c++)
 			{
+				WorldPosition thisWorldPosition = new WorldPosition(wp, new Vector2(c, r));
 				int x = c * TheHunter.CELL_SIZE * MAP_SCALE;
 				int y = (r * TheHunter.CELL_SIZE) * MAP_SCALE;
-				
+								
 				ObjectTypes objectType = ObjectTypes.values()[mapData[r][c]];
 				
 				switch(objectType)
@@ -64,7 +68,7 @@ public class MapStruct
 					
 				case Bush:
 					BerryBush bush = new BerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					bush.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
+					bush.updateWorldPosition(thisWorldPosition);
 					break;
 					
 				case GndDirt:
@@ -84,22 +88,22 @@ public class MapStruct
 					x = x - Game.WIDTH / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					y = y - Game.HEIGHT / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
 					p.updateWorldPosition(x, y);
-					p.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
+					p.updateWorldPosition(thisWorldPosition);
 					break;
 					
 				case Tree:
 					Tree t = new Tree(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					t.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
+					t.updateWorldPosition(thisWorldPosition);
 					break;
 					
 				case Water:
 					WaterSource ws = new WaterSource(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					ws.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
+					ws.updateWorldPosition(thisWorldPosition);
 					break;
 					
 				case Wolf:
 					Wolf w = new Wolf(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					w.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
+					w.updateWorldPosition(thisWorldPosition);
 					break;
 				case InvBerries:
 					break;
@@ -107,12 +111,12 @@ public class MapStruct
 					break;
 				case Rock:
 					Rock rock = new Rock(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
-					rock.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
+					rock.updateWorldPosition(thisWorldPosition);
 					break;
 				case Fire:
 					Fire f = new Fire(this.inScene, false);
 					f.placeOnGround(x, y);
-					f.updateWorldPosition(new WorldPosition(this.worldPosition.getWorldPos(), new Vector2(c, r)));
+					f.updateWorldPosition(thisWorldPosition);
 					break;
 				default:
 					break;

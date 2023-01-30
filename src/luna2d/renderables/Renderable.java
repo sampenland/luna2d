@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import luna2d.Game;
 import luna2d.Scene;
+import luna2d.Vector2;
 import luna2d.ui.UIMenu;
 import theHunter.WorldPosition;
 
@@ -143,6 +144,11 @@ public abstract class Renderable
 	{
 		this.worldX = x;
 		this.worldY = y;
+	}
+	
+	public void updateWorldPosition(Vector2 worldPos, Vector2 mapPos)
+	{
+		this.worldPosition = new WorldPosition(worldPos, mapPos);
 	}
 	
 	public int getWorldX()

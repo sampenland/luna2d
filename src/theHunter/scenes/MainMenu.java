@@ -62,7 +62,7 @@ public class MainMenu extends Scene
 		if (this.isKeyPressed(KeyEvent.VK_O))
 		{
 			WorldPlayer worldPlayer = (WorldPlayer)this.openScene("WorldPlayer");
-			worldPlayer.loadAndStart("WORLD00");
+			worldPlayer.loadAndStart("WORLD01");
 			return;
 		}
 	}

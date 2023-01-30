@@ -117,29 +117,10 @@ public class MapGrounds extends Grid
 		}
 	}
 	
-	private void worldRender(Graphics g)
+	public void worldRender(Graphics g, WorldPosition playerWP)
 	{
-		WorldPosition playerWP = ((Player)this.getScene().getPlayer()).getWorldPosition();
-				
-		int playerWorldCol = playerWP.worldColumn;
-		int playerWorldRow = playerWP.worldRow;
-		
-		int mapWorldCol = this.worldPosition.worldColumn;
-		int mapWorldRow = this.worldPosition.worldRow;
-		
-		int colDist = Math.abs(playerWorldCol - mapWorldCol);
-		int rowDist = Math.abs(playerWorldRow - mapWorldRow); 
-		
-		Log.println(colDist, rowDist);
-		Log.println("Rendering: " + mapWorldCol + ", " + mapWorldRow);
-
-		if (colDist <= WorldPlayer.WORLD_RENDER_DISTANCE &&
-			rowDist <= WorldPlayer.WORLD_RENDER_DISTANCE)
-		{			
-			this.renderBackground(g);
-			this.renderWorldGrid(g, playerWP);
-		}
-
+		this.renderBackground(g);
+		this.renderWorldGrid(g, playerWP);
 	}
 	
 	@Override
@@ -154,7 +135,7 @@ public class MapGrounds extends Grid
 		
 		if (this.worldRendering)
 		{
-			this.worldRender(g);
+			return;
 		}
 		
 		this.renderBackground(g);

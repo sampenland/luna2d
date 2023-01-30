@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
+import theHunter.Player;
 import theHunter.WorldPosition;
 import theHunter.WorldStruct;
 import theHunter.scenes.WorldPlayer;
@@ -240,10 +241,12 @@ public abstract class Scene
 	 */
 	private void renderWorld(Graphics g)
 	{
-		WorldPosition pWP = this.worldData.getPlayerWorldPosition();
+		if (this.getPlayer() == null) return;
 		
-		this.objHandler.worldRenderAllObjects(g, pWP);
-		this.objHandler.worldRenderAllRenderables(g, pWP);		
+		WorldPosition playerWP = ((Player)this.getPlayer()).getWorldPosition();
+		
+		this.objHandler.worldRenderAllObjects(g, playerWP);
+		this.objHandler.worldRenderAllRenderables(g, playerWP);		
 		
 		if (Game.getWeatherSystem() != null)
 		{
@@ -285,7 +288,7 @@ public abstract class Scene
 			Game.getWeatherSystem().renderTopLayer(g);
 		}
 		
-		this.objHandler.worldRenderAllUIs(g, pWP);
+		this.objHandler.worldRenderAllUIs(g, playerWP);
 		
 	}
 	
