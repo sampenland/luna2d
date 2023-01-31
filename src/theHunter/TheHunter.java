@@ -2,13 +2,16 @@ package theHunter;
 
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.ResourceHandler;
+import luna2d.Utilites;
 import theHunter.scenes.MainMenu;
 import theHunter.scenes.MapEditor;
 import theHunter.scenes.MapPlayer;
@@ -20,7 +23,9 @@ public class TheHunter extends Game
 
 	private static final long serialVersionUID = -8234717309381689045L;
 
-	public static final String DATA_DIR = System.getProperty("user.dir") + "/data/";
+	public static final String DATA_DIR = System.getProperty("user.dir") + "/data/worlds-and-maps/";
+	public static final String GAME_SAVE_DIR = System.getProperty("user.dir") + "/data/games/";
+	
 	public static final int GRIDY_OFFSET = 5;
 	public static final int ROWS = 37;
 	public static final int COLUMNS = 49;
@@ -198,4 +203,6 @@ public class TheHunter extends Game
 		
 		return data;
 	}
+	
+	
 }

@@ -198,21 +198,18 @@ public abstract class UIMenu extends UI
 	}
 
 	@Override
-	public void clean() {
-		// TODO Auto-generated method stub
-		
+	public void clean()
+	{
 	}
 
 	@Override
-	public void keyPressed(int keycode) {
-		// TODO Auto-generated method stub
-		
+	public void keyPressed(int keycode) 
+	{
 	}
 
 	@Override
-	public void keyReleased(int keycode) {
-		// TODO Auto-generated method stub
-		
+	public void keyReleased(int keycode) 
+	{
 	}
 	
 }

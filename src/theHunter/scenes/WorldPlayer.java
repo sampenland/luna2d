@@ -21,6 +21,8 @@ public class WorldPlayer extends Scene
 	public static final int WORLD_RENDER_DISTANCE = 1;
 	public static final int WORLD_UPDATE_DISTANCE = 2;
 	
+	private boolean savingLock;
+	
 	public WorldPlayer(String name) 
 	{
 		super(name);
@@ -34,6 +36,8 @@ public class WorldPlayer extends Scene
 	
 	public void loadAndStart(String worldName)
 	{
+		this.savingLock = false;
+		
 		Log.println("Loading world...");
 		this.worldData = new WorldStruct(worldName, this);
 		
@@ -42,7 +46,7 @@ public class WorldPlayer extends Scene
 		
 		// Startup day and night
 		this.setDayNightCycle(new DayNightCycleEngine(80, 8, 20, Color.orange, Color.white, Color.orange, 
-				new Color(0, 0, 0, 0.8f)), new DayNightCycleTime(20, 0, 0));
+				new Color(0, 0, 0, 0.8f)), new DayNightCycleTime(8, 0, 0));
 		
 		ResourceHandler.addRain("Rain", "RainComing", 800, 10, 50, 
 				4 * 60, 3 * 24 * 60, // 4 hrs - 3 days between rain
@@ -101,24 +105,27 @@ public class WorldPlayer extends Scene
 		{
 			this.openScene("MainMenu");
 		}
+		
+		if (!this.savingLock && this.isKeyPressed(KeyEvent.VK_U)) 
+		{
+			this.savingLock = true;
+			WorldStruct.saveEntireWorld("sam-world", this.worldData.getWorldMaps());
+		}
 	}
 	
 	@Override
-	protected void onMouseClick(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseClick(MouseEvent e) 
+	{
 	}
 
 	@Override
-	protected void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMousePressed(MouseEvent e) 
+	{
 	}
 
 	@Override
-	protected void onMouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseReleased(MouseEvent e) 
+	{
 	}
 
 }

@@ -324,15 +324,11 @@ public class WorldEditor extends Scene
 	@Override
 	protected void onMousePressed(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void onMouseReleased(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 }

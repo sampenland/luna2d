@@ -392,9 +392,8 @@ public class Sprite extends Renderable
 	}
 
 	@Override
-	public void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMousePressed(MouseEvent e) 
+	{
 	}
 
 	@Override

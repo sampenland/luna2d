@@ -37,6 +37,16 @@ public class MapStruct
 		this.mapDataGrounds = TheHunter.loadCSVints(mapName, LoadDataType.GROUNDS);
 	}
 	
+	public String getMapName()
+	{
+		return this.mapName;
+	}
+	
+	public WorldPosition getWorldPosition()
+	{
+		return this.worldPosition;
+	}
+	
 	public void load()
 	{
 		Log.println("Loading Map: " + this.mapName);

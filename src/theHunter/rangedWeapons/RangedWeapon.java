@@ -22,9 +22,8 @@ public class RangedWeapon extends GameObject
 	}
 
 	@Override
-	protected void render(Graphics g) {
-		// TODO Auto-generated method stub
-		
+	protected void render(Graphics g) 
+	{
 	}
 
 	@Override
@@ -43,15 +42,13 @@ public class RangedWeapon extends GameObject
 	}
 
 	@Override
-	protected void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	protected void onMousePressed(MouseEvent e) 
+	{
 	}
 
 	@Override
-	protected void onMouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	protected void onMouseReleased(MouseEvent e) 
+	{
 	}
 
 	@Override
@@ -61,9 +58,8 @@ public class RangedWeapon extends GameObject
 	}
 
 	@Override
-	protected void pauseTick() {
-		// TODO Auto-generated method stub
-		
+	protected void pauseTick() 
+	{
 	}
 	
 }

@@ -171,15 +171,13 @@ public class UITextInput extends UI
 	}
 
 	@Override
-	public void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMousePressed(MouseEvent e) 
+	{
 	}
 
 	@Override
-	public void onMouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseReleased(MouseEvent e) 
+	{
 	}
 
 }

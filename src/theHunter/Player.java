@@ -82,15 +82,8 @@ public class Player extends SimplePlayer
 		
 		backpack = new Backpack(inScene);
 
-		// add a fire to back pack
-		backpack.addToBackpack(new InvFire(this.getScene()));
-		backpack.addToBackpack(new InvTorch(this.getScene()));
-		
-		// add to backpack 15 Fences
-		for (int i = 0; i < 15; i++)
-		{			
-			backpack.addToBackpack(new InvFence(this.getScene(), 1));
-		}
+		// add 4 torches to backpack
+		for (int i = 0; i < 4; i++) backpack.addToBackpack(new InvTorch(this.getScene()));
 		
 		backpack.show();
 		
@@ -351,6 +344,11 @@ public class Player extends SimplePlayer
 		if (this.hunger < 1)
 		{
 			this.health -= 0.05f;
+		}
+		else if(this.hunger > 75)
+		{
+			this.health += 0.05f;
+			this.health = Maths.clamp(this.health, 100, 0);
 		}
 	}
 

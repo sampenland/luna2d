@@ -66,21 +66,18 @@ public class TextDisplay extends Renderable
 	}
 
 	@Override
-	public void onMouseClick(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseClick(MouseEvent e) 
+	{
 	}
 
 	@Override
-	public void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMousePressed(MouseEvent e) 
+	{
 	}
 
 	@Override
-	public void onMouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseReleased(MouseEvent e) 
+	{
 	}
 
 }

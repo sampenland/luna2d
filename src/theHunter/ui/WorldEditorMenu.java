@@ -259,22 +259,16 @@ public class WorldEditorMenu extends UIMenu
 	@Override
 	public void onMouseClick(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onMousePressed(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onMouseReleased(MouseEvent e) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 }

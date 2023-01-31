@@ -159,38 +159,32 @@ public class FillBar extends UI
 	}
 
 	@Override
-	public void clean() {
-		// TODO Auto-generated method stub
-		
+	public void clean() 
+	{
 	}
 
 	@Override
-	public void keyPressed(int keycode) {
-		// TODO Auto-generated method stub
-		
+	public void keyPressed(int keycode) 
+	{
 	}
 
 	@Override
-	public void keyReleased(int keycode) {
-		// TODO Auto-generated method stub
-		
+	public void keyReleased(int keycode) 
+	{
 	}
 
 	@Override
-	public void onMouseClick(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseClick(MouseEvent e) 
+	{
 	}
 
 	@Override
-	public void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMousePressed(MouseEvent e) 
+	{
 	}
 
 	@Override
-	public void onMouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onMouseReleased(MouseEvent e) 
+	{
 	}
 }

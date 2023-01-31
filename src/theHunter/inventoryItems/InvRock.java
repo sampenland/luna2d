@@ -22,15 +22,13 @@ public class InvRock extends InventoryItem
 	}
 
 	@Override
-	public void repair() {
-		// TODO Auto-generated method stub
-		
+	public void repair() 
+	{
 	}
 
 	@Override
-	public void craft() {
-		// TODO Auto-generated method stub
-		
+	public void craft() 
+	{
 	}
 
 }

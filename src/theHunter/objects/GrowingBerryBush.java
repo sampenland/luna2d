@@ -53,7 +53,11 @@ public class GrowingBerryBush extends Sprite
 				{
 					// Done growing
 					bush.growTimer.cancel();
-					this.sprite.getScene().addSprite(new BerryBush(this.sprite.getScene(), this.sprite.getWorldX(), this.sprite.getWorldY(), 1, TheHunter.ENVIRONMENT_DRAW_LAYER));
+					
+					BerryBush b = new BerryBush(this.sprite.getScene(), this.sprite.getWorldX(), this.sprite.getWorldY(), 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					b.updateWorldPosition(this.sprite.getWorldPosition());
+					this.sprite.getScene().addSprite(b);
+					
 					this.sprite.destroy();
 				}
 				else
