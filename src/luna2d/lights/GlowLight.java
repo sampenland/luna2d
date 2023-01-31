@@ -8,15 +8,16 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import luna2d.Scene;
+import theHunter.WorldPosition;
 
 public class GlowLight extends Light
 {	
 	private final Color color[] = new Color[5];
 	private final float fraction[] = new float[5];
 		
-	public GlowLight(Scene inScene, int worldX, int worldY, int radius) 
+	public GlowLight(Scene inScene, int worldX, int worldY, int radius, WorldPosition wp) 
 	{
-		super(inScene, worldX, worldY);
+		super(inScene, worldX, worldY, wp);
 		this.radius = radius;
 		
 		color[4] = new Color(0, 0, 0, 0.f);

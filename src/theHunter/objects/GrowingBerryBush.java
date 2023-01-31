@@ -3,11 +3,14 @@ package theHunter.objects;
 import java.util.Timer;
 
 import luna2d.Game;
+import luna2d.Maths;
 import luna2d.Scene;
+import luna2d.Vector2;
 import luna2d.WeatherSystem;
 import luna2d.renderables.Sprite;
 import luna2d.timers.SpriteTask;
 import theHunter.TheHunter;
+import theHunter.WorldPosition;
 
 public class GrowingBerryBush extends Sprite
 {
@@ -23,6 +26,11 @@ public class GrowingBerryBush extends Sprite
 		super(inScene, "GrowingBerryBush", x, y, scale, depth, 16, 5, 0);
 		
 		this.hasWater = false;
+		
+		Vector2 gPos = Maths.convertToGrid(this.getWorldX(), this.getWorldY(), TheHunter.CELL_SIZE * Game.CAMERA_SCALE);
+		WorldPosition pWP = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
+
+		this.updateWorldPosition(pWP);
 		
 		growTask = new SpriteTask(this)
 		{

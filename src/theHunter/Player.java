@@ -17,9 +17,11 @@ import theHunter.inventoryItems.InvBerries;
 import theHunter.inventoryItems.InvFence;
 import theHunter.inventoryItems.InvFire;
 import theHunter.inventoryItems.InvRock;
+import theHunter.inventoryItems.InvTorch;
 import theHunter.objects.Fence;
 import theHunter.objects.Fire;
 import theHunter.objects.GrowingBerryBush;
+import theHunter.objects.Torch;
 import theHunter.rangedWeapons.ThrownRock;
 import theHunter.ui.Backpack;
 
@@ -82,6 +84,7 @@ public class Player extends SimplePlayer
 
 		// add a fire to back pack
 		backpack.addToBackpack(new InvFire(this.getScene()));
+		backpack.addToBackpack(new InvTorch(this.getScene()));
 		
 		// add to backpack 15 Fences
 		for (int i = 0; i < 15; i++)
@@ -202,6 +205,8 @@ public class Player extends SimplePlayer
 		case InvFire:
 			this.holdingObject = new Fire(this.getScene(), true);
 			break;
+		case InvTorch:
+			this.holdingObject = new Torch(this.getScene(), true);
 		case InvRock:
 			break;
 		case Player:
@@ -406,6 +411,34 @@ public class Player extends SimplePlayer
 				fire.destroy();
 				this.holdingObject = null;
 				this.backpack.addToBackpack(new InvFire(this.getScene()));
+			}		
+		}
+		else if (this.holdingType == ObjectTypes.InvTorch && this.holdingObject != null)
+		{
+			if (e.getButton() == 1)
+			{
+				Torch torch = (Torch)this.holdingObject;
+				if (true) // TODO: CAN PLACE
+				{
+					torch.placeOnGround();
+					
+					if (this.backpack.itemQty(this.holdingType) > 0)
+					{
+						this.backpack.removeNextTypeFromBackpack(this.holdingType);
+						this.holdingObject = new Torch(this.getScene(), true);
+					}
+					else
+					{
+						this.holdingObject = null;
+					}
+				}
+			}
+			else if (e.getButton() == 3)
+			{
+				Torch torch = (Torch)this.holdingObject;
+				torch.destroy();
+				this.holdingObject = null;
+				this.backpack.addToBackpack(new InvTorch(this.getScene()));
 			}		
 		}
 		else if(this.holdingType == ObjectTypes.InvFence && this.holdingObject != null)

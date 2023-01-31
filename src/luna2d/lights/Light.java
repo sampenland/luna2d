@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
+import theHunter.WorldPosition;
 
 public abstract class Light 
 {
@@ -17,13 +18,16 @@ public abstract class Light
 	protected int radius;
 	
 	private Scene inScene;
+	private WorldPosition worldPosition;
+	
 	protected BufferedImage img;
 	
-	public Light(Scene inScene, int worldX, int worldY)
+	public Light(Scene inScene, int worldX, int worldY, WorldPosition wp)
 	{
 		this.inScene = inScene;
 		this.worldX = worldX;
 		this.worldY = worldY;
+		this.worldPosition = wp;
 		
 		if (this.inScene == null || this.inScene.getObjectHandler() == null)
 		{
@@ -32,6 +36,16 @@ public abstract class Light
 		}
 		
 		this.inScene.getObjectHandler().addLight(this);
+	}
+	
+	public WorldPosition getWorldPosition()
+	{
+		return this.worldPosition;
+	}
+	
+	public void updateWorldProsition(WorldPosition wp)
+	{
+		this.worldPosition = wp;
 	}
 	
 	public void setRadius(int r)

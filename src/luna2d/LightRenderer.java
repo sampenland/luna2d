@@ -9,6 +9,8 @@ import java.util.LinkedList;
 
 import luna2d.lights.GlowLight;
 import luna2d.lights.Light;
+import theHunter.Player;
+import theHunter.WorldPosition;
 
 public class LightRenderer extends Thread
 {
@@ -19,6 +21,11 @@ public class LightRenderer extends Thread
 	{
 		this.inScene = scene;
 		this.running = false;
+	}
+	
+	private Scene getScene()
+	{
+		return this.inScene;
 	}
 	
 	public void setRunning(boolean val)
@@ -32,7 +39,7 @@ public class LightRenderer extends Thread
 		this.running = true;
 		while (running)
 		{			
-			if (this.inScene == null || this.inScene.getDayNightCycle() == null) 
+			if (this.getScene() == null || this.getScene().getDayNightCycle() == null) 
 			{
 				try 
 				{
@@ -67,28 +74,35 @@ public class LightRenderer extends Thread
 			
 			try
 			{
+				WorldPosition playerWP = ((Player)this.getScene().getPlayer()).getWorldPosition();
+				
 				for (Light light : lights)
 				{
 					if (!light.visible) continue;
 					
-					int x = light.getWorldX();
-					int y = light.getWorldY();
-					
-					if (x < -Game.CAMERA_X - Light.CullDistance || x > -Game.CAMERA_X + Game.WIDTH + Light.CullDistance ||
-						y < -Game.CAMERA_Y - Light.CullDistance || y > -Game.CAMERA_Y + Game.HEIGHT + Light.CullDistance)
+					// CULL world maps
+					WorldPosition lightWP = light.getWorldPosition();
+					if (playerWP.worldColumn == lightWP.worldColumn && playerWP.worldRow == lightWP.worldRow)
 					{
-						continue;
-					}
-					
-					Point p = Maths.convertWorldToScreen(x, y, 16);
-					
-					if (light instanceof GlowLight)
-					{
-						GlowLight gl = (GlowLight)light;
-						g2d.drawImage(gl.getImage(), p.x - gl.getRadius() / 2, 
-								p.y - gl.getRadius() / 2, 
-								gl.getRadius(), 
-								gl.getRadius(), null);					
+						int x = light.getWorldX();
+						int y = light.getWorldY();
+						
+						if (x < -Game.CAMERA_X - Light.CullDistance || x > -Game.CAMERA_X + Game.WIDTH + Light.CullDistance ||
+							y < -Game.CAMERA_Y - Light.CullDistance || y > -Game.CAMERA_Y + Game.HEIGHT + Light.CullDistance)
+						{
+							continue;
+						}
+						
+						Point p = Maths.convertWorldToScreen(x, y, 16);
+						
+						if (light instanceof GlowLight)
+						{
+							GlowLight gl = (GlowLight)light;
+							g2d.drawImage(gl.getImage(), p.x - gl.getRadius() / 2, 
+									p.y - gl.getRadius() / 2, 
+									gl.getRadius(), 
+									gl.getRadius(), null);					
+						}
 					}
 				}
 			}

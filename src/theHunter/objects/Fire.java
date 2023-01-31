@@ -7,6 +7,7 @@ import luna2d.Vector2;
 import luna2d.lights.GlowLight;
 import luna2d.renderables.Sprite;
 import theHunter.TheHunter;
+import theHunter.WorldPosition;
 
 public class Fire extends Sprite
 {
@@ -30,11 +31,24 @@ public class Fire extends Sprite
 		this.enableCulling = true;
 		this.updateWorldPosition(x, y);
 		
-		// TODO: Fix this for no bug when placing fire (also do to fence and growing bush)
-		//this.updateWorldPosition(Maths.convertToWorldPosition(x, y, TheHunter.CELL_SIZE * Game.CAMERA_SCALE, 1, TheHunter.ROWS, TheHunter.COLUMNS));
+		Vector2 gPos = Maths.convertToGrid(this.getWorldX(), this.getWorldY(), TheHunter.CELL_SIZE * Game.CAMERA_SCALE);
+		WorldPosition pWP = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
+
+		this.updateWorldPosition(pWP);
 		
-		light = new GlowLight(this.getScene(), 0, 0, FIRE_LIGHT_DISTANCE);
+		light = new GlowLight(this.getScene(), 0, 0, FIRE_LIGHT_DISTANCE, this.getWorldPosition());
 		light.visible = true;
+	}
+	
+	@Override
+	public void updateWorldPosition(WorldPosition wp)
+	{
+		super.updateWorldPosition(wp);
+		
+		if (this.light != null)
+		{
+			this.light.updateWorldProsition(wp);
+		}
 	}
 	
 	public void placeOnGround()

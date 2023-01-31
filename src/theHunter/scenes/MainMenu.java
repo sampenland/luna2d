@@ -21,8 +21,8 @@ public class MainMenu extends Scene
 		new TextDisplay(this, "Main Menu", 200, 150, Color.GREEN, 1);
 		new TextDisplay(this, "(E) Map Editor", 200, 250, Color.GREEN, 1);
 		new TextDisplay(this, "(W) World Editor", 200, 300, Color.GREEN, 1);
-		new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN, 1);
-		new TextDisplay(this, "(O) World Player", 200, 400, Color.GREEN, 1);
+		//new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN, 1);
+		new TextDisplay(this, "(P) World Player", 200, 400, Color.GREEN, 1);
 		new TextDisplay(this, "(Q) Quit", 200, 500, Color.GREEN, 1);
 	}
 	
@@ -40,12 +40,12 @@ public class MainMenu extends Scene
 			return;
 		}
 		
-		if (this.isKeyPressed(KeyEvent.VK_P))
-		{
-			MapPlayer mapPlayer = (MapPlayer)this.openScene("MapPlayer");
-			mapPlayer.loadAndStartMap("MAP00");
-			return;
-		}
+//		if (this.isKeyPressed(KeyEvent.VK_P))
+//		{
+//			MapPlayer mapPlayer = (MapPlayer)this.openScene("MapPlayer");
+//			mapPlayer.loadAndStartMap("MAP00");
+//			return;
+//		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_E))
 		{
@@ -59,7 +59,7 @@ public class MainMenu extends Scene
 			return;
 		}
 		
-		if (this.isKeyPressed(KeyEvent.VK_O))
+		if (this.isKeyPressed(KeyEvent.VK_P))
 		{
 			WorldPlayer worldPlayer = (WorldPlayer)this.openScene("WorldPlayer");
 			worldPlayer.loadAndStart("WORLD00");
