@@ -22,6 +22,7 @@ public class MainMenu extends Scene
 		new TextDisplay(this, "(E) Map Editor", 200, 250, Color.GREEN, 1);
 		new TextDisplay(this, "(W) World Editor", 200, 300, Color.GREEN, 1);
 		//new TextDisplay(this, "(P) Map Player", 200, 350, Color.GREEN, 1);
+		new TextDisplay(this, "(L) Load Game", 200, 350, Color.GREEN, 1);
 		new TextDisplay(this, "(P) World Player", 200, 400, Color.GREEN, 1);
 		new TextDisplay(this, "(Q) Quit", 200, 500, Color.GREEN, 1);
 	}
@@ -63,6 +64,13 @@ public class MainMenu extends Scene
 		{
 			WorldPlayer worldPlayer = (WorldPlayer)this.openScene("WorldPlayer");
 			worldPlayer.loadAndStart("WORLD00");
+			return;
+		}
+		
+		if (this.isKeyPressed(KeyEvent.VK_L))
+		{
+			WorldPlayer worldPlayer = (WorldPlayer)this.openScene("WorldPlayer");
+			worldPlayer.loadGame("sam-world");
 			return;
 		}
 	}

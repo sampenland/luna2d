@@ -24,9 +24,15 @@ public class MapStruct
 	MapGrounds grounds;
 	Scene inScene;
 	
-	public MapStruct(String mapName, Scene inScene, int r, int c) // r, c is row and col of world
+	public MapStruct(String mapName, Scene inScene, int r, int c, boolean gameLoad) // r, c is row and col of world
 	{
 		this.inScene = inScene;
+		
+		if (gameLoad)
+		{
+			this.worldPosition = new WorldPosition(new Vector2(c, r), new Vector2(0, 0));
+			return;
+		}
 		
 		this.mapName = mapName;
 		mapName = "m_" + mapName;
@@ -175,6 +181,14 @@ public class MapStruct
 		return false;
 	}
 	
+	public void addObjectToWorld(ObjectTypes type, int r, int c)
+	{
+		if (this.mapData != null)
+		{
+			this.mapData[r][c] = type.intValue;
+		}
+	}
+	
 	public int[][] getMapData()
 	{
 		return this.mapData;
@@ -183,6 +197,19 @@ public class MapStruct
 	public int[][] getMapGroundsData()
 	{
 		return this.mapDataGrounds;
+	}
+	
+	public void injectData(String mapName, int[][] mapData, int[][] groundData)
+	{
+		this.mapName = mapName;
+		
+		this.mapData = new int[TheHunter.ROWS][TheHunter.COLUMNS];
+		this.mapData = mapData;
+		
+		this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
+		this.mapDataGrounds = groundData;
+		
+		this.load();
 	}
 	
 }

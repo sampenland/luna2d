@@ -113,8 +113,14 @@ public class TheHunter extends Game
 		case WORLD:
 			path += ".thw";
 			break;
+		case GAME_MAP:
+			path = name;
+			break;
+		case GAME_GROUNDS:
+			path = name;
+			break;
 		default:
-			Log.println(name + " not a world, map, or grounds name.");
+			Log.println(name + " not a game save, world, map, or grounds name.");
 			return null;	
 		}
 		

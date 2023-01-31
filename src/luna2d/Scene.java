@@ -40,6 +40,11 @@ public abstract class Scene
 		this.dayNightCycle = null;
 	}
 	
+	public WorldStruct getWorldData()
+	{
+		return this.worldData;
+	}
+	
 	public DayNightCycle getDayNightCycle()
 	{
 		return this.dayNightCycle;

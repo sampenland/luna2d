@@ -18,9 +18,11 @@ public class WorldStruct
 	private String worldName;
 	private Scene inScene;
 	
-	public WorldStruct(String worldName, Scene inScene)
+	public WorldStruct(String worldName, Scene inScene, boolean gameLoad)
 	{
 		this.inScene = inScene;
+		
+		if (gameLoad) return;
 		
 		this.worldName = worldName;
 		worldName = "w_" + worldName;
@@ -34,7 +36,7 @@ public class WorldStruct
 			for (int c = 0; c < TheHunter.COLUMNS; c++)
 			{
 				String mapName = mapsInWorld[r][c];
-				this.worldMaps[r][c] = new MapStruct(mapName, this.inScene, r, c);
+				this.worldMaps[r][c] = new MapStruct(mapName, this.inScene, r, c, false);
 				this.worldMaps[r][c].load();
 				
 				if (this.worldMaps[r][c].hasPlayer())
@@ -77,6 +79,11 @@ public class WorldStruct
 		
 	}
 	
+	public void addObjectToWorld(ObjectTypes type, WorldPosition wp)
+	{
+		this.worldMaps[wp.worldRow][wp.worldColumn].addObjectToWorld(type, wp.mapRow, wp.mapColumn);
+	}
+	
 	/*
 	 * Returns Vector2 (COLUMN, ROW)    NOT r, c
 	 */
@@ -91,9 +98,10 @@ public class WorldStruct
 	// --------------------------------------------------------------------
 	//                 LOADING
 	// --------------------------------------------------------------------
-	public static void loadEntireWorld(String gameName)
+	public void injectData(MapStruct[][] data)
 	{
-		
+		this.worldMaps = new MapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
+		this.worldMaps = data;
 	}
 	
 	// --------------------------------------------------------------------
