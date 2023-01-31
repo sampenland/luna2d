@@ -8,6 +8,7 @@ import luna2d.Vector2;
 import theHunter.objects.BerryBush;
 import theHunter.objects.Fire;
 import theHunter.objects.Rock;
+import theHunter.objects.Torch;
 import theHunter.objects.Tree;
 import theHunter.objects.WaterSource;
 import theHunter.objects.Wolf;
@@ -136,6 +137,11 @@ public class MapStruct
 					Fire f = new Fire(this.inScene, false);
 					f.placeOnGround(x, y);
 					f.updateWorldPosition(thisWorldPosition);
+					break;
+				case Torch:
+					Torch torch = new Torch(this.inScene, false);
+					torch.placeOnGround(x, y);
+					torch.updateWorldPosition(thisWorldPosition);
 					break;
 				default:
 					break;

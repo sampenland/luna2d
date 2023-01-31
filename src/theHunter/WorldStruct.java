@@ -81,6 +81,8 @@ public class WorldStruct
 	
 	public void addObjectToWorld(ObjectTypes type, WorldPosition wp)
 	{
+		if (this.worldMaps == null) return;
+		
 		this.worldMaps[wp.worldRow][wp.worldColumn].addObjectToWorld(type, wp.mapRow, wp.mapColumn);
 	}
 	

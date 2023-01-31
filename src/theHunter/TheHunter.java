@@ -2,16 +2,13 @@ package theHunter;
 
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.ResourceHandler;
-import luna2d.Utilites;
 import theHunter.scenes.MainMenu;
 import theHunter.scenes.MapEditor;
 import theHunter.scenes.MapPlayer;
