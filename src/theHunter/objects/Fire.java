@@ -6,6 +6,7 @@ import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.lights.GlowLight;
 import luna2d.renderables.Sprite;
+import theHunter.ObjectTypes;
 import theHunter.TheHunter;
 import theHunter.WorldPosition;
 
@@ -35,6 +36,11 @@ public class Fire extends Sprite
 		WorldPosition pWP = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
 
 		this.updateWorldPosition(pWP);
+		
+		if (this.getScene().getWorldData() != null)
+		{
+			this.getScene().getWorldData().addObjectToWorld(ObjectTypes.Fire, pWP);
+		}
 		
 		light = new GlowLight(this.getScene(), 0, 0, FIRE_LIGHT_DISTANCE, this.getWorldPosition());
 		light.visible = true;

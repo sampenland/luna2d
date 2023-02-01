@@ -419,6 +419,8 @@ public class Player extends SimplePlayer
 		float drain = this.hungerDrain; // also with conditions
 		
 		this.hunger -= drain;
+		this.hunger = Maths.clamp(this.hunger, 100, 0);
+		
 		hungerBar.setValue(Math.round(this.hunger));
 		
 		if (this.hunger < 1)

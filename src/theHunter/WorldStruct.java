@@ -17,6 +17,8 @@ public class WorldStruct
 	private String worldName;
 	private Scene inScene;
 	
+	private boolean active;
+	
 	public WorldStruct(String worldName, Scene inScene, boolean gameLoad)
 	{
 		this.inScene = inScene;
@@ -45,6 +47,16 @@ public class WorldStruct
 		}
 		
 		Log.println("Loading Complete: Player @ ", this.playerWorldPosition);
+	}
+	
+	public void setActive(boolean val)
+	{
+		this.active = val;
+	}
+	
+	public boolean isActive()
+	{
+		return this.active;
 	}
 	
 	public MapStruct[][] getWorldMaps()
@@ -81,6 +93,7 @@ public class WorldStruct
 	public void addObjectToWorld(ObjectTypes type, WorldPosition wp)
 	{
 		if (this.worldMaps == null) return;
+		if (!this.isActive()) return;
 		
 		this.worldMaps[wp.worldRow][wp.worldColumn].addObjectToWorld(type, wp.mapRow, wp.mapColumn);
 	}

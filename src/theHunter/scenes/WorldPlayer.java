@@ -80,6 +80,7 @@ public class WorldPlayer extends Scene
 			Player player = (Player)this.getPlayer();
 			player.load(gameName);
 			
+			this.worldData.setActive(true);
 			Log.println(gameName + " game loaded. Starting...");
 		}		
 	}

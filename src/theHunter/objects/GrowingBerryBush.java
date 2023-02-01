@@ -32,7 +32,11 @@ public class GrowingBerryBush extends Sprite
 		WorldPosition pWP = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
 
 		this.updateWorldPosition(pWP);
-		this.getScene().getWorldData().addObjectToWorld(ObjectTypes.GrowingBerryBush, pWP);
+		
+		if (this.getScene().getWorldData() != null)
+		{			
+			this.getScene().getWorldData().addObjectToWorld(ObjectTypes.GrowingBerryBush, pWP);
+		}
 		
 		growTask = new SpriteTask(this)
 		{

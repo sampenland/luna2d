@@ -5,6 +5,7 @@ import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.renderables.Sprite;
+import theHunter.ObjectTypes;
 import theHunter.TheHunter;
 import theHunter.WorldPosition;
 
@@ -35,6 +36,48 @@ public class Fence extends Sprite
 		WorldPosition pWP = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
 
 		this.updateWorldPosition(pWP);
+		
+		this.updateFenceStyle();
+	}
+	
+	private void updateFenceStyle()
+	{
+		ObjectTypes type = ObjectTypes.FenceVert;
+		switch(this.getCurrentFrame())
+		{
+			case 0:
+				type = ObjectTypes.FenceVert;
+				break;
+				
+			case 3:
+				type = ObjectTypes.FenceHorz;
+				break;
+				
+			case 6:
+				type = ObjectTypes.FenceTopRight;
+				break;
+				
+			case 7:
+				type = ObjectTypes.FenceTopLeft;
+				break;
+				
+			case 8:
+				type = ObjectTypes.FenceBottomLeft;
+				break;
+				
+			case 9:
+				type = ObjectTypes.FenceBottomRight;
+				break;
+				
+			default:
+				type = ObjectTypes.FenceVert;
+				break;
+		}
+		
+		if (this.getScene().getWorldData() != null)
+		{
+			this.getScene().getWorldData().addObjectToWorld(type, this.getWorldPosition());
+		}
 	}
 	
 	public void placeOnGround()
