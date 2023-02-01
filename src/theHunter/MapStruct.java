@@ -7,6 +7,7 @@ import luna2d.Scene;
 import luna2d.Vector2;
 import theHunter.objects.BerryBush;
 import theHunter.objects.Fire;
+import theHunter.objects.GrowingBerryBush;
 import theHunter.objects.Rock;
 import theHunter.objects.Torch;
 import theHunter.objects.Tree;
@@ -90,7 +91,10 @@ public class MapStruct
 					BerryBush bush = new BerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 					bush.updateWorldPosition(thisWorldPosition);
 					break;
-					
+				case GrowingBerryBush:
+					GrowingBerryBush growingBush = new GrowingBerryBush(inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					growingBush.updateWorldPosition(thisWorldPosition);
+					break;
 				case GndDirt:
 					break;
 					

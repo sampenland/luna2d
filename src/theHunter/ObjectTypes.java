@@ -22,7 +22,8 @@ public enum ObjectTypes
 	InvFence(17, "InvFence", false),
 	InvFire(18, "InvFire", false),
 	InvTorch(19, "InvTorch", false),
-	Torch(20, "Torch", true);
+	Torch(20, "Torch", true),
+	GrowingBerryBush(21, "BerryBush", false);
 	
 	public final int intValue;
 	public final String imgName;

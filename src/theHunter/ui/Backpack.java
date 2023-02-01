@@ -194,6 +194,18 @@ public class Backpack extends UIMenu
 		this.backpackItems.updateItems(items);
 		
 	}
+	
+	public boolean save(String gameName)
+	{
+		return this.backpackItems.save(gameName);
+	}
+	
+	public boolean load(String gameName)
+	{
+		this.backpackItems.load(gameName);
+		this.items = this.backpackItems.getItems();
+		return true;
+	}
 
 	@Override
 	public void launch() 

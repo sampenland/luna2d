@@ -1,6 +1,8 @@
 package luna2d;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,6 +29,24 @@ public class Utilites
 		
 		    System.err.println("Failed to create directory: " + e.getMessage());
 		    return false;		
+		}
+	}
+	
+	public static boolean saveStringToFile(String data, String filepath)
+	{
+		BufferedWriter writer;
+		try
+		{
+			writer = new BufferedWriter(new FileWriter(filepath));
+			writer.write(data);
+			writer.close();
+			
+			return true;
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+			return false;
 		}
 	}
 	

@@ -73,10 +73,20 @@ public class WorldStruct
 		this.playerMapPosition = wp.getMapPos();
 	}
 	
+	public void updatePlayerWorldPosition(WorldPosition wp)
+	{
+		this.addObjectToWorld(ObjectTypes.Player, wp);
+	}
+	
 	public WorldPosition getPlayerWorldPosition()
 	{
 		return new WorldPosition(this.playerWorldPosition, this.playerMapPosition);
 		
+	}
+	
+	public void removePlayer()
+	{
+		this.addObjectToWorld(ObjectTypes.Empty, getPlayerWorldPosition());
 	}
 	
 	public void addObjectToWorld(ObjectTypes type, WorldPosition wp)
@@ -109,8 +119,12 @@ public class WorldStruct
 	// --------------------------------------------------------------------
 	//                 SAVING
 	// --------------------------------------------------------------------
-	public static void saveEntireWorld(String gameName, MapStruct[][] worldMaps)
+	public static void saveEntireWorld(String gameName, MapStruct[][] worldMaps, Player p)
 	{
+		// Save backpack and player data
+		p.save(gameName);
+		
+		// Save world
 		Log.println("Saving world: " + gameName);
 		for(int r = 0; r < TheHunter.ROWS; r++)//for each row
 		{

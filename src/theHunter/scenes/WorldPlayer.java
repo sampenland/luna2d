@@ -14,10 +14,12 @@ import luna2d.Vector2;
 import theHunter.DayNightCycleEngine;
 import theHunter.LoadDataType;
 import theHunter.MapStruct;
+import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
 import theHunter.WorldPosition;
 import theHunter.WorldStruct;
+import theHunter.inventoryItems.InvTorch;
 
 public class WorldPlayer extends Scene
 {
@@ -59,13 +61,20 @@ public class WorldPlayer extends Scene
 					
 					if (worldMaps[r][c].hasPlayer())
 					{
-						this.worldData.setPlayerWorldPosition(new WorldPosition(new Vector2(c, r), worldMaps[r][c].getPlayerMapPosition()));
+						WorldPosition wp = new WorldPosition(new Vector2(c, r), worldMaps[r][c].getPlayerMapPosition());
+						this.worldData.setPlayerWorldPosition(wp);
+						this.worldData.addObjectToWorld(ObjectTypes.Empty, wp);
 					}					
 				}
 			}
 			
 			this.worldData.injectData(worldMaps);
+			
 			configGame();
+			
+			// Below load backpack and player
+			Player player = (Player)this.getPlayer();
+			player.load(gameName);
 		}		
 	}
 	
@@ -95,6 +104,10 @@ public class WorldPlayer extends Scene
 		this.worldData = new WorldStruct(worldName, this, false);
 		
 		configGame();
+		
+		Player p = (Player)this.getPlayer();
+		// add 4 torches to backpack
+		for (int i = 0; i < 4; i++) p.addToBackpack(new InvTorch(this));
 		
 		Log.println(worldName + " finished. Starting...");
 	}
@@ -173,7 +186,8 @@ public class WorldPlayer extends Scene
 		if (!this.savingLock && this.isKeyPressed(KeyEvent.VK_U)) 
 		{
 			this.savingLock = true;
-			WorldStruct.saveEntireWorld("sam-world", this.worldData.getWorldMaps());
+			Player p = (Player)this.getPlayer();
+			WorldStruct.saveEntireWorld("sam-world", this.worldData.getWorldMaps(), p);
 		}
 	}
 	

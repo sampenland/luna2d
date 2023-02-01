@@ -2,6 +2,7 @@ package theHunter.rangedWeapons;
 
 import luna2d.Scene;
 import luna2d.Vector2f;
+import theHunter.ObjectTypes;
 import theHunter.TheHunter;
 import theHunter.objects.Rock;
 
@@ -15,7 +16,9 @@ public class ThrownRock extends RangedWeapon
 	
 	private void stop()
 	{
-		this.getScene().addSprite(new Rock(this.getScene(), this.getWorldX(), this.getWorldY(), 1, TheHunter.ENVIRONMENT_DRAW_LAYER));
+		Rock rock = new Rock(this.getScene(), this.getWorldX(), this.getWorldY(), 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+		this.getScene().addSprite(rock);
+		this.getScene().getWorldData().addObjectToWorld(ObjectTypes.Rock, rock.getWorldPosition());
 		this.destroy();
 	}
 	

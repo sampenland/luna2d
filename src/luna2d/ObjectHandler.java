@@ -188,6 +188,7 @@ public class ObjectHandler
 				if (temp.enableCulling)
 				{
 					WorldPosition wp = temp.getWorldPosition();
+					
 					if (wp.worldColumn == playerWorldCol && wp.worldRow == playerWorldRow)
 					{
 						if (temp instanceof Sprite)

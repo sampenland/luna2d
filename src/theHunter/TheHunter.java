@@ -116,6 +116,9 @@ public class TheHunter extends Game
 		case GAME_GROUNDS:
 			path = name;
 			break;
+		case BACKPACK:
+			path = name;
+			break;
 		default:
 			Log.println(name + " not a game save, world, map, or grounds name.");
 			return null;	
@@ -136,7 +139,8 @@ public class TheHunter extends Game
 			   int col = 0;
 			   for(String  c : cols)
 			   {
-				   data[row][col] = Integer.parseInt(c);
+				   int t = Integer.parseInt(c);				   
+				   data[row][col] = t;
 				   col++;
 			   }
 			   

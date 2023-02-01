@@ -5,13 +5,19 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.Vector2f;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
+import luna2d.Utilites;
 import luna2d.renderables.TextDisplay;
 import theHunter.inventoryItems.InvBerries;
 import theHunter.inventoryItems.InvFence;
@@ -82,13 +88,85 @@ public class Player extends SimplePlayer
 		
 		backpack = new Backpack(inScene);
 
-		// add 4 torches to backpack
-		for (int i = 0; i < 4; i++) backpack.addToBackpack(new InvTorch(this.getScene()));
-		
-		backpack.show();
-		
 		this.inScene.setPlayer(this);
 		
+	}
+	
+	private boolean playerSave(String gameName)
+	{
+		String path = TheHunter.GAME_SAVE_DIR + gameName + "/player.play";
+		
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append(this.health + "\n");
+		builder.append(this.hunger + "\n");
+		this.getScene().getWorldData().updatePlayerWorldPosition(this.worldPosition);
+		
+		return Utilites.saveStringToFile(builder.toString(), path);
+	}
+	
+	public void save(String gameName)
+	{
+		if (this.playerSave(gameName) && this.backpack.save(gameName))		
+		{
+			Log.println("Saved player and backpack.");
+		}
+		else
+		{
+			Log.println("Error saving player and backpack.");
+		}
+	}
+	
+	private boolean playerLoad(String gameName)
+	{
+		String path = TheHunter.GAME_SAVE_DIR + gameName + "/player.play";
+		
+		BufferedReader reader;
+		try 
+		{
+			reader = new BufferedReader(new FileReader(path));
+			
+			String line = "";
+			int i = 0;
+			while((line = reader.readLine()) != null)
+			{
+			   	if (i == 0)
+			   	{
+			   		// health
+			   		this.health = Float.parseFloat(line);
+			   	}
+			   	else if (i == 1)
+			   	{
+			   		// hunger
+			   		this.hunger = Float.parseFloat(line);
+			   	}
+			   	
+				i++;
+			}
+			
+			reader.close();
+			
+			return true;
+			
+		} 
+		catch (IOException | NumberFormatException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public void load(String gameName)
+	{
+		if (this.playerLoad(gameName) && this.backpack.load(gameName))
+		{
+			Log.println("Player and backpack loaded.");
+		}
+		else
+		{
+			Log.println("Failed to load player and backpack.");
+		}
 	}
 	
 	@Override 

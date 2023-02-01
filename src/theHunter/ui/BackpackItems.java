@@ -3,14 +3,25 @@ package theHunter.ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import luna2d.Game;
+import luna2d.Log;
 import luna2d.ResourceHandler;
 import luna2d.Scene;
+import luna2d.Utilites;
 import luna2d.ui.UIGrid;
 import theHunter.InventoryItem;
 import theHunter.ObjectTypes;
+import theHunter.TheHunter;
+import theHunter.inventoryItems.InvBerries;
+import theHunter.inventoryItems.InvFence;
+import theHunter.inventoryItems.InvFire;
+import theHunter.inventoryItems.InvRock;
+import theHunter.inventoryItems.InvTorch;
 
 public class BackpackItems extends UIGrid
 {
@@ -24,6 +35,130 @@ public class BackpackItems extends UIGrid
 		this.backpack = backpack;
 		this.mouseEnabled = true;
 		this.enableCulling = false;
+		this.items = new InventoryItem[Backpack.BACKPACK_ROWS][Backpack.BACKPACK_COLUMNS];
+	}
+	
+	public boolean load(String worldName)
+	{
+		String path = TheHunter.GAME_SAVE_DIR + worldName + "/backpack.thbp";
+		BufferedReader reader;
+		try 
+		{
+			reader = new BufferedReader(new FileReader(path));
+			
+			String line = "";
+			int row = 0;
+			while((line = reader.readLine()) != null)
+			{
+			   String[] cols = line.split(","); 
+			   int col = 0;
+			   for(String  c : cols)
+			   {
+				   String[] parts = c.split("-");
+				   
+				   items[row][col] = this.loadInventoryItem(parts);
+				   col++;
+			   }
+			   
+			   row++;
+			   
+			}
+			
+			reader.close();
+			
+			return true;
+			
+		} 
+		catch (IOException | NumberFormatException e) 
+		{
+			e.printStackTrace();
+			Log.println("Problem loading backpack.");
+			return false;
+		}
+	}
+	
+	private InventoryItem loadInventoryItem(String[] item)
+	{
+		ObjectTypes type = ObjectTypes.values()[Integer.parseInt(item[0])];
+		int qty = Integer.parseInt(item[1]);
+		
+		switch(type)
+		{
+		case Empty:
+			return null;
+		case InvBerries:
+			return new InvBerries(this.getScene(), qty);
+		case InvFence:
+			return new InvFence(this.getScene(), qty);
+		case InvFire:
+			return new InvFire(this.getScene());
+		case InvRock:
+			return new InvRock(this.getScene(), qty);
+		case InvTorch:
+			return new InvTorch(this.getScene());
+		default:
+			Log.println("NOT A INVENTORY ITEM");
+			return null;
+		
+		}
+	}
+	
+	public boolean save(String worldName)
+	{
+		String path = TheHunter.GAME_SAVE_DIR + worldName + "/backpack.thbp";
+		
+		StringBuilder builder = new StringBuilder();
+		
+		for (int r = 0; r < Backpack.BACKPACK_ROWS; r++)
+		{
+			for (int c = 0; c < Backpack.BACKPACK_COLUMNS; c++)
+			{
+				String item = "";
+				if (this.items[r][c] == null)
+				{
+					 item = ObjectTypes.Empty.intValue + "-0";
+				}
+				else
+				{
+					 item = this.items[r][c].TYPE.intValue + "-" + this.items[r][c].AMOUNT;
+				}
+				
+				builder.append(item);
+
+			   if(c < Backpack.BACKPACK_COLUMNS - 1)
+			   {
+				   builder.append(",");
+			   }
+		   }
+		   
+		   builder.append("\n");
+		
+		}
+		
+		return Utilites.saveStringToFile(builder.toString(), path);
+		
+	}
+	
+	public LinkedList<InventoryItem> getItems()
+	{
+		LinkedList<InventoryItem> l = new LinkedList<InventoryItem>();
+		for (int r = 0; r < Backpack.BACKPACK_ROWS; r++)
+		{
+			for (int c = 0; c < Backpack.BACKPACK_COLUMNS; c++)
+			{
+				if (items[r][c] != null)
+				{
+					l.add(this.loadInventoryItem(
+							new String[] {
+									items[r][c].TYPE.intValue + "", 
+									items[r][c].AMOUNT + ""
+							}
+					));
+				}
+			}
+		}
+		
+		return l;
 	}
 	
 	public int totalItems()

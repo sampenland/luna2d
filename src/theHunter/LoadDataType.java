@@ -8,4 +8,6 @@ public enum LoadDataType
 	WORLD_NAMES,
 	GAME_MAP,
 	GAME_GROUNDS,
+	BACKPACK,
+	PLAYER
 }
