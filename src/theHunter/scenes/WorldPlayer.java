@@ -3,6 +3,9 @@ package theHunter.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import luna2d.DayNightCycleTime;
 import luna2d.Game;
@@ -46,7 +49,10 @@ public class WorldPlayer extends Scene
 		Log.println("Loading save data: " + gameName);
 		this.worldData = new WorldStruct(gameName, this, true);
 		
-		Log.println(gameName + " game finished. Starting...");
+		// Load game file
+		loadGameFile(gameName);
+		
+		WorldPosition pWP = this.worldData.getPlayerWorldPosition();
 		
 		String pathBase = TheHunter.GAME_SAVE_DIR + "/" + gameName + "/";
 		
@@ -59,12 +65,10 @@ public class WorldPlayer extends Scene
 				{
 					worldMaps[r][c] = this.loadMap(gameName, r, c);
 					
-					if (worldMaps[r][c].hasPlayer())
+					if (r == pWP.worldRow && c == pWP.worldColumn)
 					{
-						WorldPosition wp = new WorldPosition(new Vector2(c, r), worldMaps[r][c].getPlayerMapPosition());
-						this.worldData.setPlayerWorldPosition(wp);
-						this.worldData.addObjectToWorld(ObjectTypes.Empty, wp);
-					}					
+						worldMaps[r][c].createPlayer(pWP);
+					}
 				}
 			}
 			
@@ -75,7 +79,52 @@ public class WorldPlayer extends Scene
 			// Below load backpack and player
 			Player player = (Player)this.getPlayer();
 			player.load(gameName);
+			
+			Log.println(gameName + " game loaded. Starting...");
 		}		
+	}
+	
+	private boolean loadGameFile(String gameName)
+	{
+		String path = TheHunter.GAME_SAVE_DIR + "/" + gameName + "/" + gameName + ".thdat";
+				
+		BufferedReader reader;
+		try 
+		{
+			reader = new BufferedReader(new FileReader(path));
+			
+			String line = "";
+			int i = 0;
+			while((line = reader.readLine()) != null)
+			{
+			   	if(i == 0)
+			   	{
+			   		String[] wps = line.split(",");
+			   		int[] wpi = new int[4];
+			   		for (int j = 0; j < 4; j++)
+			   		{
+			   			wpi[j] = Integer.parseInt(wps[j]);
+			   		}
+			   		
+			   		WorldPosition wp = new WorldPosition(wpi[0], wpi[1], wpi[2], wpi[3]);
+			   		this.worldData.setPlayerWorldPosition(wp);
+			   	}
+			   	
+				i++;
+			}
+			
+			reader.close();
+			
+			return true;
+			
+		} 
+		catch (IOException | NumberFormatException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return false;
+		
 	}
 	
 	private MapStruct loadMap(String gameName, int worldRow, int worldColumn)
@@ -88,6 +137,17 @@ public class WorldPlayer extends Scene
 
 		int[][] mapData = TheHunter.loadCSVints(mapPath, LoadDataType.GAME_MAP);
 		int[][] mapGrounds = TheHunter.loadCSVints(groundPath, LoadDataType.GAME_GROUNDS);
+		
+		for (int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for( int c = 0; c < TheHunter.COLUMNS; c++)
+			{
+				if (mapData[r][c] == ObjectTypes.Player.intValue)
+				{
+					mapData[r][c] = ObjectTypes.Empty.intValue;
+				}
+			}
+		}
 		
 		MapStruct mapStruct = new MapStruct(mapName, this, worldRow, worldColumn, true);
 		mapStruct.injectData(mapName, mapData, mapGrounds);

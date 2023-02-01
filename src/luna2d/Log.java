@@ -19,6 +19,12 @@ public class Log
 				pos.getMapPos().y + "]");
 	}
 	
+	public static void println(String text, WorldPosition wp)
+	{
+		System.out.print(text + "  ");
+		Log.println(wp);
+	}
+	
 	public static void println(String text)
 	{
 		System.out.println(text);

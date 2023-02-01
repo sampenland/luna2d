@@ -100,7 +100,9 @@ public class Player extends SimplePlayer
 		
 		builder.append(this.health + "\n");
 		builder.append(this.hunger + "\n");
-		this.getScene().getWorldData().updatePlayerWorldPosition(this.worldPosition);
+		
+		WorldPosition wp = this.getWorldPosition();		
+		builder.append(wp.worldRow + "," + wp.worldColumn + "," + wp.mapRow + "," + wp.mapColumn);
 		
 		return Utilites.saveStringToFile(builder.toString(), path);
 	}

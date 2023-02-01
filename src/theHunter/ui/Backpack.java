@@ -204,6 +204,7 @@ public class Backpack extends UIMenu
 	{
 		this.backpackItems.load(gameName);
 		this.items = this.backpackItems.getItems();
+		this.compact();
 		return true;
 	}
 

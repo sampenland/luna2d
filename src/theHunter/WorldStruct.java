@@ -12,8 +12,7 @@ import luna2d.Vector2;
 public class WorldStruct 
 {
 	private MapStruct[][] worldMaps;
-	private Vector2 playerWorldPosition;
-	private Vector2 playerMapPosition;
+	private WorldPosition playerWorldPosition;
 	
 	private String worldName;
 	private Scene inScene;
@@ -21,13 +20,12 @@ public class WorldStruct
 	public WorldStruct(String worldName, Scene inScene, boolean gameLoad)
 	{
 		this.inScene = inScene;
+		this.worldMaps = new MapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
 		
 		if (gameLoad) return;
 		
 		this.worldName = worldName;
-		worldName = "w_" + worldName;
-		
-		this.worldMaps = new MapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
+		worldName = "w_" + worldName;		
 		
 		String[][] mapsInWorld = TheHunter.loadCSVstrings(worldName, LoadDataType.WORLD_NAMES);
 		
@@ -41,15 +39,12 @@ public class WorldStruct
 				
 				if (this.worldMaps[r][c].hasPlayer())
 				{
-					playerWorldPosition = new Vector2(c, r);
-					playerMapPosition = this.worldMaps[r][c].getPlayerMapPosition();
+					playerWorldPosition = new WorldPosition(new Vector2(c, r), this.worldMaps[r][c].getPlayerMapPosition());
 				}
 			}
 		}
 		
-		Log.println("Loading Complete: Player @ W[" + 
-			playerWorldPosition.x + ", " + playerWorldPosition.y + "] :: M[" + 
-			playerMapPosition.x + ", " + playerMapPosition.y + "]");
+		Log.println("Loading Complete: Player @ ", this.playerWorldPosition);
 	}
 	
 	public MapStruct[][] getWorldMaps()
@@ -69,8 +64,7 @@ public class WorldStruct
 	
 	public void setPlayerWorldPosition(WorldPosition wp)
 	{
-		this.playerWorldPosition = wp.getWorldPos();
-		this.playerMapPosition = wp.getMapPos();
+		this.playerWorldPosition = wp;
 	}
 	
 	public void updatePlayerWorldPosition(WorldPosition wp)
@@ -80,13 +74,8 @@ public class WorldStruct
 	
 	public WorldPosition getPlayerWorldPosition()
 	{
-		return new WorldPosition(this.playerWorldPosition, this.playerMapPosition);
+		return this.playerWorldPosition;
 		
-	}
-	
-	public void removePlayer()
-	{
-		this.addObjectToWorld(ObjectTypes.Empty, getPlayerWorldPosition());
 	}
 	
 	public void addObjectToWorld(ObjectTypes type, WorldPosition wp)
@@ -101,7 +90,7 @@ public class WorldStruct
 	 */
 	public Vector2 getPlayerOnMapRC()
 	{
-		return this.playerWorldPosition;
+		return this.playerWorldPosition.getMapPos();
 	}
 	
 	// --------------------------------------------------------------------------------------------------
@@ -121,8 +110,7 @@ public class WorldStruct
 	// --------------------------------------------------------------------
 	public static void saveEntireWorld(String gameName, MapStruct[][] worldMaps, Player p)
 	{
-		// Save backpack and player data
-		p.save(gameName);
+		saveGameFile(gameName, p);
 		
 		// Save world
 		Log.println("Saving world: " + gameName);
@@ -130,17 +118,33 @@ public class WorldStruct
 		{
 		   for(int c = 0; c < TheHunter.COLUMNS; c++)//for each column
 		   {
-			   Log.println("Saving [" + gameName + "] :: " + worldMaps[r][c].getMapName());
 			   saveWorldMap(gameName, worldMaps[r][c]);
-			   Log.println("Saved");
 		   }
 		}
 		Log.println(gameName + " World Saved");
 	}
 	
+	private static void saveGameFile(String gameName, Player p)
+	{
+		String path = TheHunter.GAME_SAVE_DIR + "/" + gameName + "/" + gameName + ".thdat";
+		
+		StringBuilder builder = new StringBuilder();
+		
+		// player position
+		WorldPosition wp = p.getWorldPosition();
+		builder.append(wp.worldRow + "," + wp.worldColumn + "," + wp.mapRow + "," + wp.mapColumn);
+		
+		Utilites.saveStringToFile(builder.toString(), path);
+		
+		// Backpack and player stats
+		p.save(gameName);		
+		
+	}
+	
 	public static void saveWorldMap(String gameName, MapStruct map)
 	{
 		String path = TheHunter.GAME_SAVE_DIR + "/" + gameName + "/";
+		
 		Utilites.createDirectory(path);
 		path = path + "s_" + gameName + "_" + map.getWorldPosition().worldRow + "-" +  map.getWorldPosition().worldColumn + ".ths";
 		

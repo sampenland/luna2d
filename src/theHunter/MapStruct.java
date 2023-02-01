@@ -2,7 +2,7 @@ package theHunter;
 
 import luna2d.ColorHandler;
 import luna2d.Game;
-import luna2d.Log;
+import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 import theHunter.objects.BerryBush;
@@ -55,10 +55,23 @@ public class MapStruct
 		return this.worldPosition;
 	}
 	
+	public void clearPlayer()
+	{
+		for (int r = 0; r < TheHunter.ROWS; r++)
+		{
+			for (int c = 0; c < TheHunter.COLUMNS; c++)
+			{
+				if (this.mapData[r][c] == ObjectTypes.Player.intValue)
+				{
+					this.mapData[r][c] = ObjectTypes.Empty.intValue;
+					return;
+				}
+			}
+		}
+	}
+	
 	public void load()
 	{
-		Log.println("Loading Map: " + this.mapName);
-				
 		grounds = new MapGrounds(this.inScene, this.worldPosition.worldColumn * (TheHunter.CELL_SIZE * TheHunter.COLUMNS), 
 				this.worldPosition.worldRow * (TheHunter.CELL_SIZE * TheHunter.ROWS), MAP_SCALE, this.mapDataGrounds);
 		
@@ -197,6 +210,20 @@ public class MapStruct
 		{
 			this.mapData[r][c] = type.intValue;
 		}
+	}
+	
+	public void createPlayer(WorldPosition wp)
+	{
+		Vector2 xyPos = Maths.convertWorldPositionToXY(wp, TheHunter.CELL_SIZE, TheHunter.ROWS, TheHunter.COLUMNS, MAP_SCALE);
+		
+		int x = xyPos.x;
+		int y = xyPos.y;
+		
+		Player p = new Player(this.inScene, "Player", 0, 0, 1, 16, 4, 250);
+		x = x - Game.WIDTH / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
+		y = y - Game.HEIGHT / 2 + (TheHunter.CELL_SIZE * Game.CAMERA_SCALE) + (TheHunter.CELL_SIZE * MAP_SCALE / 2);
+		p.updateWorldPosition(x, y);
+		p.updateWorldPosition(wp);
 	}
 	
 	public int[][] getMapData()
