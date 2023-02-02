@@ -3,7 +3,6 @@ package theHunter;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import luna2d.Log;
 import luna2d.Scene;
 import luna2d.Utilites;
@@ -11,6 +10,8 @@ import luna2d.Vector2;
 
 public class WorldStruct 
 {
+	private WorldHandler worldHandler;
+	
 	private MapStruct[][] worldMaps;
 	private WorldPosition playerWorldPosition;
 	
@@ -47,6 +48,17 @@ public class WorldStruct
 		}
 		
 		Log.println("Loading Complete: Player @ ", this.playerWorldPosition);
+	}
+	
+	public void startWorldHanlder()
+	{
+		this.worldHandler = new WorldHandler(this.inScene);
+		this.worldHandler.loadFromMapStruct(worldMaps);
+	}
+	
+	public WorldHandler getWorldHandler()
+	{
+		return this.worldHandler;
 	}
 	
 	public void setActive(boolean val)

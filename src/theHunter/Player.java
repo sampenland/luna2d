@@ -80,8 +80,6 @@ public class Player extends SimplePlayer
 		temperatureBar.setFixedScreenPosition(true);
 		
 		// -----
-
-		this.setZoomingEnabled(true);
 		
 		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), Game.WIDTH - 160, Game.HEIGHT - 50, Color.white, Game.TOP_DRAW_LAYER);
 		this.weatherLabel = new TextDisplay(inScene, inScene.getWeather(), 10, 30, Color.white, Game.TOP_DRAW_LAYER);
@@ -404,6 +402,7 @@ public class Player extends SimplePlayer
 		handleHunger();
 		
 		this.handleWorldPosition();
+	
 	}
 	
 	private void handleWorldPosition()

@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 import luna2d.DayNightCycleTime;
 import luna2d.Game;
 import luna2d.Log;
@@ -81,6 +80,8 @@ public class WorldPlayer extends Scene
 			player.load(gameName);
 			
 			this.worldData.setActive(true);
+			this.worldData.startWorldHanlder();
+			
 			Log.println(gameName + " game loaded. Starting...");
 		}		
 	}
@@ -169,6 +170,9 @@ public class WorldPlayer extends Scene
 		Player p = (Player)this.getPlayer();
 		// add 4 torches to backpack
 		for (int i = 0; i < 4; i++) p.addToBackpack(new InvTorch(this));
+		
+		this.worldData.setActive(true);
+		this.worldData.startWorldHanlder();
 		
 		Log.println(worldName + " finished. Starting...");
 	}

@@ -25,6 +25,7 @@ public class MainMenu extends Scene
 		new TextDisplay(this, "(L) Load Game", 200, 350, Color.GREEN, 1);
 		new TextDisplay(this, "(P) World Player", 200, 400, Color.GREEN, 1);
 		new TextDisplay(this, "(Q) Quit", 200, 500, Color.GREEN, 1);
+				
 	}
 	
 	public void update()

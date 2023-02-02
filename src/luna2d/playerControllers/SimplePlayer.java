@@ -5,12 +5,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import luna2d.Game;
 import luna2d.GameObject;
+import luna2d.Maths;
 import luna2d.Scene;
+import luna2d.Vector2;
 import luna2d.renderables.Sprite;
+import theHunter.TheHunter;
+import theHunter.WorldPosition;
 
 public class SimplePlayer extends GameObject
 {
-	private boolean zoomingEnabled = false;
 	protected int moveSpeed = 5;
 	protected float health = 100;
 	protected int realWorldX, realWorldY;
@@ -78,12 +81,7 @@ public class SimplePlayer extends GameObject
 	{
 		return this.sprite.getHeight();
 	}
-	
-	public void setZoomingEnabled(boolean val)
-	{
-		this.zoomingEnabled = val;
-	}
-	
+		
 	public void setMoveSpeed(int speed)
 	{
 		this.moveSpeed = speed;
@@ -104,55 +102,56 @@ public class SimplePlayer extends GameObject
 	
 	public void playerUpdate() 
 	{
+		int oX = this.worldX;
+		int oY = this.worldY;
+		int dX = 0;
+		int dY = 0;
+		
 		if (this.isKeyPressed(KeyEvent.VK_W) || this.isKeyPressed(KeyEvent.VK_UP))
 		{
-			this.worldY -= this.moveSpeed;
+			dY -= this.moveSpeed;
 		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_S) || this.isKeyPressed(KeyEvent.VK_DOWN))
 		{
-			this.worldY += this.moveSpeed;
+			dY += this.moveSpeed;
 		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_A) || this.isKeyPressed(KeyEvent.VK_LEFT))
 		{
-			this.worldX -= this.moveSpeed;
+			dX -= this.moveSpeed;
 		}
 		
 		if (this.isKeyPressed(KeyEvent.VK_D) || this.isKeyPressed(KeyEvent.VK_RIGHT))
 		{
-			this.worldX += this.moveSpeed;
+			dX += this.moveSpeed;
+		}
+		
+		if (this.getScene().getWorldData().getWorldHandler() != null)
+		{
+			int x = this.getWorldX() + dX;
+			int y = this.getWorldY() + dY;
+			
+			x += this.getWidth() / 2 - this.getWidth() / 4;
+			y += this.getHeight() / 2 + this.getHeight() / 4;
+			
+			Vector2 gPos = Maths.convertToGrid(x, y, TheHunter.CELL_SIZE * Game.CAMERA_SCALE);
+			WorldPosition movingToWP = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
+			
+			if (!this.inScene.getWorldData().getWorldHandler().isSolid(movingToWP))
+			{
+				this.worldX += dX;
+				this.worldY += dY;
+			}
+		}
+		else
+		{
+			this.worldX = oX;
+			this.worldY = oY;
 		}
 		
 		this.getGame().updateCameraOffset(this.worldX, this.worldY);
 		
-		if (this.zoomingEnabled)
-		{
-			if (this.isKeyPressed(KeyEvent.VK_1)) 
-			{
-				this.getGame().updateScale(1);
-			}
-			
-			if (this.isKeyPressed(KeyEvent.VK_2)) 
-			{
-				this.getGame().updateScale(2);
-			}
-			
-			if (this.isKeyPressed(KeyEvent.VK_3)) 
-			{
-				this.getGame().updateScale(3);
-			}
-			
-			if (this.isKeyPressed(KeyEvent.VK_4)) 
-			{
-				this.getGame().updateScale(4);
-			}
-			
-			if (this.isKeyPressed(KeyEvent.VK_5)) 
-			{
-				this.getGame().updateScale(5);
-			}	
-		}
 	}
 
 	@Override
