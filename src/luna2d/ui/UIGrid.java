@@ -8,8 +8,8 @@ import java.awt.event.MouseEvent;
 
 import luna2d.Game;
 import luna2d.Scene;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Renderable;
-import theHunter.WorldPosition;
 
 public class UIGrid extends Renderable
 {

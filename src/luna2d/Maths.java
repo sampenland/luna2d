@@ -3,9 +3,10 @@ package luna2d;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.ThreadLocalRandom;
+
+import luna2d.maps.WorldPosition;
 import luna2d.playerControllers.SimplePlayer;
 import theHunter.TheHunter;
-import theHunter.WorldPosition;
 
 public class Maths 
 {

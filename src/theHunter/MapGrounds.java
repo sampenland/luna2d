@@ -6,6 +6,7 @@ import java.awt.Point;
 import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Scene;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Grid;
 
 public class MapGrounds extends Grid

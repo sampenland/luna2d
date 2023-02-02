@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import luna2d.Scene;
-import theHunter.WorldPosition;
+import luna2d.maps.WorldPosition;
 
 public class TextDisplay extends Renderable
 {

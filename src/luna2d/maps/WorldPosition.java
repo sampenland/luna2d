@@ -1,4 +1,4 @@
-package theHunter;
+package luna2d.maps;
 
 import luna2d.Vector2;
 

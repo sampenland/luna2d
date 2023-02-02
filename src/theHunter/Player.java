@@ -15,6 +15,7 @@ import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.Vector2f;
+import luna2d.maps.WorldPosition;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
 import luna2d.Utilites;

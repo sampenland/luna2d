@@ -1,11 +1,11 @@
-package theHunter;
+package luna2d.maps;
 
 import luna2d.Log;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 
-public class WorldHandler 
+public abstract class WorldHandler 
 {
 
 	/*
@@ -19,56 +19,37 @@ public class WorldHandler
 	 * 
 	 */	
 	
-	private Scene inScene;
-	private WorldCell[][] entireWorldCells;
+	protected Scene inScene;
+	protected WorldCell[][] entireWorldCells;
 	
-	private final int worldRows;
-	private final int worldColumns;
+	protected final int worldRows;
+	protected final int worldColumns;
 	
-	public WorldHandler(Scene inScene)
+	private static int ROWS;
+	private static int COLUMNS;
+	
+	public WorldHandler(Scene inScene, int totalRows, int totalColumns)
 	{
 		this.inScene = inScene;
 		
-		this.worldRows = TheHunter.ROWS * TheHunter.ROWS;
-		this.worldColumns = TheHunter.COLUMNS * TheHunter.COLUMNS;
+		ROWS = totalRows;
+		COLUMNS = totalColumns;
+		
+		this.worldRows = totalRows * totalRows;
+		this.worldColumns = totalColumns * totalColumns;
 		
 		this.entireWorldCells = new WorldCell[this.worldRows][this.worldColumns];
 		
 	}
 	
-	/*
-	 *     Load from file, to map structure then into entire world array
-	 * 	   using this function
-	 */
-	public void loadFromMapStruct(MapStruct[][] worldMaps)
+	public int getRows()
 	{
-		this.entireWorldCells = new WorldCell[this.worldRows][this.worldColumns];
-				
-		for (int currentWorldRow = 0; currentWorldRow < TheHunter.ROWS; currentWorldRow++)
-		{
-			for (int currentWorldColumn = 0; currentWorldColumn < TheHunter.COLUMNS; currentWorldColumn++)
-			{
-				MapStruct map = worldMaps[currentWorldRow][currentWorldColumn];
-				
-				int[][] mapObjects = map.getMapData();
-				int[][] mapGrounds = map.getMapGroundsData();
-				
-				for (int mapRow = 0; mapRow < TheHunter.ROWS; mapRow++)
-				{
-					for (int mapCol = 0; mapCol < TheHunter.COLUMNS; mapCol++)
-					{
-						ObjectTypes type = ObjectTypes.values()[mapObjects[mapRow][mapCol]];
-						ObjectTypes gndType = ObjectTypes.values()[mapGrounds[mapRow][mapCol]];
-												
-						int worldCol = (currentWorldColumn * TheHunter.COLUMNS) + mapCol;						
-						int worldRow = (currentWorldRow * TheHunter.ROWS) + mapRow;
-												
-						this.entireWorldCells[worldRow][worldCol] = new WorldCell(type, gndType);
-						
-					}
-				}				
-			}
-		}
+		return ROWS;
+	}
+	
+	public int getColumns()
+	{
+		return COLUMNS;
 	}
 	
 	public void updateTypeAt(WorldCell cell, int cellRow, int cellColumn)
@@ -125,16 +106,16 @@ public class WorldHandler
 		int mapRow = cellRow;
 		int mapColumn = cellCol;
 		
-		if (cellRow >= TheHunter.ROWS)
+		if (cellRow >= ROWS)
 		{
-			worldRow = cellRow / TheHunter.ROWS;
-			mapRow = cellRow % TheHunter.ROWS;
+			worldRow = cellRow / ROWS;
+			mapRow = cellRow % ROWS;
 		}
 		
-		if (cellCol >= TheHunter.COLUMNS)
+		if (cellCol >= COLUMNS)
 		{
-			worldColumn = cellCol / TheHunter.COLUMNS;
-			mapColumn = cellCol % TheHunter.COLUMNS;
+			worldColumn = cellCol / COLUMNS;
+			mapColumn = cellCol % COLUMNS;
 		}
 		
 		return new WorldPosition(worldRow, worldColumn, mapRow, mapColumn);
@@ -142,8 +123,8 @@ public class WorldHandler
 	
 	public Vector2 getCellPosition(WorldPosition wp)
 	{
-		int worldRow = (wp.worldRow * TheHunter.ROWS) + wp.mapRow;
-		int worldCol = (wp.worldColumn * TheHunter.COLUMNS) + wp.mapColumn;
+		int worldRow = (wp.worldRow * ROWS) + wp.mapRow;
+		int worldCol = (wp.worldColumn * COLUMNS) + wp.mapColumn;
 		return new Vector2(worldCol, worldRow);
 	}
 	

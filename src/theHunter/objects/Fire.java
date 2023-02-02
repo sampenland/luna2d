@@ -5,10 +5,11 @@ import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.lights.GlowLight;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Sprite;
+import theHunter.HunterWorldStruct;
 import theHunter.ObjectTypes;
 import theHunter.TheHunter;
-import theHunter.WorldPosition;
 
 public class Fire extends Sprite
 {
@@ -39,7 +40,8 @@ public class Fire extends Sprite
 		
 		if (this.getScene().getWorldData() != null)
 		{
-			this.getScene().getWorldData().addObjectToWorld(ObjectTypes.Fire, pWP);
+			HunterWorldStruct world = (HunterWorldStruct)this.getScene().getWorldData();
+			world.addObjectToWorld(ObjectTypes.Fire, pWP);
 		}
 		
 		light = new GlowLight(this.getScene(), 0, 0, FIRE_LIGHT_DISTANCE, this.getWorldPosition());

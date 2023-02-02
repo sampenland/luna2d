@@ -13,14 +13,15 @@ import luna2d.ResourceHandler;
 import luna2d.Scene;
 import luna2d.Utilites;
 import luna2d.Vector2;
+import luna2d.enums.LoadDataType;
+import luna2d.maps.MapStruct;
+import luna2d.maps.WorldPosition;
 import theHunter.DayNightCycleEngine;
-import theHunter.LoadDataType;
-import theHunter.MapStruct;
+import theHunter.HunterMapStruct;
+import theHunter.HunterWorldStruct;
 import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
-import theHunter.WorldPosition;
-import theHunter.WorldStruct;
 import theHunter.inventoryItems.InvTorch;
 
 public class WorldPlayer extends Scene
@@ -41,12 +42,17 @@ public class WorldPlayer extends Scene
 		Log.println("World Player started.");		
 	}
 	
+	public HunterWorldStruct getWorldData()
+	{
+		return this.worldData;
+	}
+	
 	public void loadGame(String gameName)
 	{
 		this.savingLock = false;
 		
 		Log.println("Loading save data: " + gameName);
-		this.worldData = new WorldStruct(gameName, this, true);
+		this.worldData = new HunterWorldStruct(gameName, this, true);
 		
 		// Load game file
 		loadGameFile(gameName);
@@ -57,7 +63,7 @@ public class WorldPlayer extends Scene
 		
 		if(Utilites.directoryExists(pathBase))
 		{
-			MapStruct[][] worldMaps = new MapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
+			HunterMapStruct[][] worldMaps = new HunterMapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
 			for (int r = 0; r < TheHunter.ROWS; r++)
 			{
 				for (int c = 0; c < TheHunter.COLUMNS; c++)
@@ -129,7 +135,7 @@ public class WorldPlayer extends Scene
 		
 	}
 	
-	private MapStruct loadMap(String gameName, int worldRow, int worldColumn)
+	private HunterMapStruct loadMap(String gameName, int worldRow, int worldColumn)
 	{
 		String mapName = gameName + "_" + worldRow + "-" +  worldColumn;
 		
@@ -151,7 +157,7 @@ public class WorldPlayer extends Scene
 			}
 		}
 		
-		MapStruct mapStruct = new MapStruct(mapName, this, worldRow, worldColumn, true);
+		HunterMapStruct mapStruct = new HunterMapStruct(mapName, this, worldRow, worldColumn, true);
 		mapStruct.injectData(mapName, mapData, mapGrounds);
 		
 		return mapStruct;
@@ -163,7 +169,7 @@ public class WorldPlayer extends Scene
 		this.savingLock = false;
 		
 		Log.println("Loading world...");
-		this.worldData = new WorldStruct(worldName, this, false);
+		this.worldData = new HunterWorldStruct(worldName, this, false);
 		
 		configGame();
 		
@@ -184,7 +190,7 @@ public class WorldPlayer extends Scene
 		
 		// Startup day and night
 		this.setDayNightCycle(new DayNightCycleEngine(80, 8, 20, Color.orange, Color.white, Color.orange, 
-				new Color(0, 0, 0, 0.8f)), new DayNightCycleTime(8, 0, 0));
+				new Color(0, 0, 0, 0.8f)), new DayNightCycleTime(7, 0, 0));
 		
 		ResourceHandler.addRain("Rain", "RainComing", 800, 10, 50, 
 				4 * 60, 3 * 24 * 60, // 4 hrs - 3 days between rain
@@ -252,7 +258,7 @@ public class WorldPlayer extends Scene
 		{
 			this.savingLock = true;
 			Player p = (Player)this.getPlayer();
-			WorldStruct.saveEntireWorld("sam-world", this.worldData.getWorldMaps(), p);
+			HunterWorldStruct.saveEntireWorld("sam-world", p);
 		}
 	}
 	

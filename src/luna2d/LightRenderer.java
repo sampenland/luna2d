@@ -9,8 +9,8 @@ import java.util.LinkedList;
 
 import luna2d.lights.GlowLight;
 import luna2d.lights.Light;
+import luna2d.maps.WorldPosition;
 import theHunter.Player;
-import theHunter.WorldPosition;
 
 public class LightRenderer extends Thread
 {

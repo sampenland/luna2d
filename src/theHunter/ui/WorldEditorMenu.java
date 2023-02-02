@@ -6,13 +6,13 @@ import java.util.Timer;
 
 import luna2d.Game;
 import luna2d.Scene;
+import luna2d.enums.LoadDataType;
 import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.TextDisplay;
 import luna2d.timers.SceneTask;
 import luna2d.ui.UIButton;
 import luna2d.ui.UIMenu;
 import luna2d.ui.UITextInput;
-import theHunter.LoadDataType;
 import theHunter.TheHunter;
 import theHunter.scenes.WorldEditor;
 

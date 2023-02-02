@@ -8,7 +8,7 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import luna2d.Scene;
-import theHunter.WorldPosition;
+import luna2d.maps.WorldPosition;
 
 public class GlowLight extends Light
 {	

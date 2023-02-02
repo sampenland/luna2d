@@ -7,11 +7,12 @@ import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.WeatherSystem;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Sprite;
 import luna2d.timers.SpriteTask;
+import theHunter.HunterWorldStruct;
 import theHunter.ObjectTypes;
 import theHunter.TheHunter;
-import theHunter.WorldPosition;
 
 public class GrowingBerryBush extends Sprite
 {
@@ -35,7 +36,8 @@ public class GrowingBerryBush extends Sprite
 		
 		if (this.getScene().getWorldData() != null)
 		{			
-			this.getScene().getWorldData().addObjectToWorld(ObjectTypes.GrowingBerryBush, pWP);
+			HunterWorldStruct world = (HunterWorldStruct)this.getScene().getWorldData();
+			world.addObjectToWorld(ObjectTypes.GrowingBerryBush, pWP);
 		}
 		
 		growTask = new SpriteTask(this)
@@ -62,7 +64,10 @@ public class GrowingBerryBush extends Sprite
 					
 					BerryBush b = new BerryBush(this.sprite.getScene(), this.sprite.getWorldX(), this.sprite.getWorldY(), 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
 					b.updateWorldPosition(this.sprite.getWorldPosition());
-					this.sprite.getScene().getWorldData().addObjectToWorld(ObjectTypes.Bush, this.sprite.getWorldPosition());
+					
+					HunterWorldStruct world = (HunterWorldStruct)this.sprite.getScene().getWorldData();
+					world.addObjectToWorld(ObjectTypes.Bush, this.sprite.getWorldPosition());
+					
 					this.sprite.getScene().addSprite(b);
 					
 					this.sprite.destroy();

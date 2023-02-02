@@ -1,4 +1,4 @@
-package theHunter;
+package luna2d.enums;
 
 public enum LoadDataType 
 {

@@ -105,7 +105,7 @@ public abstract class DayNightCycle
 			this.inGameMinutes = 0;
 			this.inGameHours++;
 			
-			if (this.inGameHours > 24)
+			if (this.inGameHours >= 24)
 			{
 				this.inGameHours = 0;
 				this.inGameDays++;
@@ -116,7 +116,7 @@ public abstract class DayNightCycle
 		this.update();
 	}
 	
-	public String getTime()
+	public String getMilitaryTime()
 	{
 		String mins = this.inGameMinutes + "";
 		if (mins.length() == 1) mins = "0" + mins;
@@ -127,7 +127,28 @@ public abstract class DayNightCycle
 	{
 		String mins = this.inGameMinutes + "";
 		if (mins.length() == 1) mins = "0" + mins;
-		return "Day " + this.inGameDays + "    Time: " + this.inGameHours + ":" + mins;
+		
+		String hours;
+		String amPM = " AM";
+		if (this.inGameHours == 0)
+		{
+			hours = "12";
+			amPM = " AM";
+		}
+		else if(this.inGameHours > 0 && this.inGameHours < 13)
+		{
+			hours = "" + this.inGameHours;
+			amPM = " AM";
+		}
+		else
+		{
+			hours = "" + (this.inGameHours - 12);
+			amPM = " PM";
+		}
+		
+		if (this.inGameHours >= 12) amPM = " PM";
+		
+		return "Day " + this.inGameDays + "    Time: " + hours + ":" + mins + amPM;
 	}
 	
 	public int getMinutes()

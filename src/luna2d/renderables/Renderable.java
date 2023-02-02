@@ -6,8 +6,8 @@ import java.awt.event.MouseEvent;
 import luna2d.Game;
 import luna2d.Scene;
 import luna2d.Vector2;
+import luna2d.maps.WorldPosition;
 import luna2d.ui.UIMenu;
-import theHunter.WorldPosition;
 
 public abstract class Renderable 
 {

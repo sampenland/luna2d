@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Renderable;
-import theHunter.WorldPosition;
 
 public abstract class GameObject 
 {	

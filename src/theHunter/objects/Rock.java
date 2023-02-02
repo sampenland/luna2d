@@ -6,12 +6,13 @@ import luna2d.Game;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Sprite;
+import theHunter.HunterWorldStruct;
 import theHunter.InventoryItem;
 import theHunter.ObjectTypes;
 import theHunter.Player;
 import theHunter.TheHunter;
-import theHunter.WorldPosition;
 
 public class Rock extends Sprite 
 {
@@ -38,7 +39,8 @@ public class Rock extends Sprite
 	
 	private void playerPickedUp()
 	{
-		this.getScene().getWorldData().addObjectToWorld(ObjectTypes.Empty, this.getWorldPosition());
+		HunterWorldStruct world = (HunterWorldStruct)this.getScene().getWorldData();
+		world.addObjectToWorld(ObjectTypes.Empty, this.getWorldPosition());
 		this.destroy();
 	}
 	

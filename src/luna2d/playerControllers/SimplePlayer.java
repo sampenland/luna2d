@@ -8,9 +8,9 @@ import luna2d.GameObject;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Sprite;
 import theHunter.TheHunter;
-import theHunter.WorldPosition;
 
 public class SimplePlayer extends GameObject
 {

@@ -8,12 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import luna2d.lights.Light;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.FadingTextDisplay;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
 import theHunter.MapGrounds;
-import theHunter.WorldPosition;
 import theHunter.scenes.WorldPlayer;
 
 public class ObjectHandler 

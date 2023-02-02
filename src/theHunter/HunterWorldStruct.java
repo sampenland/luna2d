@@ -7,23 +7,21 @@ import luna2d.Log;
 import luna2d.Scene;
 import luna2d.Utilites;
 import luna2d.Vector2;
+import luna2d.enums.LoadDataType;
+import luna2d.maps.WorldHandler;
+import luna2d.maps.WorldPosition;
+import luna2d.maps.WorldStruct;
 
-public class WorldStruct 
-{
-	private WorldHandler worldHandler;
+public class HunterWorldStruct extends WorldStruct 
+{	
+	private static HunterMapStruct[][] worldMaps;
+	private HunterWorldHandler worldHandler;
 	
-	private MapStruct[][] worldMaps;
-	private WorldPosition playerWorldPosition;
-	
-	private String worldName;
-	private Scene inScene;
-	
-	private boolean active;
-	
-	public WorldStruct(String worldName, Scene inScene, boolean gameLoad)
+	public HunterWorldStruct(String worldName, Scene inScene, boolean gameLoad)
 	{
-		this.inScene = inScene;
-		this.worldMaps = new MapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
+		super(worldName, inScene);
+
+		worldMaps = new HunterMapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
 		
 		if (gameLoad) return;
 		
@@ -37,12 +35,12 @@ public class WorldStruct
 			for (int c = 0; c < TheHunter.COLUMNS; c++)
 			{
 				String mapName = mapsInWorld[r][c];
-				this.worldMaps[r][c] = new MapStruct(mapName, this.inScene, r, c, false);
-				this.worldMaps[r][c].load();
+				worldMaps[r][c] = new HunterMapStruct(mapName, this.inScene, r, c, false);
+				worldMaps[r][c].load();
 				
-				if (this.worldMaps[r][c].hasPlayer())
+				if (worldMaps[r][c].hasPlayer())
 				{
-					playerWorldPosition = new WorldPosition(new Vector2(c, r), this.worldMaps[r][c].getPlayerMapPosition());
+					playerWorldPosition = new WorldPosition(new Vector2(c, r), worldMaps[r][c].getPlayerMapPosition());
 				}
 			}
 		}
@@ -50,45 +48,20 @@ public class WorldStruct
 		Log.println("Loading Complete: Player @ ", this.playerWorldPosition);
 	}
 	
-	public void startWorldHanlder()
-	{
-		this.worldHandler = new WorldHandler(this.inScene);
-		this.worldHandler.loadFromMapStruct(worldMaps);
-	}
-	
 	public WorldHandler getWorldHandler()
 	{
 		return this.worldHandler;
 	}
 	
-	public void setActive(boolean val)
+	public void startWorldHanlder()
 	{
-		this.active = val;
-	}
-	
-	public boolean isActive()
-	{
-		return this.active;
-	}
-	
-	public MapStruct[][] getWorldMaps()
-	{
-		return this.worldMaps;
+		this.worldHandler = new HunterWorldHandler(this.inScene);
+		this.worldHandler.loadFromMapStruct(worldMaps);
 	}
 	
 	public void updateMap(int r, int c)
 	{
-		this.worldMaps[r][c].update();
-	}
-	
-	public String getWorldName()
-	{
-		return this.worldName;
-	}
-	
-	public void setPlayerWorldPosition(WorldPosition wp)
-	{
-		this.playerWorldPosition = wp;
+		worldMaps[r][c].update();
 	}
 	
 	public void updatePlayerWorldPosition(WorldPosition wp)
@@ -104,10 +77,11 @@ public class WorldStruct
 	
 	public void addObjectToWorld(ObjectTypes type, WorldPosition wp)
 	{
-		if (this.worldMaps == null) return;
+		if (worldMaps == null) return;
 		if (!this.isActive()) return;
 		
-		this.worldMaps[wp.worldRow][wp.worldColumn].addObjectToWorld(type, wp.mapRow, wp.mapColumn);
+		HunterMapStruct map = (HunterMapStruct)worldMaps[wp.worldRow][wp.worldColumn];
+		map.addObjectToWorld(type, wp.mapRow, wp.mapColumn);
 	}
 	
 	/*
@@ -124,16 +98,16 @@ public class WorldStruct
 	// --------------------------------------------------------------------
 	//                 LOADING
 	// --------------------------------------------------------------------
-	public void injectData(MapStruct[][] data)
+	public void injectData(HunterMapStruct[][] data)
 	{
-		this.worldMaps = new MapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
-		this.worldMaps = data;
+		worldMaps = new HunterMapStruct[TheHunter.ROWS][TheHunter.COLUMNS];
+		worldMaps = data;
 	}
 	
 	// --------------------------------------------------------------------
 	//                 SAVING
 	// --------------------------------------------------------------------
-	public static void saveEntireWorld(String gameName, MapStruct[][] worldMaps, Player p)
+	public static void saveEntireWorld(String gameName, Player p)
 	{
 		saveGameFile(gameName, p);
 		
@@ -166,7 +140,7 @@ public class WorldStruct
 		
 	}
 	
-	public static void saveWorldMap(String gameName, MapStruct map)
+	public static void saveWorldMap(String gameName, HunterMapStruct map)
 	{
 		String path = TheHunter.GAME_SAVE_DIR + "/" + gameName + "/";
 		
@@ -209,7 +183,7 @@ public class WorldStruct
 		}
 	}
 	
-	public static void saveWorldGround(String gameName, MapStruct map)
+	public static void saveWorldGround(String gameName, HunterMapStruct map)
 	{
 		
 		String path = TheHunter.GAME_SAVE_DIR + "/" + gameName + "/";

@@ -2,7 +2,7 @@ package luna2d;
 
 import java.awt.Point;
 
-import theHunter.WorldPosition;
+import luna2d.maps.WorldPosition;
 
 public class Log 
 {

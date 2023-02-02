@@ -1,4 +1,6 @@
-package theHunter;
+package luna2d.maps;
+
+import theHunter.ObjectTypes;
 
 public class WorldCell 
 {

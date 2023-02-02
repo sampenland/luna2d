@@ -9,6 +9,7 @@ import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.ResourceHandler;
+import luna2d.enums.LoadDataType;
 import theHunter.scenes.MainMenu;
 import theHunter.scenes.MapEditor;
 import theHunter.scenes.MapPlayer;

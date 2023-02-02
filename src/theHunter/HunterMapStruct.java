@@ -5,6 +5,9 @@ import luna2d.Game;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
+import luna2d.enums.LoadDataType;
+import luna2d.maps.MapStruct;
+import luna2d.maps.WorldPosition;
 import theHunter.objects.BerryBush;
 import theHunter.objects.Fire;
 import theHunter.objects.GrowingBerryBush;
@@ -14,21 +17,14 @@ import theHunter.objects.Tree;
 import theHunter.objects.WaterSource;
 import theHunter.objects.Wolf;
 
-public class MapStruct 
+public class HunterMapStruct extends MapStruct
 {
 	public static final int MAP_SCALE = 5;
-	private int[][] mapData;
-	private int[][] mapDataGrounds;
-	private String mapName;
+	private MapGrounds grounds;
 	
-	private WorldPosition worldPosition;
-	
-	MapGrounds grounds;
-	Scene inScene;
-	
-	public MapStruct(String mapName, Scene inScene, int r, int c, boolean gameLoad) // r, c is row and col of world
+	public HunterMapStruct(String mapName, Scene inScene, int r, int c, boolean gameLoad) // r, c is row and col of world
 	{
-		this.inScene = inScene;
+		super(mapName, inScene, r, c, gameLoad, TheHunter.ROWS, TheHunter.COLUMNS, TheHunter.CELL_SIZE, MAP_SCALE);
 		
 		if (gameLoad)
 		{
@@ -43,21 +39,12 @@ public class MapStruct
 		
 		this.mapData = TheHunter.loadCSVints(mapName, LoadDataType.MAP);
 		this.mapDataGrounds = TheHunter.loadCSVints(mapName, LoadDataType.GROUNDS);
-	}
-	
-	public String getMapName()
-	{
-		return this.mapName;
-	}
-	
-	public WorldPosition getWorldPosition()
-	{
-		return this.worldPosition;
+		
 	}
 	
 	public void clearPlayer()
 	{
-		for (int r = 0; r < TheHunter.ROWS; r++)
+		for (int r = 0; r < this.totalRows; r++)
 		{
 			for (int c = 0; c < TheHunter.COLUMNS; c++)
 			{
@@ -70,6 +57,7 @@ public class MapStruct
 		}
 	}
 	
+	@Override
 	public void load()
 	{
 		grounds = new MapGrounds(this.inScene, this.worldPosition.worldColumn * (TheHunter.CELL_SIZE * TheHunter.COLUMNS), 
@@ -167,11 +155,6 @@ public class MapStruct
 		}
 	}
 	
-	public void update()
-	{
-		
-	}
-	
 	public Vector2 getPlayerMapPosition()
 	{
 		for(int r = 0; r < TheHunter.ROWS; r++)
@@ -225,28 +208,11 @@ public class MapStruct
 		p.updateWorldPosition(x, y);
 		p.updateWorldPosition(wp);
 	}
-	
-	public int[][] getMapData()
+
+	@Override
+	public void update() 
 	{
-		return this.mapData;
-	}
-	
-	public int[][] getMapGroundsData()
-	{
-		return this.mapDataGrounds;
-	}
-	
-	public void injectData(String mapName, int[][] mapData, int[][] groundData)
-	{
-		this.mapName = mapName;
 		
-		this.mapData = new int[TheHunter.ROWS][TheHunter.COLUMNS];
-		this.mapData = mapData;
-		
-		this.mapDataGrounds = new int[TheHunter.ROWS][TheHunter.COLUMNS];
-		this.mapDataGrounds = groundData;
-		
-		this.load();
 	}
 	
 }

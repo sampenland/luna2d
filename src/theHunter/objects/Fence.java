@@ -4,10 +4,11 @@ import luna2d.Game;
 import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
+import luna2d.maps.WorldPosition;
 import luna2d.renderables.Sprite;
+import theHunter.HunterWorldStruct;
 import theHunter.ObjectTypes;
 import theHunter.TheHunter;
-import theHunter.WorldPosition;
 
 public class Fence extends Sprite
 {
@@ -76,7 +77,8 @@ public class Fence extends Sprite
 		
 		if (this.getScene().getWorldData() != null)
 		{
-			this.getScene().getWorldData().addObjectToWorld(type, this.getWorldPosition());
+			HunterWorldStruct world = (HunterWorldStruct)this.getScene().getWorldData();
+			world.addObjectToWorld(type, this.getWorldPosition());
 		}
 	}
 	

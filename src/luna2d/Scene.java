@@ -6,16 +6,18 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.LinkedList;
+
+import luna2d.maps.WorldPosition;
+import luna2d.maps.WorldStruct;
 import luna2d.renderables.Renderable;
 import luna2d.renderables.Sprite;
 import luna2d.ui.UI;
+import theHunter.HunterWorldStruct;
 import theHunter.Player;
-import theHunter.WorldPosition;
-import theHunter.WorldStruct;
 
 public abstract class Scene
 {
-	protected WorldStruct worldData;
+	protected HunterWorldStruct worldData;
 	public String name;
 
 	protected ObjectHandler objHandler;
@@ -80,7 +82,7 @@ public abstract class Scene
 	{
 		if (this.dayNightCycle != null)
 		{
-			return this.dayNightCycle.getTime();
+			return this.dayNightCycle.getMilitaryTime();
 		}
 		
 		return "No day/night cycle";
