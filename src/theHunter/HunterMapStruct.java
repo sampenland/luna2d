@@ -7,6 +7,7 @@ import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.enums.LoadDataType;
 import luna2d.maps.MapStruct;
+import luna2d.maps.WorldCell;
 import luna2d.maps.WorldPosition;
 import theHunter.objects.BerryBush;
 import theHunter.objects.Fire;
@@ -16,6 +17,7 @@ import theHunter.objects.Torch;
 import theHunter.objects.Tree;
 import theHunter.objects.WaterSource;
 import theHunter.objects.Wolf;
+import theHunter.objects.animals.Rabbit;
 
 public class HunterMapStruct extends MapStruct
 {
@@ -148,6 +150,30 @@ public class HunterMapStruct extends MapStruct
 					torch.placeOnGround(x, y);
 					torch.updateWorldPosition(thisWorldPosition);
 					break;
+				case FenceBottomLeft:
+					break;
+				case FenceBottomRight:
+					break;
+				case FenceHorz:
+					break;
+				case FenceTopLeft:
+					break;
+				case FenceTopRight:
+					break;
+				case FenceVert:
+					break;
+				case InvFence:
+					break;
+				case InvFire:
+					break;
+				case InvTorch:
+					break;
+				case Rabbit:
+					Rabbit rabbit = new Rabbit(this.inScene, x, y);
+					rabbit.updateWorldPosition(thisWorldPosition);
+					break;
+				case ThrownRock:
+					break;
 				default:
 					break;
 				}
@@ -192,6 +218,10 @@ public class HunterMapStruct extends MapStruct
 		if (this.mapData != null)
 		{
 			this.mapData[r][c] = type.intValue;
+			
+			WorldCell cell = new WorldCell(type, ObjectTypes.GndGrass);
+			WorldPosition wp = new WorldPosition(this.worldPosition.worldRow, this.worldPosition.worldColumn, r, c);
+			this.getScene().getWorldData().getWorldHandler().updateTypeAt(cell, wp);
 		}
 	}
 	

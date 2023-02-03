@@ -192,6 +192,11 @@ public abstract class Scene
 	{
 		Scene.lightRenderer.setRunning(false);
 		
+		if (this.worldData != null)
+		{
+			this.worldData.setActive(false);
+		}
+		
 		this.objHandler.getUIs().clear();
 		this.objHandler.getObjects().clear();
 		this.objHandler.getLights().clear();

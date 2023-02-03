@@ -25,6 +25,11 @@ public abstract class MapStruct
 		MAP_SCALE = mapScale;
 	}
 	
+	public Scene getScene()
+	{
+		return this.inScene;
+	}
+	
 	public String getMapName()
 	{
 		return this.mapName;

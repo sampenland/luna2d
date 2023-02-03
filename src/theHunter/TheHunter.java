@@ -34,7 +34,8 @@ public class TheHunter extends Game
 	public static final int RESOURCE_ACTION_DISTANCE = 50;
 	
 	// -------- LAYERS ----------------------
-	public static final int ENVIRONMENT_DRAW_LAYER = 2; 
+	public static final int ENVIRONMENT_DRAW_LAYER = 2;
+	public static final int ANIMAL_DRAW_LAYER = 3; 
 	//---------------------------------------
 	
 	public static final int WIDTH = 800;
@@ -94,6 +95,7 @@ public class TheHunter extends Game
 		ResourceHandler.addImage("InvFire", "inv-fire.png");
 		ResourceHandler.addImage("Torch", "torch_16x16_5-frames.png");
 		ResourceHandler.addImage("InvTorch", "inv-torch.png");
+		ResourceHandler.addImage("Rabbit", "rabbit.png");
 	}
 	
 	public static int[][] loadCSVints(String name, LoadDataType dataType)

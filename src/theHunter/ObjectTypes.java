@@ -27,7 +27,8 @@ public enum ObjectTypes
 	FenceTopRight(22, "Fence", true, true),
 	FenceTopLeft(23, "Fence", true, true),
 	FenceBottomRight(24, "Fence", true, true),
-	FenceBottomLeft(25, "Fence", true, true);
+	FenceBottomLeft(25, "Fence", true, true),
+	Rabbit(26, "Rabbit", true, false);
 	
 	public final int intValue;
 	public final String imgName;

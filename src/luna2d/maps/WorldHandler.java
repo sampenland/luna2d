@@ -52,16 +52,17 @@ public abstract class WorldHandler
 		return COLUMNS;
 	}
 	
-	public void updateTypeAt(WorldCell cell, int cellRow, int cellColumn)
+	public void updateTypeAt(WorldCell cell, WorldPosition wp)
 	{
-		if (cellRow > this.worldRows || cellRow < 0 || cellColumn > this.worldColumns || cellColumn < 0)
+		Vector2 p = getCellPosition(wp);
+		if (p.y > this.worldRows || p.y < 0 || p.x > this.worldColumns || p.x < 0)
 		{
 			Log.println("Could not update object onto worldcells.");
 			return;
 		}
 		
-		this.entireWorldCells[cellRow][cellColumn].type = cell.type;
-		this.entireWorldCells[cellRow][cellColumn].groundType = cell.groundType;
+		this.entireWorldCells[p.y][p.x].type = cell.type;
+		this.entireWorldCells[p.y][p.x].groundType = cell.groundType;
 		
 	}
 	
@@ -84,6 +85,38 @@ public abstract class WorldHandler
 			for (int c = minCol; c < maxCol; c++)
 			{
 				rtn[r - minRow][c - minCol] = this.entireWorldCells[r][c];
+			}
+		}
+		
+		return rtn;
+		
+	}
+	
+	public char[][] getSubCharArray(int row, int column, int surroundingCells)
+	{
+		int minRow = row - surroundingCells;
+		int maxRow = row + surroundingCells;
+		int minCol = column + surroundingCells;
+		int maxCol = column + surroundingCells;
+		
+		minRow = Maths.clamp(minRow, this.worldRows, 0);
+		maxRow = Maths.clamp(maxRow, this.worldRows, 0);
+		minCol = Maths.clamp(minCol, this.worldColumns, 0);
+		maxCol = Maths.clamp(maxCol, this.worldColumns, 0);
+		
+		char[][] rtn = new char[maxRow - minRow][maxCol - minCol];
+		for (int r = minRow; r < maxRow; r++)
+		{
+			for (int c = minCol; c < maxCol; c++)
+			{
+				if (this.entireWorldCells[r][c].isSolid())
+				{					
+					rtn[r - minRow][c - minCol] = '1';
+				}
+				else
+				{
+					rtn[r - minRow][c - minCol] = '0';
+				}
 			}
 		}
 		

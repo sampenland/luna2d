@@ -9,11 +9,14 @@ import luna2d.maps.WorldPosition;
 import luna2d.renderables.Sprite;
 import theHunter.HunterWorldStruct;
 import theHunter.ObjectTypes;
+import theHunter.Player;
 import theHunter.TheHunter;
+import theHunter.inventoryItems.InvTorch;
 
 public class Torch extends Sprite
 {
 	private final int TORCH_LIGHT_DISTANCE = 350;
+	private final int PICKUP_DISTANCE = 1; // 1 Grid Cells
 	
 	private GlowLight light;
 	private boolean placing;
@@ -24,6 +27,7 @@ public class Torch extends Sprite
 		this.enableCulling = false;
 		this.setFixedScreenPosition(true);
 		this.placing = placingTorch;
+		this.mouseEnabled = true;
 	}
 	
 	public void placeOnGround(int x, int y)
@@ -82,6 +86,22 @@ public class Torch extends Sprite
 		if (this.placing)
 		{
 			this.updateScreenPosition(Game.mouseX, Game.mouseY);
+		}
+		
+		if (this.mouseClicked && this.mouseClickEvent != null && this.mouseClickEvent.getButton() == 3)
+		{
+			Player p = (Player)this.getScene().getPlayer();
+		
+			if (WorldPosition.withinDistance(p.getWorldPosition(), this.getWorldPosition(), PICKUP_DISTANCE, PICKUP_DISTANCE))
+			{
+				if (!p.backpackFull())
+				{
+					HunterWorldStruct wData = (HunterWorldStruct)this.getScene().getWorldData();
+					wData.addObjectToWorld(ObjectTypes.Empty, this.worldPosition);
+					p.addToBackpack(new InvTorch(this.getScene()));
+					this.destroy();
+				}	
+			}
 		}
 	}
 	

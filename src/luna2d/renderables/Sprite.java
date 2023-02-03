@@ -283,7 +283,7 @@ public class Sprite extends Renderable
 	@Override
 	public void render(Graphics g) 
 	{		
-		if(this.imageName.isEmpty())return;
+		if(this.imageName.isEmpty()) return;
 		if (!this.visible) return;
 		if (this.imgRef == null) return;
 		if (this.customRender) return;

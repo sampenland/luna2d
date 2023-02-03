@@ -440,7 +440,8 @@ public class Player extends SimplePlayer
 		if (this.holdingType == ObjectTypes.Empty) return;
 		
 		Vector2 gPos = Maths.convertToGrid(Game.mouseWorldX, Game.mouseWorldY, TheHunter.CELL_SIZE * Game.CAMERA_SCALE, 0, 0);
-
+		WorldPosition clickWorldPosition = Maths.convertToWorldPosition(gPos, Game.CAMERA_SCALE, TheHunter.ROWS, TheHunter.COLUMNS);
+		
 		int x = gPos.x * TheHunter.CELL_SIZE;
 		int y = gPos.y * TheHunter.CELL_SIZE;
 		
@@ -470,7 +471,7 @@ public class Player extends SimplePlayer
 			if (e.getButton() == 1)
 			{
 				Fire fire = (Fire)this.holdingObject;
-				if (true) // TODO: CAN PLACE
+				if (this.getScene().getWorldData().getWorldHandler().isFree(clickWorldPosition))
 				{
 					fire.placeOnGround();
 					
@@ -498,7 +499,7 @@ public class Player extends SimplePlayer
 			if (e.getButton() == 1)
 			{
 				Torch torch = (Torch)this.holdingObject;
-				if (true) // TODO: CAN PLACE
+				if (this.getScene().getWorldData().getWorldHandler().isFree(clickWorldPosition))
 				{
 					torch.placeOnGround();
 					
@@ -526,7 +527,7 @@ public class Player extends SimplePlayer
 			if (e.getButton() == 1)
 			{
 				Fence fence = (Fence)this.holdingObject;
-				if (true) // TODO: CAN PLACE
+				if (this.getScene().getWorldData().getWorldHandler().isFree(clickWorldPosition))
 				{
 					fence.placeOnGround();
 					

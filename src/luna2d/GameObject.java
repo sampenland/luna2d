@@ -58,8 +58,6 @@ public abstract class GameObject
 		this.worldY = y;
 	}
 	
-	public abstract void onDestroy();
-	
 	public void destroy()
 	{
 		this.onDestroy();
@@ -124,9 +122,6 @@ public abstract class GameObject
 		this.update();
 	}
 	
-	protected abstract void render(Graphics g);
-	protected abstract void update();
-	
 	protected void keyPressed(int keycode)
 	{
 		this.keys.put(keycode, true);
@@ -143,9 +138,13 @@ public abstract class GameObject
 		return this.keys.get(keycode);
 	}
 	
+	protected abstract void update();
+	protected abstract void render(Graphics g);
+	
 	protected abstract void onMouseClick(MouseEvent e);
 	protected abstract void onMousePressed(MouseEvent e);
 	protected abstract void onMouseReleased(MouseEvent e);
 	protected abstract void pauseTick();
+	public abstract void onDestroy();
 	
 }
