@@ -448,7 +448,7 @@ public class Player extends SimplePlayer
 		{
 			if (e.getButton() == 1)
 			{
-				new GrowingBerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+				new GrowingBerryBush(this.inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER, true);
 				
 				if (this.backpack.itemQty(this.holdingType) > 0)
 				{

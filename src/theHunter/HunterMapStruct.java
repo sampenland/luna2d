@@ -93,7 +93,7 @@ public class HunterMapStruct extends MapStruct
 					bush.updateWorldPosition(thisWorldPosition);
 					break;
 				case GrowingBerryBush:
-					GrowingBerryBush growingBush = new GrowingBerryBush(inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER);
+					GrowingBerryBush growingBush = new GrowingBerryBush(inScene, x, y, 1, TheHunter.ENVIRONMENT_DRAW_LAYER, true);
 					growingBush.updateWorldPosition(thisWorldPosition);
 					break;
 				case GndDirt:

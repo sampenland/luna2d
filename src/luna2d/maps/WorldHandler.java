@@ -99,6 +99,11 @@ public abstract class WorldHandler
 		
 	}
 	
+	public boolean isFree(WorldPosition wp)
+	{
+		return !isSolid(wp);
+	}
+	
 	public static WorldPosition convertFromCellToWorldPosition(int cellRow, int cellCol)
 	{
 		int worldRow = 0;

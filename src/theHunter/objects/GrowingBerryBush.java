@@ -18,12 +18,18 @@ public class GrowingBerryBush extends Sprite
 {
 
 	private final static int GROW_SPEED = 2; // in seconds, the duration between frames
+	
+	private final static int DELAY_MIN = 40000; // Delay variables in seconds
+	private final static int DELAY_MAX = 60000; //    this controls how long to wait in milliseconds before growing
+	
 	private SpriteTask growTask;
+	private SpriteTask delayGrowth;
 	private Timer growTimer;
+	private Timer delayGrowthTimer;
 	
 	public boolean hasWater;
 	
-	public GrowingBerryBush(Scene inScene, int x, int y, int scale, int depth) 
+	public GrowingBerryBush(Scene inScene, int x, int y, int scale, int depth, boolean activate) 
 	{
 		super(inScene, "GrowingBerryBush", x, y, scale, depth, 16, 5, 0);
 		
@@ -39,6 +45,33 @@ public class GrowingBerryBush extends Sprite
 			HunterWorldStruct world = (HunterWorldStruct)this.getScene().getWorldData();
 			world.addObjectToWorld(ObjectTypes.GrowingBerryBush, pWP);
 		}
+		
+		if (activate) 
+		{
+			this.activate();
+		}
+		else
+		{
+			this.visible = false;
+			delayGrowth = new SpriteTask(this)
+			{
+				@Override
+				public void run()
+				{
+					GrowingBerryBush bush = (GrowingBerryBush)this.sprite;
+					bush.activate();
+				}
+			};
+			
+			delayGrowthTimer = new Timer();
+			delayGrowthTimer.schedule(delayGrowth, Maths.random(DELAY_MIN, DELAY_MAX));
+		}
+		
+	}	
+	
+	private void activate()
+	{
+		this.visible = true;
 		
 		growTask = new SpriteTask(this)
 		{
@@ -81,7 +114,6 @@ public class GrowingBerryBush extends Sprite
 		
 		growTimer = new Timer("Growing");
 		growTimer.scheduleAtFixedRate(growTask, GROW_SPEED * 1000 * this.getFrameCount(), GROW_SPEED * 1000 * this.getFrameCount());
-		
-	}	
+	}
 
 }
