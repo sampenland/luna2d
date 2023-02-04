@@ -76,7 +76,7 @@ public class UIGrid extends Renderable
 						drawY + (rows * cellSize));
 			}
 			
-			for (int row = 0; row <= columns; row++)
+			for (int row = 0; row <= rows; row++)
 			{
 				g.drawLine(drawX, 
 						drawY + (row * cellSize), 

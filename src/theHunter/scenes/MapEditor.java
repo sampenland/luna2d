@@ -227,9 +227,43 @@ public class MapEditor extends Scene
 					this.mapDataSprites[r][c].setFrameWidth(16);
 					this.mapDataSprites[r][c].setFrameCount(1, true);
 					this.mapDataSpritesPlaced[r][c] = true;
-					
+				case FenceBottomLeft:
+					break;
+				case FenceBottomRight:
+					break;
+				case FenceHorz:
+					break;
+				case FenceTopLeft:
+					break;
+				case FenceTopRight:
+					break;
+				case FenceVert:
+					break;
+				case GrowingBerryBush:
+					break;
+				case InvBerries:
+					break;
+				case InvFence:
+					break;
+				case InvFire:
+					break;
+				case InvRock:
+					break;
+				case InvTorch:
+					break;
+				case Rabbit:
+					break;
+				case Rock:
+					this.mapDataSprites[r][c].updateImageRef("Rock", true, true);
+					this.mapDataSpritesPlaced[r][c] = true;
+					break;
+				case ThrownRock:
+					break;
+				case Torch:
+					break;
 				default:
 					break;
+					
 				}
 				
 				mapDataSprites[r][c].setObjectType(objectType.intValue);

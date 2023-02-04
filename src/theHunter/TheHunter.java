@@ -74,6 +74,7 @@ public class TheHunter extends Game
 		ColorHandler.addColor("GrassYellow", new Color(155, 161, 95));
 		ColorHandler.addColor("GrassGridYellow", new Color(155, 161, 95), 0.25f);
 		ColorHandler.addColor("WaterBlue", new Color(118, 135, 171));
+		ColorHandler.addColor("UIGray", new Color(0.2f, 0.2f, 0.2f, 0.4f));
 	}
 	
 	private static void loadImages()

@@ -99,6 +99,7 @@ public class Torch extends Sprite
 					HunterWorldStruct wData = (HunterWorldStruct)this.getScene().getWorldData();
 					wData.addObjectToWorld(ObjectTypes.Empty, this.worldPosition);
 					p.addToBackpack(new InvTorch(this.getScene()));
+					this.light.destroy();
 					this.destroy();
 				}	
 			}

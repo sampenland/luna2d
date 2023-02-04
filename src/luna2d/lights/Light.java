@@ -21,6 +21,7 @@ public abstract class Light
 	private WorldPosition worldPosition;
 	
 	protected BufferedImage img;
+	private boolean destroyNow;
 	
 	public Light(Scene inScene, int worldX, int worldY, WorldPosition wp)
 	{
@@ -37,6 +38,19 @@ public abstract class Light
 		
 		this.inScene.getObjectHandler().addLight(this);
 	}
+	
+	public boolean getDestroyNow()
+	{
+		return this.destroyNow;
+	}
+	
+	public void destroy()
+	{
+		this.onDestroy();
+		this.destroyNow = true;
+	}
+	
+	public abstract void onDestroy();
 	
 	public WorldPosition getWorldPosition()
 	{

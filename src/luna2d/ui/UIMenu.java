@@ -21,6 +21,8 @@ public abstract class UIMenu extends UI
 	
 	private Rectangle drawRect;
 	private Color bkgColor;
+	private Color borderColor;
+	private int borderThickness;
 	
 	public UIMenu(Scene inScene, int x, int y, int width, int height, Color bkgColor, int scale)
 	{
@@ -42,6 +44,15 @@ public abstract class UIMenu extends UI
 		this.bkgColor = bkgColor;
 		this.visible = false;
 		this.mouseEnabled = true;
+		
+		this.borderThickness = 2;
+		this.borderColor = Color.white;
+	}
+	
+	public void setBorder(Color color, int thickness)
+	{
+		this.borderColor = color;
+		this.borderThickness = thickness;
 	}
 	
 	public Scene getScene()
@@ -139,7 +150,12 @@ public abstract class UIMenu extends UI
 	public void render(Graphics g) 
 	{
 		if (!this.visible) return;
-		
+
+		g.setColor(borderColor);
+		g.drawRect(this.drawRect.x - this.borderThickness, 
+				this.drawRect.y - this.borderThickness, 
+				this.drawRect.width + this.borderThickness * 2,
+				this.drawRect.height + this.borderThickness * 2);
 		g.setColor(bkgColor);
 		g.fillRect(this.drawRect.x, this.drawRect.y, this.drawRect.width, this.drawRect.height);
 		

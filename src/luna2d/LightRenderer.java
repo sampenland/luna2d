@@ -76,8 +76,15 @@ public class LightRenderer extends Thread
 			{
 				WorldPosition playerWP = ((Player)this.getScene().getPlayer()).getWorldPosition();
 				
+				LinkedList<Light> removes = new LinkedList<Light>();
 				for (Light light : lights)
 				{
+					if (light.getDestroyNow())
+					{
+						removes.add(light);
+						continue;
+					}
+					
 					if (!light.visible) continue;
 					
 					// CULL world maps
@@ -104,6 +111,11 @@ public class LightRenderer extends Thread
 									gl.getRadius(), null);					
 						}
 					}
+				}
+				
+				for (Light light : removes)
+				{
+					this.inScene.objHandler.getLights().remove(light);
 				}
 			}
 			catch (Exception e)

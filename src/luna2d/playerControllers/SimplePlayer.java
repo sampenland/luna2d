@@ -36,6 +36,16 @@ public class SimplePlayer extends GameObject
 		sprite.updateScreenPosition(Game.WIDTH / 2 - sprite.getWidth(), Game.HEIGHT / 2 - sprite.getHeight());
 	}
 	
+	public int getScreenX()
+	{
+		return this.screenX;
+	}
+	
+	public int getScreenY()
+	{
+		return this.screenY;
+	}
+	
 	public int getInternalX()
 	{
 		return this.worldX;

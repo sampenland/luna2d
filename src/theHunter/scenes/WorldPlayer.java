@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import luna2d.ColorHandler;
 import luna2d.DayNightCycleTime;
 import luna2d.Game;
 import luna2d.Log;
@@ -16,6 +18,7 @@ import luna2d.Vector2;
 import luna2d.enums.LoadDataType;
 import luna2d.maps.MapStruct;
 import luna2d.maps.WorldPosition;
+import luna2d.storying.Dialog;
 import theHunter.DayNightCycleEngine;
 import theHunter.HunterMapStruct;
 import theHunter.HunterWorldStruct;
@@ -30,6 +33,8 @@ public class WorldPlayer extends Scene
 	public static final int WORLD_UPDATE_DISTANCE = 2;
 	
 	private boolean savingLock;
+	
+	private Dialog welcome;
 	
 	public WorldPlayer(String name) 
 	{
@@ -177,6 +182,11 @@ public class WorldPlayer extends Scene
 		// add 4 torches to backpack
 		for (int i = 0; i < 4; i++) p.addToBackpack(new InvTorch(this));
 		
+		welcome = new Dialog(this, "I am dying...\nThe berries are killing me...\nI need a weapon.",
+				Game.WIDTH / 2 + 50, Game.HEIGHT / 2 - 100, 300, 150, 
+				8, 18, ColorHandler.getColor("UIGray"), Color.white, "Click to Continue");
+		welcome.show();
+		
 		this.worldData.setActive(true);
 		this.worldData.startWorldHanlder();
 		
@@ -265,6 +275,10 @@ public class WorldPlayer extends Scene
 	@Override
 	public void onMouseClick(MouseEvent e) 
 	{
+		if (welcome != null)
+		{
+			welcome.destroy();
+		}
 	}
 
 	@Override

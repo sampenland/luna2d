@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
+import luna2d.ColorHandler;
 import luna2d.Game;
 import luna2d.Scene;
 import luna2d.renderables.FadingTextDisplay;
@@ -16,7 +17,7 @@ public class Backpack extends UIMenu
 {
 
 	private final static int WIDTH = 300;
-	private final static int HEIGHT = 450;
+	private final static int HEIGHT = 400;
 	
 	private BackpackItems backpackItems;
 	private LinkedList<InventoryItem> items;
@@ -30,7 +31,7 @@ public class Backpack extends UIMenu
 	
 	public Backpack(Scene inScene) 
 	{
-		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 225, Game.HEIGHT/2 - (HEIGHT/2) + 30, WIDTH, HEIGHT, new Color(0.2f, 0.2f, 0.2f, 0.4f), 1);
+		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 225, Game.HEIGHT/2 - (HEIGHT/2) + 30, WIDTH, HEIGHT, ColorHandler.getColor("UIGray"), 1);
 		
 		items = new LinkedList<InventoryItem>();
 		

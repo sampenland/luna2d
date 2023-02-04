@@ -31,11 +31,13 @@ import theHunter.objects.GrowingBerryBush;
 import theHunter.objects.Torch;
 import theHunter.rangedWeapons.ThrownRock;
 import theHunter.ui.Backpack;
+import theHunter.ui.CraftingMenu;
 
 public class Player extends SimplePlayer
 {
 	private Backpack backpack;
-	private boolean backpackLock, pauseLock;
+	private CraftingMenu crafter;
+	private boolean backpackLock, pauseLock, crafterLock;
 	
 	private ObjectTypes holdingType;
 	private Object holdingObject;
@@ -65,7 +67,7 @@ public class Player extends SimplePlayer
 		healthBar.setEnableCameraScaling(false);
 		healthBar.setFixedScreenPosition(true);
 		
-		this.hunger = 100;
+		this.hunger = 40;
 		new TextDisplay(inScene, "Hunger", 10, currentY, Color.white, Game.TOP_DRAW_LAYER);
 		hungerBar = new FillBar(Math.round(this.hunger), 60, currentY - 5, cellSize * 3, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
 		hungerBar.setEnableCameraScaling(false);
@@ -86,6 +88,7 @@ public class Player extends SimplePlayer
 		this.weatherLabel = new TextDisplay(inScene, inScene.getWeather(), 10, 30, Color.white, Game.TOP_DRAW_LAYER);
 		
 		backpack = new Backpack(inScene);
+		crafter = new CraftingMenu(inScene);
 
 		this.inScene.setPlayer(this);
 		
@@ -357,12 +360,32 @@ public class Player extends SimplePlayer
 	{
 		if (!this.backpackLock && this.isKeyPressed(KeyEvent.VK_TAB))
 		{
-			this.backpackLock = true;
+			this.backpackLock = true;			
 			this.backpack.toggleVisible();
+			
+			if (!this.backpack.visible)
+			{
+				this.crafter.hide();
+			}
 		}
 		else if (!this.isKeyPressed(KeyEvent.VK_TAB))
 		{
 			this.backpackLock = false;
+		}
+		
+		if (!this.crafterLock && this.isKeyPressed(KeyEvent.VK_C))
+		{
+			this.crafterLock = true;
+			this.crafter.toggleVisible();
+			
+			if (!this.crafter.visible)
+			{
+				this.backpack.hide();
+			}
+		}
+		else if (!this.isKeyPressed(KeyEvent.VK_C))
+		{
+			this.crafterLock = false;
 		}
 	}
 	
