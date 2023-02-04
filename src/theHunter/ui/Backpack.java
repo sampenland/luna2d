@@ -31,12 +31,12 @@ public class Backpack extends UIMenu
 	
 	public Backpack(Scene inScene) 
 	{
-		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 225, Game.HEIGHT/2 - (HEIGHT/2) + 30, WIDTH, HEIGHT, ColorHandler.getColor("UIGray"), 1);
+		super(inScene, Game.WIDTH/2 - (WIDTH/2) - 225, Game.HEIGHT/2 - (HEIGHT/2), WIDTH, HEIGHT, ColorHandler.getColor("UIGray"), 1);
 		
 		items = new LinkedList<InventoryItem>();
 		
 		this.x = Game.WIDTH/2 - (WIDTH/2) - 225;
-		this.y = Game.HEIGHT/2 - (HEIGHT/2) + 30;
+		this.y = Game.HEIGHT/2 - (HEIGHT/2);
 		
 		title = new TextDisplay(inScene, "Backpack", this.x + 5, this.y + 15, Color.white, Game.TOP_DRAW_LAYER);
 		this.addTextDisplay(title);

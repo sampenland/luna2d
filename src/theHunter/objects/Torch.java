@@ -59,7 +59,7 @@ public class Torch extends Sprite
 		
 		if (this.light != null)
 		{
-			this.light.updateWorldProsition(wp);
+			this.light.updateWorldPosition(wp, this.getWorldX(), this.getWorldY());
 		}
 	}
 	

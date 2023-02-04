@@ -22,7 +22,7 @@ public class InvBerries extends InventoryItem
 	}
 
 	@Override
-	public void use(int flag) 
+	public boolean use(int flag) 
 	{
 		Player player = (Player)this.getScene().getPlayer();
 		if (flag == 3)
@@ -46,6 +46,8 @@ public class InvBerries extends InventoryItem
 		{
 			player.readyHoldItem(ObjectTypes.InvBerries);
 		}
+		
+		return true;
 	}
 
 	@Override

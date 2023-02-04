@@ -26,10 +26,10 @@ public class CraftingMenu extends UIMenu
 	
 	public CraftingMenu(Scene inScene) 
 	{
-		super(inScene, Game.WIDTH - 460, Game.HEIGHT/2 - (HEIGHT/2) + 30, WIDTH, HEIGHT, ColorHandler.getColor("UIGray"), 1);
+		super(inScene, Game.WIDTH - 460, Game.HEIGHT/2 - (HEIGHT/2), WIDTH, HEIGHT, ColorHandler.getColor("UIGray"), 1);
 		
 		this.x = Game.WIDTH - 460;
-		this.y = Game.HEIGHT/2 - (HEIGHT/2) + 30;
+		this.y = Game.HEIGHT/2 - (HEIGHT/2);
 		
 		title = new TextDisplay(inScene, "Crafter", this.x + 5, this.y + 15, Color.white, Game.TOP_DRAW_LAYER);
 		this.addTextDisplay(title);

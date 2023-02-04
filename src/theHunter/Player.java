@@ -15,6 +15,7 @@ import luna2d.Maths;
 import luna2d.Scene;
 import luna2d.Vector2;
 import luna2d.Vector2f;
+import luna2d.lights.GlowLight;
 import luna2d.maps.WorldPosition;
 import luna2d.playerControllers.SimplePlayer;
 import luna2d.renderables.FillBar;
@@ -32,18 +33,25 @@ import theHunter.objects.Torch;
 import theHunter.rangedWeapons.ThrownRock;
 import theHunter.ui.Backpack;
 import theHunter.ui.CraftingMenu;
+import theHunter.ui.ToolBelt;
 
 public class Player extends SimplePlayer
 {
 	private Backpack backpack;
 	private CraftingMenu crafter;
+	public ToolBelt toolbelt;
+	
+	public GlowLight heldTorch;
+	
 	private boolean backpackLock, pauseLock, crafterLock;
 	
 	private ObjectTypes holdingType;
 	private Object holdingObject;
 	
 	private float hunger, temperature;
-	private float hungerDrain = 0.02f;
+	
+	private final float HUNGER_DRAIN = 0.02f;
+	private final float HEALTH_DELTA = 0.02f;
 	
 	private FillBar healthBar, hungerBar, temperatureBar;
 	
@@ -62,6 +70,7 @@ public class Player extends SimplePlayer
 		int currentY = 60;
 		int statsPaddingY = 18;
 		
+		this.health = 20;
 		healthBar = new FillBar(Math.round(this.health), Game.WIDTH / 2 - cellSize * 2, Game.HEIGHT / 2 - cellSize * 2 - 12, 
 				cellSize * 2, 4, 2, 1, Color.GRAY, Color.WHITE, Color.GREEN, inScene);
 		healthBar.setEnableCameraScaling(false);
@@ -87,8 +96,16 @@ public class Player extends SimplePlayer
 		this.timeLabel = new TextDisplay(inScene, inScene.getDaysAndTime(), Game.WIDTH - 160, Game.HEIGHT - 50, Color.white, Game.TOP_DRAW_LAYER);
 		this.weatherLabel = new TextDisplay(inScene, inScene.getWeather(), 10, 30, Color.white, Game.TOP_DRAW_LAYER);
 		
+		heldTorch = new GlowLight(this.getScene(), this.getWorldX(), this.getWorldY(), 650, null);
+		heldTorch.visible = false;
+		
 		backpack = new Backpack(inScene);
 		crafter = new CraftingMenu(inScene);
+
+		toolbelt = new ToolBelt(inScene);
+		toolbelt.show();
+		
+		backpack.addToBackpack(new InvRock(inScene, 10));
 
 		this.inScene.setPlayer(this);
 		
@@ -418,6 +435,7 @@ public class Player extends SimplePlayer
 		checkKeys();
 		Game.updatePlayerPosition(this.getInternalX(), this.getInternalY(), 200);
 		
+		
 		this.timeLabel.updateText(this.inScene.getDaysAndTime());
 		this.weatherLabel.updateText(this.inScene.getWeather());
 		
@@ -426,7 +444,22 @@ public class Player extends SimplePlayer
 		handleHunger();
 		
 		this.handleWorldPosition();
+		
+		if (this.heldTorch != null && this.heldTorch.visible)
+		{
+			heldTorch.updateWorldPosition(this.getWorldPosition(), this.getWorldX() + this.getWidth() / 2 - 16, this.getWorldY() + this.getHeight()/2);
+		}
+
+		this.handleDeaths();
 	
+	}
+	
+	private void handleDeaths()
+	{
+		if (this.health <= 0)
+		{
+			this.getScene().openScene("GameOver");
+		}
 	}
 	
 	private void handleWorldPosition()
@@ -439,7 +472,7 @@ public class Player extends SimplePlayer
 	
 	private void handleHunger()
 	{
-		float drain = this.hungerDrain; // also with conditions
+		float drain = this.HUNGER_DRAIN; // also with conditions
 		
 		this.hunger -= drain;
 		this.hunger = Maths.clamp(this.hunger, 100, 0);
@@ -448,11 +481,11 @@ public class Player extends SimplePlayer
 		
 		if (this.hunger < 1)
 		{
-			this.health -= 0.05f;
+			this.health -= HEALTH_DELTA;
 		}
 		else if(this.hunger > 75)
 		{
-			this.health += 0.05f;
+			this.health += HEALTH_DELTA * 3;
 			this.health = Maths.clamp(this.health, 100, 0);
 		}
 	}
@@ -573,14 +606,19 @@ public class Player extends SimplePlayer
 				this.backpack.addToBackpack(new InvFence(this.getScene(), 1));
 			}
 		}
-		else if(this.holdingType == ObjectTypes.InvRock && e.getButton() == 1)
+		else if(this.holdingType == ObjectTypes.InvRock)
 		{
-			
-			Point playerPos = new Point(this.getWorldX(), this.getWorldY());
-			Vector2f dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
-			new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir, 0.25f, TheHunter.ENVIRONMENT_DRAW_LAYER);
-			this.holdingType = ObjectTypes.Empty;
-			
+			if (e.getButton() == 1)
+			{
+				Point playerPos = new Point(this.getWorldX(), this.getWorldY());
+				Vector2f dir = Maths.directionBetweenTwoPoints(playerPos, new Point(x, y), true);
+				new ThrownRock(this.getScene(), playerPos.x, playerPos.y, 1, dir, 0.25f, TheHunter.ENVIRONMENT_DRAW_LAYER);
+				this.holdingType = ObjectTypes.Empty;
+			}
+			else if (e.getButton() == 3)
+			{
+				this.toolbelt.attachToQuickAccess(ObjectTypes.InvRock);
+			}			
 		}		
 	}
 

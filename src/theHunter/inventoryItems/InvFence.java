@@ -13,10 +13,12 @@ public class InvFence extends InventoryItem
 	}
 
 	@Override
-	public void use(int flag)
+	public boolean use(int flag)
 	{
 		Player player = (Player)this.getScene().getPlayer();
 		player.readyHoldItem(ObjectTypes.InvFence);
+		
+		return true;
 	}
 
 	@Override

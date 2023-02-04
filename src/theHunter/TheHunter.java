@@ -10,6 +10,7 @@ import luna2d.Game;
 import luna2d.Log;
 import luna2d.ResourceHandler;
 import luna2d.enums.LoadDataType;
+import theHunter.scenes.GameOver;
 import theHunter.scenes.MainMenu;
 import theHunter.scenes.MapEditor;
 import theHunter.scenes.MapPlayer;
@@ -60,6 +61,9 @@ public class TheHunter extends Game
 		
 		WorldPlayer worldPlayer = new WorldPlayer("WorldPlayer");
 		g.sceneManager.addScene(worldPlayer);
+		
+		GameOver gameOver = new GameOver("GameOver");
+		g.sceneManager.addScene(gameOver);
 		
 		loadImages();
 		createColors();

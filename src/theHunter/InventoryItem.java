@@ -21,7 +21,7 @@ public abstract class InventoryItem
 		return this.inScene;
 	}
 	
-	public abstract void use(int flag);
+	public abstract boolean use(int flag); // Return true if remove from backpack
 	public abstract void repair();
 	public abstract void craft();	
 	

@@ -14,11 +14,11 @@ public class InvFire extends InventoryItem
 	}
 
 	@Override
-	public void use(int flag) 
+	public boolean use(int flag) 
 	{
 		Player player = (Player)this.getScene().getPlayer();
 		player.readyHoldItem(ObjectTypes.InvFire);
-		
+		return true;
 	}
 
 	@Override

@@ -14,11 +14,19 @@ public class InvTorch extends InventoryItem
 	}
 
 	@Override
-	public void use(int flag) 
+	public boolean use(int flag) 
 	{
 		Player player = (Player)this.getScene().getPlayer();
-		player.readyHoldItem(ObjectTypes.InvTorch);
-		
+		if (flag == 1)
+		{
+			player.readyHoldItem(ObjectTypes.InvTorch);			
+			return true;
+		}
+		else
+		{
+			player.toolbelt.attachToQuickAccess(ObjectTypes.InvTorch);
+			return false;
+		}
 	}
 
 	@Override

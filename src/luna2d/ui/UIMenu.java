@@ -151,13 +151,20 @@ public abstract class UIMenu extends UI
 	{
 		if (!this.visible) return;
 
-		g.setColor(borderColor);
-		g.drawRect(this.drawRect.x - this.borderThickness, 
-				this.drawRect.y - this.borderThickness, 
-				this.drawRect.width + this.borderThickness * 2,
-				this.drawRect.height + this.borderThickness * 2);
-		g.setColor(bkgColor);
-		g.fillRect(this.drawRect.x, this.drawRect.y, this.drawRect.width, this.drawRect.height);
+		if (borderColor != null)
+		{
+			g.setColor(borderColor);
+			g.drawRect(this.drawRect.x - this.borderThickness, 
+					this.drawRect.y - this.borderThickness, 
+					this.drawRect.width + this.borderThickness * 2,
+					this.drawRect.height + this.borderThickness * 2);
+		}
+		
+		if (bkgColor != null)
+		{
+			g.setColor(bkgColor);
+			g.fillRect(this.drawRect.x, this.drawRect.y, this.drawRect.width, this.drawRect.height);			
+		}
 		
 		for (Sprite s : sprites)
 		{

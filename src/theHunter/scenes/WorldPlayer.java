@@ -185,7 +185,7 @@ public class WorldPlayer extends Scene
 		welcome = new Dialog(this, "I am dying...\nThe berries are killing me...\nI need a weapon.",
 				Game.WIDTH / 2 + 50, Game.HEIGHT / 2 - 100, 300, 150, 
 				8, 18, ColorHandler.getColor("UIGray"), Color.white, "Click to Continue");
-		welcome.show();
+		welcome.launch();
 		
 		this.worldData.setActive(true);
 		this.worldData.startWorldHanlder();
@@ -200,7 +200,7 @@ public class WorldPlayer extends Scene
 		
 		// Startup day and night
 		this.setDayNightCycle(new DayNightCycleEngine(80, 8, 20, Color.orange, Color.white, Color.orange, 
-				new Color(0, 0, 0, 0.8f)), new DayNightCycleTime(7, 0, 0));
+				new Color(0, 0, 0, 0.8f)), new DayNightCycleTime(22, 0, 0));
 		
 		ResourceHandler.addRain("Rain", "RainComing", 800, 10, 50, 
 				4 * 60, 3 * 24 * 60, // 4 hrs - 3 days between rain

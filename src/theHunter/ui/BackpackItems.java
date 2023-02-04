@@ -231,13 +231,15 @@ public class BackpackItems extends UIGrid
 		{
 			if (items != null && items[this.clickedRow][this.clickedColumn] != null)
 			{				
-				items[this.clickedRow][this.clickedColumn].use(this.mouseClickEvent.getButton());
-				if (this.backpack != null)
+				if(items[this.clickedRow][this.clickedColumn].use(this.mouseClickEvent.getButton()))
 				{
-					this.backpack.removeFromBackpack(items[this.clickedRow][this.clickedColumn]);
-					this.mouseClicked = false;
-					this.clickedColumn = -1;
-					this.clickedRow = -1;
+					if (this.backpack != null)
+					{
+						this.backpack.removeFromBackpack(items[this.clickedRow][this.clickedColumn]);
+						this.mouseClicked = false;
+						this.clickedColumn = -1;
+						this.clickedRow = -1;
+					}	
 				}
 			}
 		}

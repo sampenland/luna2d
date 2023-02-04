@@ -14,11 +14,17 @@ public class InvRock extends InventoryItem
 	}
 
 	@Override
-	public void use(int flag) 
+	public boolean use(int flag) 
 	{
 		Player player = (Player)this.getScene().getPlayer();
 		player.readyHoldItem(ObjectTypes.InvRock);
 		
+		if (flag == 1)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override

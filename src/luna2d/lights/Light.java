@@ -2,7 +2,6 @@ package luna2d.lights;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
 import luna2d.Game;
 import luna2d.Log;
 import luna2d.Scene;
@@ -57,11 +56,6 @@ public abstract class Light
 		return this.worldPosition;
 	}
 	
-	public void updateWorldProsition(WorldPosition wp)
-	{
-		this.worldPosition = wp;
-	}
-	
 	public void setRadius(int r)
 	{
 		this.radius = r;
@@ -81,6 +75,13 @@ public abstract class Light
 	
 	public void updateWorldPosition(int x, int y)
 	{
+		this.worldX = x;
+		this.worldY = y;
+	}
+	
+	public void updateWorldPosition(WorldPosition wp, int x, int y)
+	{
+		this.worldPosition = wp;
 		this.worldX = x;
 		this.worldY = y;
 	}
