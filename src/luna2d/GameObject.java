@@ -42,6 +42,11 @@ public abstract class GameObject
 		this.worldPosition = wp;
 	}
 	
+	public WorldPosition getWorldPosition()
+	{
+		return this.worldPosition;
+	}
+	
 	public int getWorldX()
 	{
 		return this.worldX;

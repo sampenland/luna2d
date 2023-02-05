@@ -18,6 +18,11 @@ public class Maths
 		return val;
 	}
 	
+	public static boolean coinFlip()
+	{
+		return Maths.random(1, 100) >= 50;
+	}
+	
 	public static float clamp(float val, float max, float min)
 	{
 		if (val >= max) return val = max;

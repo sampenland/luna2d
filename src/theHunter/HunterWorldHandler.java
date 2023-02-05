@@ -33,7 +33,7 @@ public class HunterWorldHandler extends WorldHandler
 	 */
 	public void loadFromMapStruct(HunterMapStruct[][] worldMaps)
 	{
-		this.entireWorldCells = new WorldCell[this.worldRows][this.worldColumns];
+		entireWorldCells = new WorldCell[this.worldRows][this.worldColumns];
 				
 		for (int currentWorldRow = 0; currentWorldRow < getRows(); currentWorldRow++)
 		{
@@ -54,7 +54,7 @@ public class HunterWorldHandler extends WorldHandler
 						int worldCol = (currentWorldColumn * getColumns()) + mapCol;						
 						int worldRow = (currentWorldRow * getRows()) + mapRow;
 												
-						this.entireWorldCells[worldRow][worldCol] = new WorldCell(type, gndType);
+						entireWorldCells[worldRow][worldCol] = new WorldCell(type, gndType);
 						
 					}
 				}				
@@ -70,30 +70,30 @@ public class HunterWorldHandler extends WorldHandler
 			return;
 		}
 		
-		this.entireWorldCells[cellRow][cellColumn].type = cell.type;
-		this.entireWorldCells[cellRow][cellColumn].groundType = cell.groundType;
+		entireWorldCells[cellRow][cellColumn].type = cell.type;
+		entireWorldCells[cellRow][cellColumn].groundType = cell.groundType;
 		
 	}
 	
 	// will get a square chunk of entire array :: can do A* on this relative to object grid
-	public WorldCell[][] getSubArray(int row, int column, int surroundingCells)
+	public static WorldCell[][] getSubArray(int row, int column, int surroundingCells)
 	{
 		int minRow = row - surroundingCells;
 		int maxRow = row + surroundingCells;
 		int minCol = column + surroundingCells;
 		int maxCol = column + surroundingCells;
 		
-		minRow = Maths.clamp(minRow, this.worldRows, 0);
-		maxRow = Maths.clamp(maxRow, this.worldRows, 0);
-		minCol = Maths.clamp(minCol, this.worldColumns, 0);
-		maxCol = Maths.clamp(maxCol, this.worldColumns, 0);
+		minRow = Maths.clamp(minRow, worldRows, 0);
+		maxRow = Maths.clamp(maxRow, worldRows, 0);
+		minCol = Maths.clamp(minCol, worldColumns, 0);
+		maxCol = Maths.clamp(maxCol, worldColumns, 0);
 		
 		WorldCell[][] rtn = new WorldCell[maxRow - minRow][maxCol - minCol];
 		for (int r = minRow; r < maxRow; r++)
 		{
 			for (int c = minCol; c < maxCol; c++)
 			{
-				rtn[r - minRow][c - minCol] = this.entireWorldCells[r][c];
+				rtn[r - minRow][c - minCol] = entireWorldCells[r][c];
 			}
 		}
 		
@@ -104,7 +104,7 @@ public class HunterWorldHandler extends WorldHandler
 	public boolean isSolid(WorldPosition wp)
 	{
 		Vector2 c = getCellPosition(wp);
-		WorldCell cell = this.entireWorldCells[c.y][c.x];
+		WorldCell cell = entireWorldCells[c.y][c.x];
 		return cell.isSolid();
 		
 	}
@@ -131,7 +131,7 @@ public class HunterWorldHandler extends WorldHandler
 		return new WorldPosition(worldRow, worldColumn, mapRow, mapColumn);
 	}
 	
-	public Vector2 getCellPosition(WorldPosition wp)
+	public static Vector2 getCellPosition(WorldPosition wp)
 	{
 		int worldRow = (wp.worldRow * TheHunter.ROWS) + wp.mapRow;
 		int worldCol = (wp.worldColumn * TheHunter.COLUMNS) + wp.mapColumn;
@@ -148,10 +148,10 @@ public class HunterWorldHandler extends WorldHandler
 		int newRow = pos.y + deltaRow;
 		int newCol = pos.x + deltaColumn;
 		
-		newRow = Maths.clamp(newRow, this.worldRows - 1, 0);
-		newCol = Maths.clamp(newCol, this.worldColumns - 1, 0);
+		newRow = Maths.clamp(newRow, worldRows - 1, 0);
+		newCol = Maths.clamp(newCol, worldColumns - 1, 0);
 		
-		if (this.entireWorldCells[newRow][newCol].isSolid())
+		if (entireWorldCells[newRow][newCol].isSolid())
 		{
 			return wp;
 		}

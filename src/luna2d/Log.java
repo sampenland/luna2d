@@ -1,6 +1,7 @@
 package luna2d;
 
 import java.awt.Point;
+import java.util.LinkedList;
 
 import luna2d.maps.WorldPosition;
 
@@ -10,6 +11,22 @@ public class Log
 	public static void print(String text)
 	{
 		System.out.print(text);
+	}
+	
+	public static void println(LinkedList<WorldPosition> list)
+	{
+		int i = 0;
+		if (list == null) return;
+		for(WorldPosition wp : list)
+		{
+			Log.println("[" + i + "] : ", wp);
+			i++;
+		}
+	}
+	
+	public static void println(String text, Vector2 v)
+	{
+		Log.println(text + " " + v.x + ", " + v.y);
 	}
 	
 	public static void println(WorldPosition pos)
